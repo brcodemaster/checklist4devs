@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 
 import { circular, ibmPlex } from '@/shared/assets'
+import { Providers } from '@/shared/providers'
 
 import './globals.css'
 
@@ -20,7 +21,7 @@ export default function zzLayout({
 				data-scroll-behavior='smooth'
 				suppressHydrationWarning
 			>
-				{children}
+				<Providers>{children}</Providers>
 			</body>
 		</html>
 	)
