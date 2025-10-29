@@ -1,3 +1,5 @@
+import { Header } from '@/widgets/header'
+
 export default function RootLayout({
 	children
 }: Readonly<{
@@ -5,6 +7,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<>
+			<Header />
 			<div>
 				<main>{children}</main>
 			</div>
