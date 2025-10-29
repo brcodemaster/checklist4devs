@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../__generated__"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URI")
+}
+
+model User {
+  id String @id @default(uuid())
+
+  fullName String  @map("full_name")
+  email    String  @unique
+  userName String? @map("user_name")
+  picture  String?
+  password String
+
+  notifications Notification[] @relation("user_notifications_notification_user")
+
+  createdGroups   Group[]   @relation("user_id_group_creatorId")
+  createdProjects Project[] @relation("user_id_project_creatorId")
+  createdTasks    Task[]    @relation("user_created_tasks_task_creator")
+  tasks           Task[]    @relation("user_assigned_tasks_task_assigner")
+
+  groups Group[] @relation("group_developers_user_groups")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Group {
+  id String @id @default(uuid())
+
+  name     String
+  slug     String?
+  password String?
+
+  creator   User   @relation("user_id_group_creatorId", fields: [creatorId], references: [id])
+  creatorId String @map("creator_id")
+
+  developers User[] @relation("group_developers_user_groups")
+
+  projects Project[] @relation("group_projects_project_group")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("groups")
+}
+
+model Project {
+  id String @id @default(uuid())
+
+  name     String
+  password String?
+
+  type   ProjectType
+  status ProjectStatus @default(IN_DEVELOPMENT)
+
+  links String[] @unique
+
+  creator   User   @relation("user_id_project_creatorId", fields: [creatorId], references: [id])
+  creatorId String @map("creator_id")
+
+  group   Group  @relation("group_projects_project_group", fields: [groupId], references: [id])
+  groupId String @map("group_id")
+
+  tasks Task[] @relation("project_tasks_task_project")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([name, creatorId])
+  @@map("projects")
+}
+
+model Task {
+  id    String @id @default(uuid())
+  index Int    @default(autoincrement())
+
+  text String
+
+  status TaskStatus @default(IN_PROGRESS)
+
+  project   Project @relation("project_tasks_task_project", fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String  @map("project_id")
+
+  creator   User   @relation("user_created_tasks_task_creator", fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId String @map("creator_id")
+
+  assigner   User   @relation("user_assigned_tasks_task_assigner", fields: [assignerId], references: [id], onDelete: Cascade)
+  assignerId String @map("assigner_id")
+
+  deadlineAt DateTime @map("deadline_at")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@index([deadlineAt])
+  @@map("tasks")
+}
+
+model Notification {
+  id String @id @default(uuid())
+
+  title       String
+  description String
+
+  user   User   @relation("user_notifications_notification_user", fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("notifications")
+}
+
+enum ProjectType {
+  LANDING_PAGE
+  WEB_APP
+  MOBILE_APP
+  E_COMMERCE
+  CMS
+  SAAS
+  PORTFOLIO
+  BLOG
+  DASHBOARD
+  MARKETPLACE
+  GAME
+  CORPORATE_WEBSITE
+  EDUCATIONAL
+  SOCIAL_NETWORK
+  STREAMING
+  FINTECH
+  HEALTHCARE
+  GOVERNMENT
+  AI_TOOL
+  IOT_APP
+  OTHER
+}
+
+enum TaskStatus {
+  IN_PROGRESS
+  COMPLETED
+  FIRED
+}
+
+enum ProjectStatus {
+  IN_DEVELOPMENT
+  COMPLETED
+  PAUSED
+  CANCELED
+}

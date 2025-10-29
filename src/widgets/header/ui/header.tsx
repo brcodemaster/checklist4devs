@@ -1,10 +1,13 @@
+import { CircleQuestionMark, Inbox } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { FeedbackButton } from '@/features/feedback'
 
 import { ActivePath } from '@/entities/active-path'
 
 import { cn } from '@/shared/lib/utils'
+import { Button } from '@/shared/ui'
 
 type Props = {
 	className?: string
@@ -22,8 +25,28 @@ export const Header: React.FC<Props> = ({ className }) => {
 				<Image src='/logo.webp' alt='Checklist4Devs' width={24} height={24} />
 				<ActivePath />
 			</div>
-			<div>
+			<div className='flex items-center gap-2'>
 				<FeedbackButton />
+				<div className='border-muted-secondary bg-background flex h-8 items-center gap-0 overflow-hidden rounded-full border'>
+					<Link href='/help'>
+						<Button
+							variant='ghost'
+							tooltipText='Help'
+							className='hover:bg-muted group/question group/question flex w-full items-center justify-center rounded-r-none pr-2 pl-3'
+						>
+							<CircleQuestionMark className='stroke-secondary-foreground size-4 group-hover/question:stroke-white' />
+						</Button>
+					</Link>
+					<Link href='/notifications'>
+						<Button
+							tooltipText='Notifications'
+							variant='ghost'
+							className='hover:bg-muted group/box flex w-full items-center justify-center rounded-l-none pr-3 pl-2'
+						>
+							<Inbox className='stroke-secondary-foreground size-4 group-hover/box:stroke-white' />
+						</Button>
+					</Link>
+				</div>
 			</div>
 		</header>
 	)
