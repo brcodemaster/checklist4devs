@@ -1,10 +1,12 @@
-import { CircleQuestionMark, Inbox } from 'lucide-react'
+import { CircleQuestionMark } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
 import { FeedbackButton } from '@/features/feedback'
+import { NotificationButton } from '@/features/notifications'
 
 import { ActivePath } from '@/entities/active-path'
+import { UserButton } from '@/entities/user'
 
 import { cn } from '@/shared/lib/utils'
 import { Button } from '@/shared/ui'
@@ -37,16 +39,9 @@ export const Header: React.FC<Props> = ({ className }) => {
 							<CircleQuestionMark className='stroke-secondary-foreground size-4 group-hover/question:stroke-white' />
 						</Button>
 					</Link>
-					<Link href='/notifications'>
-						<Button
-							tooltipText='Notifications'
-							variant='ghost'
-							className='hover:bg-muted group/box flex w-full items-center justify-center rounded-l-none pr-3 pl-2'
-						>
-							<Inbox className='stroke-secondary-foreground size-4 group-hover/box:stroke-white' />
-						</Button>
-					</Link>
+					<NotificationButton />
 				</div>
+				<UserButton />
 			</div>
 		</header>
 	)

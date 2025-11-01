@@ -26,6 +26,7 @@ export {
 } from './form'
 export { Input } from './input'
 export { Label } from './label'
+export { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from './popover'
 export { Section } from './section'
 export {
 	Select,

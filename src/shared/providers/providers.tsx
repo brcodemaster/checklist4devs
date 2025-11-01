@@ -1,12 +1,16 @@
 import { PropsWithChildren } from 'react'
 
+import { QueryProvider } from './query-provider'
+
 import { Toaster } from '../ui'
 
 export const Providers: React.FC<PropsWithChildren> = ({ children }) => {
 	return (
 		<>
-			<Toaster position='top-center' />
-			{children}
+			<QueryProvider>
+				<Toaster position='top-center' />
+				{children}
+			</QueryProvider>
 		</>
 	)
 }

@@ -1,8 +1,6 @@
 import ky from 'ky'
 
-import { prefixUrl } from '../constants'
-
 export const kyInstance = ky.create({
-	prefixUrl,
+	prefixUrl: 'http://localhost:3000/api',
 	credentials: 'include'
 })
