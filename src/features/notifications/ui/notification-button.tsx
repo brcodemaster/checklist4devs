@@ -21,8 +21,8 @@ export const NotificationButton: React.FC = () => {
 					<Inbox className='stroke-secondary-foreground size-4 group-hover/box:stroke-white' />
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent align='end' className='max-h-[400px] overflow-y-auto md:min-w-[500px]'>
-				<Notifications hook={notifications} />
+			<PopoverContent align='end' className='overflow-hidden p-0 md:min-w-[500px]'>
+				<Notifications nots={notifications.nots} />
 			</PopoverContent>
 		</Popover>
 	)

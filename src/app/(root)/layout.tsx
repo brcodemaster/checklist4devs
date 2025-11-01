@@ -1,5 +1,7 @@
 import { Header, MobileHeader } from '@/widgets/header'
 
+import { Sidebar } from '@/features/sidebar'
+
 export default function RootLayout({
 	children
 }: Readonly<{
@@ -9,8 +11,9 @@ export default function RootLayout({
 		<>
 			<MobileHeader />
 			<Header />
-			<div>
-				<main>{children}</main>
+			<div className='relative h-full w-full'>
+				<Sidebar />
+				<main className='pl-0 md:pl-[51px]'>{children}</main>
 			</div>
 		</>
 	)

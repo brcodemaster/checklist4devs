@@ -1,17 +1,15 @@
 'use client'
 
-import { useNotifications } from '../model'
+import { Notification } from '@@/generated/client'
 
-export const Notifications: React.FC<{ hook: ReturnType<typeof useNotifications> }> = ({
-	hook
-}) => {
-	const { nots } = hook
-
+export const Notifications: React.FC<{ nots: Notification[] | undefined }> = ({ nots }) => {
 	return (
 		<div>
-			<h2>Notifications</h2>
+			<div className='border-b-muted-secondary border-b p-4'>
+				<h2>Notifications</h2>
+			</div>
 
-			<ul className='flex flex-col gap-2'>
+			<ul className='bg-foreground flex h-[400px] flex-col gap-2 overflow-y-auto p-4'>
 				{nots &&
 					nots.map(not => (
 						<li className='flex flex-col gap-1' key={not.id}>

@@ -1,4 +1,4 @@
-import { Boxes, Folders, Settings } from 'lucide-react'
+import { Boxes, Folders, Home, Settings } from 'lucide-react'
 
 process.loadEnvFile
 
@@ -27,5 +27,23 @@ export const mobileNavigation = [
 		icon: Settings,
 		name: 'Account preferences',
 		link: '/settings'
+	}
+]
+
+export const sidebarNavigation = [
+	{
+		icon: Home,
+		name: 'Home',
+		link: '/'
+	},
+	{
+		icon: Boxes,
+		name: 'Projects',
+		link: '/projects'
+	},
+	{
+		icon: Folders,
+		name: 'Groups',
+		link: '/groups'
 	}
 ]

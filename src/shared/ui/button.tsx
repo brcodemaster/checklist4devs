@@ -42,17 +42,19 @@ function Button({
 	size,
 	asChild = false,
 	tooltipText,
+	tooltipDelay,
 	...props
 }: React.ComponentProps<'button'> &
 	VariantProps<typeof buttonVariants> & {
 		asChild?: boolean
 		tooltipText?: string
+		tooltipDelay?: number
 	}) {
 	const Comp = asChild ? Slot : 'button'
 
 	if (tooltipText) {
 		return (
-			<Tooltip delayDuration={170}>
+			<Tooltip delayDuration={tooltipDelay || 170}>
 				<TooltipTrigger asChild>
 					<Comp
 						data-slot='button'
