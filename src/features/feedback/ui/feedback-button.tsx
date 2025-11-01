@@ -1,6 +1,13 @@
 'use client'
 
-import { Button, Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/shared/ui'
+import {
+	Button,
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogTitle,
+	DialogTrigger
+} from '@/shared/ui'
 
 import { FeedbackModal } from './feedback-modal'
 
@@ -24,6 +31,8 @@ export const FeedbackButton: React.FC = () => {
 				<DialogTitle>Send Feedback</DialogTitle>
 
 				<FeedbackModal hook={feedback} />
+
+				<DialogDescription className='hidden' />
 			</DialogContent>
 		</Dialog>
 	)

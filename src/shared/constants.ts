@@ -1,28 +1,31 @@
-import { Boxes, LucideTableRowsSplit, Proportions, Settings } from 'lucide-react'
+import { Boxes, Folders, Settings } from 'lucide-react'
 
 process.loadEnvFile
 
 export const prefixUrl = process.env.BASE_URL + '/api/'
 
-export const navigation = [
+export const userNavigation = [
 	{
 		icon: Settings,
 		name: 'Account preferences',
 		link: '/settings'
-	},
+	}
+]
+
+export const mobileNavigation = [
 	{
 		icon: Boxes,
 		name: 'Projects',
 		link: '/projects'
 	},
 	{
-		icon: LucideTableRowsSplit,
-		name: 'Usage',
-		link: '/usage'
+		icon: Folders,
+		name: 'Groups',
+		link: '/groups'
 	},
 	{
-		icon: Proportions,
-		name: 'Billing',
-		link: '/billing'
+		icon: Settings,
+		name: 'Account preferences',
+		link: '/settings'
 	}
 ]

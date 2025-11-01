@@ -3,7 +3,7 @@
 import { LogOut } from 'lucide-react'
 import Link from 'next/link'
 
-import { navigation } from '@/shared/constants'
+import { userNavigation } from '@/shared/constants'
 import {
 	Avatar,
 	AvatarFallback,
@@ -29,14 +29,14 @@ export const UserButton: React.FC<{ onClick?: VoidFunction }> = ({ onClick }) =>
 					<span>b.ravshanbekov@mail.ru</span>
 				</div>
 				<ul className='border-muted-secondary border-y py-1'>
-					{navigation.map(({ icon: Icon, link, name }, idx) => (
+					{userNavigation.map(({ icon: Icon, link, name }, idx) => (
 						<li key={name + idx}>
 							<Link
 								href={link}
-								className='text-secondary hover:bg-secondary-foreground/30 group/item flex items-center gap-1 rounded-sm px-2 py-1.5 text-xs'
+								className='hover:bg-secondary-foreground/30 group/item flex items-center gap-1 rounded-sm px-2 py-1.5 text-xs'
 							>
-								<Icon className='stroke-secondary-foreground size-3.5 duration-200 group-hover/item:stroke-white' />
-								<span className='duration-200 group-hover/item:text-white'>
+								<Icon className='stroke-secondary size-3.5 duration-200 group-hover/item:stroke-white' />
+								<span className='text-secondary duration-200 group-hover/item:text-white'>
 									{name}
 								</span>
 							</Link>

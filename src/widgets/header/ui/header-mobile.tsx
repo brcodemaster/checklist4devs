@@ -1,8 +1,9 @@
-import { CircleQuestionMark, Search } from 'lucide-react'
+import { CircleQuestionMark } from 'lucide-react'
 import Link from 'next/link'
 
 import { FeedbackButton } from '@/features/feedback'
 import { NotificationButton } from '@/features/notifications'
+import { SearchButton } from '@/features/search'
 
 import { ActivePath } from '@/entities/active-path'
 import { MenuBar } from '@/entities/menu-bar'
@@ -13,18 +14,16 @@ import { Button, Logo, Section } from '@/shared/ui'
 export const MobileHeader: React.FC = () => {
 	return (
 		<>
-			<Section className='border-b-muted-secondary/80 flex items-center justify-between border-b py-2.5 lg:hidden'>
+			<Section className='border-b-muted-secondary/80 flex items-center justify-between border-b py-2.5 md:hidden'>
 				<Logo width={28} height={28} />
 
 				<div className='flex items-center gap-1'>
-					<Button variant='ghost' className='px-2'>
-						<Search className='size-4.5 opacity-50' />
-					</Button>
+					<SearchButton />
 
 					<MenuBar />
 				</div>
 			</Section>
-			<header className='bg-background z-50 block lg:hidden'>
+			<header className='bg-background z-50 block md:hidden'>
 				<Section className='border-b-muted-secondary/80 flex items-center justify-between border-b py-2'>
 					<ActivePath />
 

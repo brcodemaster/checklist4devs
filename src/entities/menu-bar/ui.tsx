@@ -1,21 +1,31 @@
 import { Menu } from 'lucide-react'
 import Link from 'next/link'
 
-import { navigation } from '@/shared/constants'
-import { Button, Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/ui'
+import { mobileNavigation } from '@/shared/constants'
+import {
+	Button,
+	Drawer,
+	DrawerContent,
+	DrawerDescription,
+	DrawerTitle,
+	DrawerTrigger
+} from '@/shared/ui'
 
 export const MenuBar: React.FC = () => {
 	return (
 		<Drawer>
 			<DrawerTrigger asChild>
-				<Button className='border-muted-secondary/60 border px-2' variant='secondary'>
-					<Menu className='size-4.5 opacity-50' />
+				<Button
+					className='border-muted-secondary/60 group/menu border px-2'
+					variant='secondary'
+				>
+					<Menu className='size-4.5 stroke-white' />
 				</Button>
 			</DrawerTrigger>
 			<DrawerContent>
 				<DrawerTitle className='h-4'></DrawerTitle>
 				<ul className='flex flex-col gap-1 p-2'>
-					{navigation.map(({ icon: Icon, link, name }, idx) => (
+					{mobileNavigation.map(({ icon: Icon, link, name }, idx) => (
 						<li key={idx}>
 							<Link
 								href={link}
@@ -29,6 +39,7 @@ export const MenuBar: React.FC = () => {
 						</li>
 					))}
 				</ul>
+				<DrawerDescription className='hidden' />
 			</DrawerContent>
 		</Drawer>
 	)
