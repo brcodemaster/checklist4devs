@@ -1,4 +1,4 @@
-import { Header } from '@/widgets/header'
+import { Header, MobileHeader } from '@/widgets/header'
 
 export default function RootLayout({
 	children
@@ -7,6 +7,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<>
+			<MobileHeader />
 			<Header />
 			<div>
 				<main>{children}</main>

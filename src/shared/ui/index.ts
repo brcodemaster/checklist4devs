@@ -15,6 +15,18 @@ export {
 	DialogTrigger
 } from './dialog'
 export {
+	Drawer,
+	DrawerClose,
+	DrawerContent,
+	DrawerDescription,
+	DrawerFooter,
+	DrawerHeader,
+	DrawerOverlay,
+	DrawerPortal,
+	DrawerTitle,
+	DrawerTrigger
+} from './drawer'
+export {
 	Form,
 	FormControl,
 	FormDescription,
@@ -26,6 +38,7 @@ export {
 } from './form'
 export { Input } from './input'
 export { Label } from './label'
+export { Logo } from './logo'
 export { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from './popover'
 export { Section } from './section'
 export {
