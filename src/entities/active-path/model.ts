@@ -2,8 +2,8 @@ import { usePathname } from 'next/navigation'
 
 export const useActivePath = () => {
 	const path = usePathname()
-	const activePath = path.split('/')[0] || 'Home'
+	const activePath = path.split('/')[1] || 'Home'
 	const link = activePath === 'Home' ? '/' : activePath
 
-	return { activePath, link }
+	return { activePath: activePath.slice(0, 1).toUpperCase() + activePath.slice(1), link }
 }

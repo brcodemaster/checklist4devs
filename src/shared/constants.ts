@@ -36,14 +36,15 @@ export const sidebarNavigation = [
 		name: 'Home',
 		link: '/'
 	},
+
 	{
 		icon: Boxes,
-		name: 'Projects',
-		link: '/projects'
+		name: 'Groups',
+		link: '/groups'
 	},
 	{
 		icon: Folders,
-		name: 'Groups',
-		link: '/groups'
+		name: 'Projects',
+		link: '/projects'
 	}
 ]

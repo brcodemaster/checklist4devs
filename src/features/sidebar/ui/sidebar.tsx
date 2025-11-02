@@ -13,10 +13,10 @@ export const Sidebar: React.FC = () => {
 	const { isHoverEnabled, activePath, handleClick } = useSidebar()
 
 	return (
-		<aside>
+		<aside className='border-r-muted-secondary bg-background absolute top-0 bottom-0 left-0 z-50 hidden border-r md:flex'>
 			<nav
 				className={cn(
-					'border-r-muted-secondary bg-background group/aside absolute top-0 bottom-0 left-0 hidden w-[51px] flex-col items-start justify-between overflow-hidden border-r px-1 py-2 duration-200 md:flex',
+					'group/aside flex w-[51px] flex-col items-start justify-between overflow-hidden px-1 py-2 duration-200',
 					isHoverEnabled && 'hover:w-[200px]'
 				)}
 			>

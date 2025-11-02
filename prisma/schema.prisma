@@ -13,7 +13,7 @@ model User {
 
   fullName String  @map("full_name")
   email    String  @unique
-  userName String? @map("user_name")
+  userName String  @map("user_name")
   picture  String?
   password String
 

@@ -11,7 +11,7 @@ import {
 
 import { FeedbackModal } from './feedback-modal'
 
-import { useFeedback } from '../useFeedback'
+import { useFeedback } from '../model'
 
 export const FeedbackButton: React.FC = () => {
 	const feedback = useFeedback()

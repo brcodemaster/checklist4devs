@@ -23,7 +23,7 @@ export const UserButton: React.FC<{ onClick?: VoidFunction }> = ({ onClick }) =>
 					<AvatarFallback>RB</AvatarFallback>
 				</Avatar>
 			</PopoverTrigger>
-			<PopoverContent className='p-2'>
+			<PopoverContent className='p-2' align='end'>
 				<div className='text-secondary flex flex-col items-start gap-1 px-2 py-1.5 text-xs'>
 					<h3 className='text-sm text-white'>brcodemaster</h3>
 					<span>b.ravshanbekov@mail.ru</span>

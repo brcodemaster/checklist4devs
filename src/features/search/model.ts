@@ -4,7 +4,7 @@ import { useDebounce } from 'react-use'
 
 import { kyInstance } from '@/shared/lib/ky-instance'
 
-import { Group, Project, User } from '@@/generated/client'
+import { Group, Project, User } from '@/generated/client'
 
 export const useSearch = () => {
 	const [value, setValue] = useState('')

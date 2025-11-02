@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { kyInstance } from '@/shared/lib/ky-instance'
 
-import { Notification } from '@@/generated/client'
+import { Notification } from '@/generated/client'
 
 export const useNotifications = () => {
 	const [isOpen, setIsOpen] = useState(false)

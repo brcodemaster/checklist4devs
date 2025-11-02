@@ -12,7 +12,7 @@ import {
 	Textarea
 } from '@/shared/ui'
 
-import { useFeedback } from '../useFeedback'
+import { useFeedback } from '../model'
 
 export const FeedbackModal: React.FC<{ hook: ReturnType<typeof useFeedback> }> = ({ hook }) => {
 	const { form, handleSubmit, handleReset } = hook
