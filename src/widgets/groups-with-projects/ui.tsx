@@ -2,8 +2,8 @@
 
 import { Search } from 'lucide-react'
 
-import { CreateGroupButton } from '@/features/create-group-button'
-import { CreateProjectButton } from '@/features/create-project-button'
+import { CreateGroupTrigger } from '@/features/create-group-button'
+import { CreateProjectTrigger } from '@/features/create-project-button'
 
 import { RenderGroups } from '@/entities/render-groups'
 import { RenderProjects } from '@/entities/render-projects'
@@ -28,8 +28,8 @@ export const GroupsWithProjects: React.FC = () => {
 				</div>
 
 				<div className='order-2 row-start-2 flex items-center gap-2 md:row-start-1'>
-					<CreateGroupButton className='w-full md:w-fit' />
-					<CreateProjectButton className='w-full md:w-fit' />
+					<CreateGroupTrigger className='w-full md:w-fit' />
+					<CreateProjectTrigger className='w-full md:w-fit' />
 				</div>
 			</div>
 

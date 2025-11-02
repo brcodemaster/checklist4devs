@@ -13,7 +13,10 @@ export default function RootLayout({
 			<Header />
 			<div className='relative h-full w-full'>
 				<Sidebar />
-				<main className='pl-0 md:pl-[51px]'>{children}</main>
+				<main className='h-full overflow-y-auto pl-0 md:pl-[51px]'>
+					{children}
+					<div className='block h-[120px] md:hidden' />
+				</main>
 			</div>
 		</>
 	)

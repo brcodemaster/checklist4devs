@@ -37,6 +37,7 @@ export {
 	useFormField
 } from './form'
 export { Input } from './input'
+export { InputPassword } from './input-password'
 export { Label } from './label'
 export { Logo } from './logo'
 export { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from './popover'

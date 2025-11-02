@@ -1,1 +1,1 @@
-export { CreateProjectButton } from './ui'
+export { CreateProjectTrigger } from './ui/create-project-trigger'

@@ -38,6 +38,7 @@ model Group {
   name     String
   slug     String?
   password String?
+  isPublic Boolean @default(true)
 
   creator   User   @relation("user_id_group_creatorId", fields: [creatorId], references: [id])
   creatorId String @map("creator_id")
@@ -57,6 +58,7 @@ model Project {
 
   name     String
   password String?
+  isPublic Boolean @default(true)
 
   type   ProjectType
   status ProjectStatus @default(IN_DEVELOPMENT)

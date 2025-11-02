@@ -1,1 +1,1 @@
-export { CreateGroupButton } from './ui'
+export { CreateGroupTrigger } from './ui/create-group-trigger'

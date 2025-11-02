@@ -14,6 +14,11 @@ export const userNavigation = [
 
 export const mobileNavigation = [
 	{
+		icon: Home,
+		name: 'Home',
+		link: '/'
+	},
+	{
 		icon: Boxes,
 		name: 'Projects',
 		link: '/projects'

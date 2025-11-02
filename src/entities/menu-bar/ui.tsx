@@ -1,3 +1,5 @@
+'use client'
+
 import { Menu } from 'lucide-react'
 import Link from 'next/link'
 
@@ -11,13 +13,18 @@ import {
 	DrawerTrigger
 } from '@/shared/ui'
 
+import { useMenuBar } from './model'
+
 export const MenuBar: React.FC = () => {
+	const { handleOpen, isOpen } = useMenuBar()
+
 	return (
-		<Drawer>
+		<Drawer open={isOpen} onOpenChange={() => handleOpen(!isOpen)}>
 			<DrawerTrigger asChild>
 				<Button
 					className='border-muted-secondary/60 group/menu border px-2'
 					variant='secondary'
+					onClick={() => handleOpen(true)}
 				>
 					<Menu className='size-4.5 stroke-white' />
 				</Button>
@@ -30,6 +37,7 @@ export const MenuBar: React.FC = () => {
 							<Link
 								href={link}
 								className='hover:bg-muted-secondary group/item flex items-center gap-2 rounded-sm p-2'
+								onClick={() => handleOpen(false)}
 							>
 								<Icon className='text-secondary size-5 duration-200 group-hover/item:text-white' />{' '}
 								<p className='text-secondary duration-200 group-hover/item:text-white'>
