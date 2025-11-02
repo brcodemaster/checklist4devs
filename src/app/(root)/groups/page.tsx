@@ -1,3 +1,5 @@
+import { MyGroups } from '@/widgets/my-groups'
+
 import { Section } from '@/shared/ui'
 
 export default function Page() {
@@ -7,7 +9,9 @@ export default function Page() {
 				<h2 className='text-2xl font-normal'>My groups</h2>
 			</div>
 
-			<div className='mt-10 flex flex-col'></div>
+			<div className='mt-10 flex flex-col'>
+				<MyGroups />
+			</div>
 		</Section>
 	)
 }

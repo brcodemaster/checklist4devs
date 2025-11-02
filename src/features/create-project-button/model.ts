@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { kyInstance } from '@/shared/lib/ky-instance'
+import { kyInstance } from '@/shared/api'
 
 import { Project } from '@/generated/client'
 import { ProjectType } from '@/generated/enums'

@@ -1,7 +1,12 @@
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 
 export const useMenuBar = () => {
 	const [isOpen, setIsOpen] = useState(false)
 
-	return { isOpen, handleOpen: setIsOpen }
+	const path = usePathname()
+
+	const activePath = '/' + path.split('/')[1]
+
+	return { isOpen, handleOpen: setIsOpen, activePath }
 }

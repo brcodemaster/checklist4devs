@@ -2,18 +2,16 @@
 
 import { Search } from 'lucide-react'
 
-import { CreateGroupTrigger } from '@/features/create-group-button'
 import { CreateProjectTrigger } from '@/features/create-project-button'
 
-import { RenderGroups } from '@/entities/render-groups'
 import { RenderProjects } from '@/entities/render-projects'
 
 import { Input } from '@/shared/ui'
 
-import { useGroups } from './model'
+import { useMyProjects } from './model'
 
-export const GroupsWithProjects: React.FC = () => {
-	const { groups, projects, groupsIsLoading, projectsIsLoading, handleChange } = useGroups()
+export const MyProjects: React.FC = () => {
+	const { projects, handleChange, isLoading } = useMyProjects()
 
 	return (
 		<>
@@ -21,20 +19,18 @@ export const GroupsWithProjects: React.FC = () => {
 				<div className='relative order-1 row-start-1 w-full'>
 					<Input
 						className='bg-input w-full pl-9 placeholder:opacity-50'
-						placeholder='Search for an groups or projects'
+						placeholder='Search for an projects'
 						onChange={e => handleChange(e.target.value)}
 					/>
 					<Search className='stroke-secondary-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2' />
 				</div>
 
 				<div className='order-2 row-start-2 flex items-center gap-2 md:row-start-1'>
-					<CreateGroupTrigger className='w-full md:w-fit' />
 					<CreateProjectTrigger className='w-full md:w-fit' />
 				</div>
 			</div>
 
-			<RenderGroups groups={groups} isLoading={groupsIsLoading} />
-			<RenderProjects projects={projects} isLoading={projectsIsLoading} />
+			<RenderProjects projects={projects} isLoading={isLoading} />
 		</>
 	)
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { Notification } from '@@/generated/client'
+import { Notification } from '@/generated/client'
 
 export const Notifications: React.FC<{ nots: Notification[] | undefined }> = ({ nots }) => {
 	return (

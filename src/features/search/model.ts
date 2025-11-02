@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useDebounce } from 'react-use'
 
-import { kyInstance } from '@/shared/lib/ky-instance'
+import { kyInstance } from '@/shared/api'
 
 import { Group, Project, User } from '@/generated/client'
 

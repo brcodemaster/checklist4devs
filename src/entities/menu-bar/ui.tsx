@@ -4,6 +4,7 @@ import { Menu } from 'lucide-react'
 import Link from 'next/link'
 
 import { mobileNavigation } from '@/shared/constants'
+import { cn } from '@/shared/lib'
 import {
 	Button,
 	Drawer,
@@ -16,7 +17,7 @@ import {
 import { useMenuBar } from './model'
 
 export const MenuBar: React.FC = () => {
-	const { handleOpen, isOpen } = useMenuBar()
+	const { handleOpen, isOpen, activePath } = useMenuBar()
 
 	return (
 		<Drawer open={isOpen} onOpenChange={() => handleOpen(!isOpen)}>
@@ -36,13 +37,13 @@ export const MenuBar: React.FC = () => {
 						<li key={idx}>
 							<Link
 								href={link}
-								className='hover:bg-muted-secondary group/item flex items-center gap-2 rounded-sm p-2'
+								className={cn(
+									'hover:bg-muted-secondary group/item text-secondary stroke-secondary flex items-center gap-2 rounded-sm p-2 duration-200 hover:stroke-white hover:text-white',
+									activePath === link && 'bg-muted-secondary text-white'
+								)}
 								onClick={() => handleOpen(false)}
 							>
-								<Icon className='text-secondary size-5 duration-200 group-hover/item:text-white' />{' '}
-								<p className='text-secondary duration-200 group-hover/item:text-white'>
-									{name}
-								</p>
+								<Icon className='size-5 duration-200' /> <p>{name}</p>
 							</Link>
 						</li>
 					))}

@@ -1,3 +1,4 @@
+export { ApiError, BASE_ERRORS } from './errors'
 export { getProjectStatus } from './get-project-status'
-export { kyInstance } from './ky-instance'
+export { ApiResponse, ErrorApiResponse } from './responses'
 export { cn } from './utils'

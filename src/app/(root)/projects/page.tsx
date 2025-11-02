@@ -1,3 +1,5 @@
+import { MyProjects } from '@/widgets/my-projects/ui'
+
 import { Section } from '@/shared/ui'
 
 export default function Page() {
@@ -7,7 +9,9 @@ export default function Page() {
 				<h2 className='text-2xl font-normal'>My projects</h2>
 			</div>
 
-			<div className='mt-10 flex flex-col'>{/* <RenderProjects /> */}</div>
+			<div className='mt-10 flex flex-col'>
+				<MyProjects />
+			</div>
 		</Section>
 	)
 }

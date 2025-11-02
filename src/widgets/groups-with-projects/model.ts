@@ -1,9 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useDebounce } from 'react-use'
-import { toast } from 'sonner'
 
-import { kyInstance } from '@/shared/lib/ky-instance'
+import { kyInstance } from '@/shared/api'
 
 import { Prisma } from '@/generated/client'
 
@@ -26,16 +25,7 @@ export const useGroups = () => {
 				(Prisma.GroupGetPayload<{ include: { projects: true } }> & {
 					creatorName: string
 				})[]
-			>(),
-		meta: {
-			onError: (error: unknown) => {
-				if (error instanceof Error) {
-					toast.error(error.message)
-				} else {
-					toast.error('Unexpected error occurred.')
-				}
-			}
-		}
+			>()
 	})
 
 	const { data: projects = [], isLoading: projectsIsLoading } = useQuery({

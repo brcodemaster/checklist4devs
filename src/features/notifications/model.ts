@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
-import { kyInstance } from '@/shared/lib/ky-instance'
+import { kyInstance } from '@/shared/api'
 
 import { Notification } from '@/generated/client'
 
