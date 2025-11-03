@@ -3,13 +3,11 @@ import { NextRequest } from 'next/server'
 import { ApiResponse, ErrorApiResponse } from '@/shared/lib'
 import { authService } from '@/shared/lib/services/auth-service'
 
-import { User } from '@/generated/client'
-
 export async function POST(request: NextRequest) {
 	try {
-		const body = (await request.json()) as Pick<User, 'id'>
+		const { id } = await authService.me(request)
 
-		const user = await authService.logout(body)
+		const user = await authService.logout({ id })
 
 		const { accessToken, refreshToken, password: _password, ...safeUser } = user
 

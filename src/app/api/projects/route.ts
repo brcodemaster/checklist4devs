@@ -1,10 +1,15 @@
+import { NextRequest } from 'next/server'
+
 import { ApiResponse, ErrorApiResponse } from '@/shared/lib'
+import { authService } from '@/shared/lib/services/auth-service'
 import { groupService } from '@/shared/lib/services/group-service'
 import { projectService } from '@/shared/lib/services/project-service'
 import { userService } from '@/shared/lib/services/user-service'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
 	try {
+		await authService.checkAuth(request)
+
 		const projects = await projectService.findAll()
 
 		const creatorIds = projects.map(project => project.creatorId)

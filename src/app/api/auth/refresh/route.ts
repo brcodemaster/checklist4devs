@@ -3,21 +3,22 @@ import { NextRequest } from 'next/server'
 
 import { ApiResponse, ErrorApiResponse } from '@/shared/lib'
 import { authService } from '@/shared/lib/services/auth-service'
-
-import { Prisma } from '@/generated/client'
+import { jwtService } from '@/shared/lib/services/jwt-service'
 
 export async function POST(request: NextRequest) {
 	try {
-		const body = (await request.json()) as Pick<
-			Prisma.UserUncheckedCreateInput,
-			'email' | 'password'
-		>
+		await authService.checkAuth(request)
 
-		const user = await authService.login(body)
+		const token = jwtService.getAccessTokenFromRequest(request)
 
-		const { accessToken, refreshToken, password: _password, ...safeUser } = user
+		const {
+			accessToken,
+			refreshToken,
+			password: _password,
+			...safeUser
+		} = await authService.refreshToken(token)
 
-		const res = ApiResponse(safeUser, 'User logged successfully')
+		const res = ApiResponse(safeUser, 'Tokens updated successfully')
 
 		res.cookies.set('x-access-token', accessToken, {
 			httpOnly: true,

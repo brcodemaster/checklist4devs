@@ -87,7 +87,11 @@ export class AuthService {
 		return { ...updatedUser, refreshToken }
 	}
 
-	async refreshToken(token: string): Promise<User> {
+	async refreshToken(
+		token: string
+	): Promise<
+		Omit<User, 'accessToken' | 'refreshToken'> & { accessToken: string; refreshToken: string }
+	> {
 		const { userId } = this.jwtService.decode(token)
 
 		const user = await this.userService.findById(userId)
@@ -104,7 +108,11 @@ export class AuthService {
 
 		const updatedUser = await userService.update(user.id, { accessToken, refreshToken })
 
-		return updatedUser
+		return { ...updatedUser, accessToken, refreshToken }
+	}
+
+	async checkAuth(request: NextRequest) {
+		return await this.me(request)
 	}
 }
 

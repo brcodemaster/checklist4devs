@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+import { authService } from '@/shared/lib/services/auth-service'
+
 import { prisma } from '@/prisma-client'
 
-export async function GET(req: NextRequest) {
+export async function GET(request: NextRequest) {
 	try {
-		const url = req.nextUrl
+		await authService.checkAuth(request)
+
+		const url = request.nextUrl
 		const searchValue = url.searchParams.get('value')
 
 		let res

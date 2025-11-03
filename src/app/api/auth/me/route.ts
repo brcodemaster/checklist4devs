@@ -10,9 +10,11 @@ export async function GET(request: NextRequest) {
 		if (!user.accessToken || !user.refreshToken)
 			throw new ApiError(BASE_ERRORS.Unauthorized, 'User not authorized')
 
-		const res = NextResponse.json(user)
+		const { accessToken, refreshToken, password: _password, ...safeUser } = user
 
-		res.cookies.set('x-access-token', user.accessToken, {
+		const res = NextResponse.json(safeUser)
+
+		res.cookies.set('x-access-token', accessToken, {
 			httpOnly: true,
 			secure: process.env.NODE_ENV === 'production',
 			sameSite: 'lax',
@@ -20,7 +22,7 @@ export async function GET(request: NextRequest) {
 			path: '/'
 		})
 
-		res.cookies.set('x-refresh-token', user.refreshToken, {
+		res.cookies.set('x-refresh-token', refreshToken, {
 			httpOnly: true,
 			secure: process.env.NODE_ENV === 'production',
 			sameSite: 'lax',
