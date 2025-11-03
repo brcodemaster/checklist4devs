@@ -1,15 +1,16 @@
-import { NextResponse } from 'next/server'
-
-import { prisma } from '@/prisma-client'
+import { ApiResponse, ErrorApiResponse } from '@/shared/lib'
+import { groupService } from '@/shared/lib/services/group-service'
+import { projectService } from '@/shared/lib/services/project-service'
+import { userService } from '@/shared/lib/services/user-service'
 
 export async function GET() {
 	try {
-		const projects = await prisma.project.findMany()
+		const projects = await projectService.findAll()
 
 		const creatorIds = projects.map(project => project.creatorId)
-		const groupIds = projects.map(projects => projects.groupId)
+		const groupIds = projects.map(project => project.groupId)
 
-		const creators = await prisma.user.findMany({
+		const creators = await userService.findAll({
 			where: {
 				id: { in: creatorIds }
 			},
@@ -19,9 +20,9 @@ export async function GET() {
 			}
 		})
 
-		const groups = await prisma.group.findMany({
+		const groups = await groupService.findAll({
 			where: {
-				id: { in: creatorIds }
+				id: { in: groupIds }
 			},
 			select: {
 				id: true,
@@ -40,9 +41,8 @@ export async function GET() {
 			groupName: groupsObject[project.groupId]
 		}))
 
-		return NextResponse.json(metaProjects)
+		return ApiResponse(metaProjects, 'Projects returned successfully')
 	} catch (error) {
-		console.log('Error [PROJECTS API]')
-		return NextResponse.json(error)
+		return ErrorApiResponse(error)
 	}
 }

@@ -1,13 +1,12 @@
-import { NextResponse } from 'next/server'
-
-import { prisma } from '@/prisma-client'
+import { ApiResponse, ErrorApiResponse } from '@/shared/lib'
+import { notificationService } from '@/shared/lib/services/notification-service'
 
 export async function GET() {
 	try {
-		const nots = await prisma.notification.findMany()
+		const nots = await notificationService.findAll()
 
-		return NextResponse.json(nots)
+		return ApiResponse(nots, 'Notifications returned successfully')
 	} catch (error) {
-		return NextResponse.json(error)
+		return ErrorApiResponse(error)
 	}
 }

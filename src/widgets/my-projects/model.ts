@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useDebounce } from 'react-use'
 
 import { kyInstance } from '@/shared/api'
+import { TApiResponse } from '@/shared/types/default-types'
 
 import { Project } from '@/generated/client'
 
@@ -18,19 +19,24 @@ export const useMyProjects = () => {
 		[searchValue]
 	)
 
-	const { data: projects = [], isLoading } = useQuery({
+	const { data: dataProjects, isLoading } = useQuery({
 		queryKey: ['projects', 'mine'],
 		queryFn: async () =>
 			await kyInstance
 				.get('projects/mine')
-				.json<(Project & { creatorName: string; groupName: string })[]>()
+				.json<TApiResponse<(Project & { creatorName: string; groupName: string })[]>>()
 	})
 
-	const filteredProjects = debouncedValue
-		? projects.filter(project =>
-				project.name.toLowerCase().includes(debouncedValue.toLowerCase())
-			)
-		: projects
+	const projects = dataProjects?.data ?? []
+
+	const filteredProjects =
+		debouncedValue && projects
+			? projects.filter(project =>
+					project.name.toLowerCase().includes(debouncedValue.toLowerCase())
+				)
+			: projects
+
+	console.log(filteredProjects)
 
 	return { handleChange: setSearchValue, projects: filteredProjects, isLoading }
 }

@@ -2,11 +2,7 @@ import { NextResponse } from 'next/server'
 
 import { ApiError } from './errors'
 
-type TApiResponse<T = unknown> = {
-	success: boolean
-	message: string
-	data: T
-}
+import { TApiResponse } from '../types/default-types'
 
 export const ApiResponse = <T = unknown>(
 	data: T,

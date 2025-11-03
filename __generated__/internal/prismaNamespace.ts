@@ -829,6 +829,8 @@ export const UserScalarFieldEnum = {
   userName: 'userName',
   picture: 'picture',
   password: 'password',
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -841,6 +843,7 @@ export const GroupScalarFieldEnum = {
   name: 'name',
   slug: 'slug',
   password: 'password',
+  isPublic: 'isPublic',
   creatorId: 'creatorId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -853,6 +856,7 @@ export const ProjectScalarFieldEnum = {
   id: 'id',
   name: 'name',
   password: 'password',
+  isPublic: 'isPublic',
   type: 'type',
   status: 'status',
   links: 'links',
@@ -885,6 +889,7 @@ export const NotificationScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
+  isPublic: 'isPublic',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -948,6 +953,13 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 

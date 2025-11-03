@@ -27,6 +27,7 @@ export type ProjectMinAggregateOutputType = {
   id: string | null
   name: string | null
   password: string | null
+  isPublic: boolean | null
   type: $Enums.ProjectType | null
   status: $Enums.ProjectStatus | null
   creatorId: string | null
@@ -39,6 +40,7 @@ export type ProjectMaxAggregateOutputType = {
   id: string | null
   name: string | null
   password: string | null
+  isPublic: boolean | null
   type: $Enums.ProjectType | null
   status: $Enums.ProjectStatus | null
   creatorId: string | null
@@ -51,6 +53,7 @@ export type ProjectCountAggregateOutputType = {
   id: number
   name: number
   password: number
+  isPublic: number
   type: number
   status: number
   links: number
@@ -66,6 +69,7 @@ export type ProjectMinAggregateInputType = {
   id?: true
   name?: true
   password?: true
+  isPublic?: true
   type?: true
   status?: true
   creatorId?: true
@@ -78,6 +82,7 @@ export type ProjectMaxAggregateInputType = {
   id?: true
   name?: true
   password?: true
+  isPublic?: true
   type?: true
   status?: true
   creatorId?: true
@@ -90,6 +95,7 @@ export type ProjectCountAggregateInputType = {
   id?: true
   name?: true
   password?: true
+  isPublic?: true
   type?: true
   status?: true
   links?: true
@@ -176,6 +182,7 @@ export type ProjectGroupByOutputType = {
   id: string
   name: string
   password: string | null
+  isPublic: boolean
   type: $Enums.ProjectType
   status: $Enums.ProjectStatus
   links: string[]
@@ -210,6 +217,7 @@ export type ProjectWhereInput = {
   id?: Prisma.StringFilter<"Project"> | string
   name?: Prisma.StringFilter<"Project"> | string
   password?: Prisma.StringNullableFilter<"Project"> | string | null
+  isPublic?: Prisma.BoolFilter<"Project"> | boolean
   type?: Prisma.EnumProjectTypeFilter<"Project"> | $Enums.ProjectType
   status?: Prisma.EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
   links?: Prisma.StringNullableListFilter<"Project">
@@ -226,6 +234,7 @@ export type ProjectOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   password?: Prisma.SortOrderInput | Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
   type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   links?: Prisma.SortOrder
@@ -247,6 +256,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[]
   name?: Prisma.StringFilter<"Project"> | string
   password?: Prisma.StringNullableFilter<"Project"> | string | null
+  isPublic?: Prisma.BoolFilter<"Project"> | boolean
   type?: Prisma.EnumProjectTypeFilter<"Project"> | $Enums.ProjectType
   status?: Prisma.EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
   creatorId?: Prisma.StringFilter<"Project"> | string
@@ -262,6 +272,7 @@ export type ProjectOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   password?: Prisma.SortOrderInput | Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
   type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   links?: Prisma.SortOrder
@@ -281,6 +292,7 @@ export type ProjectScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Project"> | string
   name?: Prisma.StringWithAggregatesFilter<"Project"> | string
   password?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  isPublic?: Prisma.BoolWithAggregatesFilter<"Project"> | boolean
   type?: Prisma.EnumProjectTypeWithAggregatesFilter<"Project"> | $Enums.ProjectType
   status?: Prisma.EnumProjectStatusWithAggregatesFilter<"Project"> | $Enums.ProjectStatus
   links?: Prisma.StringNullableListFilter<"Project">
@@ -294,6 +306,7 @@ export type ProjectCreateInput = {
   id?: string
   name: string
   password?: string | null
+  isPublic?: boolean
   type: $Enums.ProjectType
   status?: $Enums.ProjectStatus
   links?: Prisma.ProjectCreatelinksInput | string[]
@@ -308,6 +321,7 @@ export type ProjectUncheckedCreateInput = {
   id?: string
   name: string
   password?: string | null
+  isPublic?: boolean
   type: $Enums.ProjectType
   status?: $Enums.ProjectStatus
   links?: Prisma.ProjectCreatelinksInput | string[]
@@ -322,6 +336,7 @@ export type ProjectUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumProjectTypeFieldUpdateOperationsInput | $Enums.ProjectType
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   links?: Prisma.ProjectUpdatelinksInput | string[]
@@ -336,6 +351,7 @@ export type ProjectUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumProjectTypeFieldUpdateOperationsInput | $Enums.ProjectType
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   links?: Prisma.ProjectUpdatelinksInput | string[]
@@ -350,6 +366,7 @@ export type ProjectCreateManyInput = {
   id?: string
   name: string
   password?: string | null
+  isPublic?: boolean
   type: $Enums.ProjectType
   status?: $Enums.ProjectStatus
   links?: Prisma.ProjectCreatelinksInput | string[]
@@ -363,6 +380,7 @@ export type ProjectUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumProjectTypeFieldUpdateOperationsInput | $Enums.ProjectType
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   links?: Prisma.ProjectUpdatelinksInput | string[]
@@ -374,6 +392,7 @@ export type ProjectUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumProjectTypeFieldUpdateOperationsInput | $Enums.ProjectType
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   links?: Prisma.ProjectUpdatelinksInput | string[]
@@ -410,6 +429,7 @@ export type ProjectCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
   type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   links?: Prisma.SortOrder
@@ -423,6 +443,7 @@ export type ProjectMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
   type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   creatorId?: Prisma.SortOrder
@@ -435,6 +456,7 @@ export type ProjectMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
   type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   creatorId?: Prisma.SortOrder
@@ -567,6 +589,7 @@ export type ProjectCreateWithoutCreatorInput = {
   id?: string
   name: string
   password?: string | null
+  isPublic?: boolean
   type: $Enums.ProjectType
   status?: $Enums.ProjectStatus
   links?: Prisma.ProjectCreatelinksInput | string[]
@@ -580,6 +603,7 @@ export type ProjectUncheckedCreateWithoutCreatorInput = {
   id?: string
   name: string
   password?: string | null
+  isPublic?: boolean
   type: $Enums.ProjectType
   status?: $Enums.ProjectStatus
   links?: Prisma.ProjectCreatelinksInput | string[]
@@ -622,6 +646,7 @@ export type ProjectScalarWhereInput = {
   id?: Prisma.StringFilter<"Project"> | string
   name?: Prisma.StringFilter<"Project"> | string
   password?: Prisma.StringNullableFilter<"Project"> | string | null
+  isPublic?: Prisma.BoolFilter<"Project"> | boolean
   type?: Prisma.EnumProjectTypeFilter<"Project"> | $Enums.ProjectType
   status?: Prisma.EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
   links?: Prisma.StringNullableListFilter<"Project">
@@ -635,6 +660,7 @@ export type ProjectCreateWithoutGroupInput = {
   id?: string
   name: string
   password?: string | null
+  isPublic?: boolean
   type: $Enums.ProjectType
   status?: $Enums.ProjectStatus
   links?: Prisma.ProjectCreatelinksInput | string[]
@@ -648,6 +674,7 @@ export type ProjectUncheckedCreateWithoutGroupInput = {
   id?: string
   name: string
   password?: string | null
+  isPublic?: boolean
   type: $Enums.ProjectType
   status?: $Enums.ProjectStatus
   links?: Prisma.ProjectCreatelinksInput | string[]
@@ -687,6 +714,7 @@ export type ProjectCreateWithoutTasksInput = {
   id?: string
   name: string
   password?: string | null
+  isPublic?: boolean
   type: $Enums.ProjectType
   status?: $Enums.ProjectStatus
   links?: Prisma.ProjectCreatelinksInput | string[]
@@ -700,6 +728,7 @@ export type ProjectUncheckedCreateWithoutTasksInput = {
   id?: string
   name: string
   password?: string | null
+  isPublic?: boolean
   type: $Enums.ProjectType
   status?: $Enums.ProjectStatus
   links?: Prisma.ProjectCreatelinksInput | string[]
@@ -729,6 +758,7 @@ export type ProjectUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumProjectTypeFieldUpdateOperationsInput | $Enums.ProjectType
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   links?: Prisma.ProjectUpdatelinksInput | string[]
@@ -742,6 +772,7 @@ export type ProjectUncheckedUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumProjectTypeFieldUpdateOperationsInput | $Enums.ProjectType
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   links?: Prisma.ProjectUpdatelinksInput | string[]
@@ -755,6 +786,7 @@ export type ProjectCreateManyCreatorInput = {
   id?: string
   name: string
   password?: string | null
+  isPublic?: boolean
   type: $Enums.ProjectType
   status?: $Enums.ProjectStatus
   links?: Prisma.ProjectCreatelinksInput | string[]
@@ -767,6 +799,7 @@ export type ProjectUpdateWithoutCreatorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumProjectTypeFieldUpdateOperationsInput | $Enums.ProjectType
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   links?: Prisma.ProjectUpdatelinksInput | string[]
@@ -780,6 +813,7 @@ export type ProjectUncheckedUpdateWithoutCreatorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumProjectTypeFieldUpdateOperationsInput | $Enums.ProjectType
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   links?: Prisma.ProjectUpdatelinksInput | string[]
@@ -793,6 +827,7 @@ export type ProjectUncheckedUpdateManyWithoutCreatorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumProjectTypeFieldUpdateOperationsInput | $Enums.ProjectType
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   links?: Prisma.ProjectUpdatelinksInput | string[]
@@ -805,6 +840,7 @@ export type ProjectCreateManyGroupInput = {
   id?: string
   name: string
   password?: string | null
+  isPublic?: boolean
   type: $Enums.ProjectType
   status?: $Enums.ProjectStatus
   links?: Prisma.ProjectCreatelinksInput | string[]
@@ -817,6 +853,7 @@ export type ProjectUpdateWithoutGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumProjectTypeFieldUpdateOperationsInput | $Enums.ProjectType
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   links?: Prisma.ProjectUpdatelinksInput | string[]
@@ -830,6 +867,7 @@ export type ProjectUncheckedUpdateWithoutGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumProjectTypeFieldUpdateOperationsInput | $Enums.ProjectType
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   links?: Prisma.ProjectUpdatelinksInput | string[]
@@ -843,6 +881,7 @@ export type ProjectUncheckedUpdateManyWithoutGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumProjectTypeFieldUpdateOperationsInput | $Enums.ProjectType
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   links?: Prisma.ProjectUpdatelinksInput | string[]
@@ -886,6 +925,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   name?: boolean
   password?: boolean
+  isPublic?: boolean
   type?: boolean
   status?: boolean
   links?: boolean
@@ -903,6 +943,7 @@ export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   name?: boolean
   password?: boolean
+  isPublic?: boolean
   type?: boolean
   status?: boolean
   links?: boolean
@@ -918,6 +959,7 @@ export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   name?: boolean
   password?: boolean
+  isPublic?: boolean
   type?: boolean
   status?: boolean
   links?: boolean
@@ -933,6 +975,7 @@ export type ProjectSelectScalar = {
   id?: boolean
   name?: boolean
   password?: boolean
+  isPublic?: boolean
   type?: boolean
   status?: boolean
   links?: boolean
@@ -942,7 +985,7 @@ export type ProjectSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "password" | "type" | "status" | "links" | "creatorId" | "groupId" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "password" | "isPublic" | "type" | "status" | "links" | "creatorId" | "groupId" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   group?: boolean | Prisma.GroupDefaultArgs<ExtArgs>
@@ -969,6 +1012,7 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: string
     name: string
     password: string | null
+    isPublic: boolean
     type: $Enums.ProjectType
     status: $Enums.ProjectStatus
     links: string[]
@@ -1405,6 +1449,7 @@ export interface ProjectFieldRefs {
   readonly id: Prisma.FieldRef<"Project", 'String'>
   readonly name: Prisma.FieldRef<"Project", 'String'>
   readonly password: Prisma.FieldRef<"Project", 'String'>
+  readonly isPublic: Prisma.FieldRef<"Project", 'Boolean'>
   readonly type: Prisma.FieldRef<"Project", 'ProjectType'>
   readonly status: Prisma.FieldRef<"Project", 'ProjectStatus'>
   readonly links: Prisma.FieldRef<"Project", 'String[]'>

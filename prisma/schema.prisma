@@ -17,6 +17,9 @@ model User {
   picture  String?
   password String
 
+  accessToken  String?
+  refreshToken String?
+
   notifications Notification[] @relation("user_notifications_notification_user")
 
   createdGroups   Group[]   @relation("user_id_group_creatorId")
@@ -110,6 +113,8 @@ model Notification {
 
   title       String
   description String
+
+  isPublic Boolean @default(true)
 
   user   User   @relation("user_notifications_notification_user", fields: [userId], references: [id], onDelete: Cascade)
   userId String

@@ -7,15 +7,15 @@ import { kyInstance } from '@/shared/api'
 import { Group, Project, User } from '@/generated/client'
 
 export const useSearch = () => {
-	const [value, setValue] = useState('')
+	const [searchValue, setSearchValue] = useState('')
 	const [debouncedValue, setDebouncedValue] = useState('')
 
 	useDebounce(
 		() => {
-			setDebouncedValue(value)
+			setDebouncedValue(searchValue)
 		},
 		700,
-		[value]
+		[searchValue]
 	)
 
 	const { data: results = [[], [], []] } = useQuery<[User[], Project[], Group[]]>({
@@ -28,8 +28,8 @@ export const useSearch = () => {
 	})
 
 	return {
-		value,
-		onChange: (value: string) => setValue(value),
+		searchValue,
+		onChange: (value: string) => setSearchValue(value),
 		results
 	}
 }

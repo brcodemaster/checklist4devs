@@ -7,8 +7,6 @@ export async function GET(req: NextRequest) {
 		const url = req.nextUrl
 		const searchValue = url.searchParams.get('value')
 
-		console.log(searchValue)
-
 		let res
 
 		if (searchValue) {
