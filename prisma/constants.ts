@@ -6,7 +6,7 @@ export const devs = [
 		userName: 'Onlinee',
 		fullName: 'Onlinee Fullname',
 		email: 'bekzodrn@mail.ru',
-		password: hashSync('11111111', 10)
+		password: hashSync('Bekzod2001', 10)
 	},
 	{
 		id: '2',

@@ -15,7 +15,7 @@ export const MobileHeader: React.FC = () => {
 	return (
 		<>
 			<Section className='border-b-muted-secondary/80 flex items-center justify-between border-b py-2.5 md:hidden'>
-				<Logo width={28} height={28} />
+				<Logo width={28} height={27} />
 
 				<div className='flex items-center gap-1'>
 					<SearchButton />
