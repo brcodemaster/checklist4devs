@@ -2,15 +2,18 @@ import { PropsWithChildren } from 'react'
 
 import { QueryProvider } from './query-provider'
 
+import { AuthContextProvider } from '../contexts/auth-context'
 import { Toaster } from '../ui'
 
 export const Providers: React.FC<PropsWithChildren> = ({ children }) => {
 	return (
 		<>
-			<QueryProvider>
-				<Toaster position='top-center' />
-				{children}
-			</QueryProvider>
+			<AuthContextProvider>
+				<QueryProvider>
+					<Toaster position='top-center' />
+					{children}
+				</QueryProvider>
+			</AuthContextProvider>
 		</>
 	)
 }

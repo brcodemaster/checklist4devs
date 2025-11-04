@@ -52,8 +52,6 @@ export const useCreateGroup = () => {
 				password: payload.password
 			}
 
-			console.log(newGroup)
-
 			return await kyInstance.post('groups/create', { json: newGroup }).json<Group>()
 		},
 		onMutate: async (payload: TForm) => {

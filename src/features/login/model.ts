@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { kyInstance } from '@/shared/api'
+import { useAuth } from '@/shared/contexts/auth-context'
 
 const formSchema = z.object({
 	email: z.email({ error: 'Please enter a valid email address' }),
@@ -17,23 +17,23 @@ const formSchema = z.object({
 		})
 })
 
-type TForm = z.infer<typeof formSchema>
+export type TLoginForm = z.infer<typeof formSchema>
 
 export const useLogin = () => {
+	const { login, isLoading } = useAuth()
+
 	const defaultValues = {
 		email: '',
 		password: ''
 	}
 
-	const form = useForm<TForm>({
+	const form = useForm<TLoginForm>({
 		mode: 'onSubmit',
 		resolver: zodResolver(formSchema),
 		defaultValues
 	})
 
-	const handleSubmit: SubmitHandler<TForm> = async data => {
-		await kyInstance.post('auth/login', { json: data }).json()
-	}
+	const handleSubmit: SubmitHandler<TLoginForm> = data => login(data)
 
-	return { form, handleSubmit }
+	return { form, handleSubmit, isLoading }
 }

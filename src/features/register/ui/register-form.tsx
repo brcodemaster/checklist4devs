@@ -1,3 +1,5 @@
+import { LoaderCircle } from 'lucide-react'
+
 import {
 	Button,
 	Form,
@@ -13,7 +15,7 @@ import {
 import { useRegister } from '../model'
 
 export const RegisterForm: React.FC = () => {
-	const { form, handleSubmit } = useRegister()
+	const { form, handleSubmit, isLoading } = useRegister()
 
 	return (
 		<Form {...form}>
@@ -74,7 +76,16 @@ export const RegisterForm: React.FC = () => {
 					/>
 				</div>
 
-				<Button className='mt-10 w-full'>Sign in</Button>
+				<Button className='mt-10 w-full' disabled={isLoading}>
+					{isLoading ? (
+						<>
+							<LoaderCircle className='size-4 animate-spin stroke-white duration-200' />{' '}
+							Signing up
+						</>
+					) : (
+						'Sign up'
+					)}
+				</Button>
 			</form>
 		</Form>
 	)

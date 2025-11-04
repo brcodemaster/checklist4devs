@@ -11,7 +11,7 @@ export default function Page() {
 				<Logo width={30} height={29} />
 				<p className='text-xl font-semibold'>checklist4devs</p>
 			</div>
-			<div className='flex max-w-[560px] grow flex-col items-start p-10'>
+			<div className='flex max-w-[560px] grow flex-col items-start py-8 lg:p-10'>
 				<div>
 					<h3 className='text-3xl'>Welcome back</h3>
 					<p className='text-secondary pt-2 text-sm font-medium'>

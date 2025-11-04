@@ -53,3 +53,5 @@ export const sidebarNavigation = [
 		link: '/projects'
 	}
 ]
+
+export const PUBLIC_ROUTES = ['/auth/login', '/auth/register']

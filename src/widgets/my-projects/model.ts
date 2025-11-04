@@ -36,7 +36,5 @@ export const useMyProjects = () => {
 				)
 			: projects
 
-	console.log(filteredProjects)
-
 	return { handleChange: setSearchValue, projects: filteredProjects, isLoading }
 }

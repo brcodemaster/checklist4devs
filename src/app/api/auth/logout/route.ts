@@ -7,11 +7,9 @@ export async function POST(request: NextRequest) {
 	try {
 		const { id } = await authService.me(request)
 
-		const user = await authService.logout({ id })
+		await authService.logout({ id })
 
-		const { accessToken, refreshToken, password: _password, ...safeUser } = user
-
-		const res = ApiResponse(safeUser, 'User logged out successfully')
+		const res = ApiResponse(null, 'User logged out successfully')
 
 		res.cookies.set('x-access-token', '', {
 			httpOnly: true,

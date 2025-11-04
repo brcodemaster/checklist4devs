@@ -1,34 +1,37 @@
 'use client'
 
-import { LogOut } from 'lucide-react'
 import Link from 'next/link'
 
+import { LogoutButton } from '@/features/logout-button'
+
 import { userNavigation } from '@/shared/constants'
+import { useAuth } from '@/shared/contexts/auth-context'
 import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
-	Button,
 	Popover,
 	PopoverContent,
 	PopoverTrigger
 } from '@/shared/ui'
 
-export const UserButton: React.FC<{ onClick?: VoidFunction }> = ({ onClick }) => {
+export const UserButton: React.FC = () => {
+	const { user } = useAuth()
+
 	return (
 		<Popover>
 			<PopoverTrigger>
 				<Avatar className='size-7 cursor-pointer'>
 					<AvatarImage src='/user.png' className='' />
-					<AvatarFallback>RB</AvatarFallback>
+					<AvatarFallback>CH</AvatarFallback>
 				</Avatar>
 			</PopoverTrigger>
 			<PopoverContent className='p-2' align='end'>
-				<div className='text-secondary flex flex-col items-start gap-1 px-2 py-1.5 text-xs'>
-					<h3 className='text-sm text-white'>brcodemaster</h3>
-					<span>b.ravshanbekov@mail.ru</span>
+				<div className='text-secondary flex flex-col items-start px-2 py-1.5 text-xs'>
+					<h3 className='text-sm text-white'>{user?.userName}</h3>
+					<span>{user?.email}</span>
 				</div>
-				<ul className='border-muted-secondary border-y py-1'>
+				<ul className='border-muted-secondary my-1 border-y py-1'>
 					{userNavigation.map(({ icon: Icon, link, name }, idx) => (
 						<li key={name + idx}>
 							<Link
@@ -43,16 +46,7 @@ export const UserButton: React.FC<{ onClick?: VoidFunction }> = ({ onClick }) =>
 						</li>
 					))}
 				</ul>
-				<Button
-					variant='ghost'
-					className='text-secondary hover:bg-secondary-foreground/30 group/item mt-1 flex h-7 w-full cursor-pointer items-center justify-between gap-1 rounded-sm px-2 py-1.5 text-xs'
-					onClick={onClick}
-				>
-					<span className='font-normal duration-100 group-hover/item:text-white'>
-						Log out
-					</span>
-					<LogOut className='size-4 duration-100 group-hover/item:text-white' />
-				</Button>
+				<LogoutButton />
 			</PopoverContent>
 		</Popover>
 	)
