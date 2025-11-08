@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from '@/generated/client'
+import { Notification, Prisma, PrismaClient } from '@/generated/client'
 import { prisma } from '@/prisma-client'
 
 import { ApiError, BASE_ERRORS } from '../errors'
@@ -79,6 +79,52 @@ export class UserService {
 				id
 			},
 			data: { ...payload, id },
+			...params
+		})) as Prisma.UserGetPayload<T>
+	}
+
+	async invite<T extends Prisma.UserDefaultArgs>(
+		email: string,
+		group: Prisma.GroupGetPayload<{ include: { developers: true } }>,
+		userId: string,
+		args?: Prisma.SelectSubset<T, Prisma.UserDefaultArgs>
+	): Promise<Prisma.UserGetPayload<T>> {
+		const params = args ?? {}
+
+		const user = await this.findOne(email)
+
+		const isAdmin = group.admins.some(oldAdmin => oldAdmin === userId) || false
+
+		const isInGroup = group.developers.some(developer => developer.id === user?.id)
+
+		if (isInGroup)
+			throw new ApiError(BASE_ERRORS.Conflict, 'This user is already a member of this group')
+
+		if (!isAdmin)
+			throw new ApiError(
+				BASE_ERRORS.BadRequest,
+				'Only admins can invite members to the group'
+			)
+
+		if (!user)
+			throw new ApiError(BASE_ERRORS.NotFound, `User with this email: ${email} is not found`)
+
+		const newNotification = {
+			title: 'Invitation',
+			description: `You’ve been invited to the group ${group.name}.`,
+			isPublic: false,
+			invitedGroupId: group.id
+		} as Notification
+
+		return (await prisma.user.update({
+			where: {
+				id: user.id
+			},
+			data: {
+				notifications: {
+					create: newNotification
+				}
+			},
 			...params
 		})) as Prisma.UserGetPayload<T>
 	}

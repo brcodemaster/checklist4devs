@@ -1,6 +1,6 @@
 import { JwtPayload } from 'jsonwebtoken'
 
-import { User } from '@/generated/client'
+import { Project, User } from '@/generated/client'
 
 export type TApiResponse<T = unknown> = {
 	success: boolean
@@ -13,3 +13,5 @@ export type TJwtPayload = {
 } & JwtPayload
 
 export type TSafeUser = Omit<User, 'accessToken' | 'refreshToken' | 'password'>
+
+export type TMetaProjects = Project & { creatorName: string; groupName: string }

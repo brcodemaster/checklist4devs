@@ -7,8 +7,8 @@ import { useAuth } from '@/shared/contexts/auth-context'
 const formSchema = z.object({
 	email: z.email({ error: 'Please enter a valid email address' }),
 	password: z
-		.string({ error: 'Password must be at least 6 characters long' })
-		.min(6)
+		.string({ error: 'Required field' })
+		.min(6, { error: 'Password must be at least 6 characters long' })
 		.refine(val => /[A-Z]/.test(val), {
 			message: 'Password must contain at least one uppercase letter'
 		})
@@ -24,7 +24,7 @@ export const useLogin = () => {
 
 	const defaultValues = {
 		email: '',
-		password: ''
+		password: 'Bekzod2001'
 	}
 
 	const form = useForm<TLoginForm>({

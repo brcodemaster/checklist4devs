@@ -92,6 +92,7 @@ export const GroupScalarFieldEnum = {
   slug: 'slug',
   password: 'password',
   isPublic: 'isPublic',
+  admins: 'admins',
   creatorId: 'creatorId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -135,8 +136,11 @@ export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof Task
 
 export const NotificationScalarFieldEnum = {
   id: 'id',
+  index: 'index',
   title: 'title',
   description: 'description',
+  invitedGroupId: 'invitedGroupId',
+  state: 'state',
   isPublic: 'isPublic',
   userId: 'userId',
   createdAt: 'createdAt',

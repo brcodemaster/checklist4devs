@@ -1,3 +1,4 @@
+import { HTTPError } from 'ky'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
@@ -7,7 +8,6 @@ import { TRegisterForm } from '@/features/register/model'
 
 import { kyInstance } from '../api'
 import { PUBLIC_ROUTES } from '../constants'
-import { ApiError } from '../lib'
 import { TApiResponse, TSafeUser } from '../types/default-types'
 
 export const useAuthContext = () => {
@@ -33,8 +33,12 @@ export const useAuthContext = () => {
 			router.push(callbackUrl ?? '/')
 		} catch (error) {
 			setUser(null)
-			if (error instanceof ApiError) {
-				return toast.error(error.message)
+
+			if (error instanceof HTTPError) {
+				const body = await error.response.json().catch(() => null)
+				if (body?.message) {
+					return toast.error(body.message)
+				}
 			}
 
 			toast.error('Something went wrong during login')
@@ -50,11 +54,13 @@ export const useAuthContext = () => {
 			await kyInstance.post('auth/logout').json<TApiResponse<null>>()
 
 			setIsAuthenticated(false)
-			setUser(null)
 			router.push('/auth/login')
 		} catch (error) {
-			if (error instanceof ApiError) {
-				return toast.error(error.message)
+			if (error instanceof HTTPError) {
+				const body = await error.response.json().catch(() => null)
+				if (body?.message) {
+					return toast.error(body.message)
+				}
 			}
 
 			toast.error('Something went wrong during logout')
@@ -73,8 +79,11 @@ export const useAuthContext = () => {
 
 			await login({ email: payload.email, password: payload.password })
 		} catch (error) {
-			if (error instanceof ApiError) {
-				return toast.error(error.message)
+			if (error instanceof HTTPError) {
+				const body = await error.response.json().catch(() => null)
+				if (body?.message) {
+					return toast.error(body.message)
+				}
 			}
 
 			toast.error('Something went wrong during register')
@@ -93,8 +102,11 @@ export const useAuthContext = () => {
 			setIsAuthenticated(false)
 			setUser(null)
 
-			if (error instanceof ApiError) {
-				return toast.error(error.message)
+			if (error instanceof HTTPError) {
+				const body = await error.response.json().catch(() => null)
+				if (body?.message) {
+					return toast.error(body.message)
+				}
 			}
 
 			toast.error('Something went wrong during checkAuth')

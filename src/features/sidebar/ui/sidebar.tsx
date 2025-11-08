@@ -52,7 +52,7 @@ export const Sidebar: React.FC = () => {
 							</Link>
 						</li>
 					))}
-					<li className='flex grow items-end'>
+					<li className='flex shrink-0 grow items-end'>
 						<ToggleSidebarButton handleClick={handleClick} />
 					</li>
 				</ul>

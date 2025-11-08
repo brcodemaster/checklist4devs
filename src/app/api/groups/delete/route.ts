@@ -6,11 +6,11 @@ import { groupService } from '@/shared/lib/services/group-service'
 
 export async function DELETE(request: NextRequest) {
 	try {
-		await authService.checkAuth(request)
+		const { id: userId } = await authService.checkAuth(request)
 
 		const { id } = (await request.json()) as { id: string }
 
-		const group = await groupService.delete(id)
+		const group = await groupService.delete(id, userId)
 
 		return ApiResponse(group, 'Group deleted successfully')
 	} catch (error) {

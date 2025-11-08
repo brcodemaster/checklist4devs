@@ -17,7 +17,7 @@ export const Header: React.FC<Props> = ({ className }) => {
 	return (
 		<header
 			className={cn(
-				'border-b-muted-secondary hidden h-12 items-center justify-between border-b px-4 md:flex',
+				'border-b-muted-secondary hidden h-12 min-h-12 items-center justify-between border-b px-4 md:flex',
 				className
 			)}
 		>

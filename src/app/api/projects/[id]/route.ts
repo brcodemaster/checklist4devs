@@ -12,7 +12,9 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
 		const { id } = await params
 
-		const project = await projectService.findById(id)
+		const project = await projectService.findById(id, {
+			include: { tasks: true, group: { include: { developers: true } } }
+		})
 
 		const { userName: creatorName } = await userService.findById(project.creatorId, {
 			select: { userName: true }

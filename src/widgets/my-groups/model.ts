@@ -19,19 +19,20 @@ export const useMyGroups = () => {
 		[searchValue]
 	)
 
-	const { data: dataGroups, isLoading } = useQuery({
+	const { data: groups = [], isLoading } = useQuery({
 		queryKey: ['groups', 'mine'],
-		queryFn: async () =>
-			await kyInstance.get('groups/mine').json<
+		queryFn: async () => {
+			const res = await kyInstance.get('groups/mine').json<
 				TApiResponse<
 					(Prisma.GroupGetPayload<{ include: { projects: true } }> & {
 						creatorName: string
 					})[]
 				>
 			>()
-	})
 
-	const groups = dataGroups?.data ?? []
+			return res.data
+		}
+	})
 
 	const filteredGroups =
 		debouncedValue && groups

@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { HTTPError } from 'ky'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -15,7 +16,7 @@ const formSchema = z.object({
 		.string({ error: 'Required field' })
 		.min(3, { error: 'Project name must be at least 3 characters' }),
 	password: z
-		.string({ error: 'Password' })
+		.string({ error: 'Required field' })
 		.min(3, { error: 'Group password must be at least 3 characters' }),
 	isPublic: z.boolean(),
 	type: z.enum(ProjectType),
@@ -51,8 +52,8 @@ export const useCreateProject = () => {
 
 			const previousProjects = queryClient.getQueryData(['projects'])
 
-			await queryClient.setQueryData(['projects'], (old: Project[] | undefined) => {
-				if (!old) return { previousProjects }
+			queryClient.setQueryData(['projects'], (old: Project[] | undefined) => {
+				if (!old) return old
 
 				const now = new Date()
 
@@ -75,7 +76,14 @@ export const useCreateProject = () => {
 		},
 		onError: async (err, _, context) => {
 			if (context?.previousProjects) {
-				await queryClient.setQueryData(['projects'], context?.previousProjects)
+				queryClient.setQueryData(['projects'], context?.previousProjects)
+			}
+
+			if (err instanceof HTTPError) {
+				const body = await err.response.json().catch(() => null)
+				if (body?.message) {
+					return toast.error(body.message)
+				}
 			}
 
 			toast.error('Failed to create the project. Please try again.')

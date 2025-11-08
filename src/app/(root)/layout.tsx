@@ -11,11 +11,10 @@ export default function RootLayout({
 		<>
 			<MobileHeader />
 			<Header />
-			<div className='relative h-full w-full'>
+			<div className='relative flex w-full grow overflow-hidden'>
 				<Sidebar />
-				<main className='h-full overflow-y-auto pl-0 md:pl-[51px]'>
+				<main className='flex h-full w-full flex-col overflow-y-auto pb-5 pl-0 md:pl-[51px]'>
 					{children}
-					<div className='block h-[120px] md:hidden' />
 				</main>
 			</div>
 		</>

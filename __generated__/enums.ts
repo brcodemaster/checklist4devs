@@ -52,3 +52,11 @@ export const ProjectStatus = {
 } as const
 
 export type ProjectStatus = (typeof ProjectStatus)[keyof typeof ProjectStatus]
+
+
+export const NotificationState = {
+  NEW: 'NEW',
+  OPENED: 'OPENED'
+} as const
+
+export type NotificationState = (typeof NotificationState)[keyof typeof NotificationState]

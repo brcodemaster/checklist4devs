@@ -9,23 +9,7 @@ export async function up() {
 		devs.map(dev =>
 			prisma.user.create({
 				data: {
-					...dev,
-					notifications: {
-						createMany: {
-							data: [
-								{
-									title: 'First test notification',
-									description:
-										"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-								},
-								{
-									title: 'Second test notification',
-									description:
-										"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-								}
-							]
-						}
-					}
+					...dev
 				}
 			})
 		)
@@ -39,8 +23,17 @@ export async function up() {
 			password: hashSync('123456', 10),
 			creator: { connect: { id: '1' } },
 			developers: {
-				connect: [{ id: '1' }, { id: '2' }, { id: '3' }]
+				connect: [
+					{ id: '1' },
+					{ id: '2' },
+					{ id: '3' },
+					{ id: '4' },
+					{ id: '5' },
+					{ id: '6' },
+					{ id: '7' }
+				]
 			},
+			admins: ['1'],
 			projects: {
 				create: {
 					id: '1',
@@ -151,6 +144,7 @@ export async function up() {
 			developers: {
 				connect: [{ id: '4' }, { id: '5' }, { id: '6' }, { id: '7' }]
 			},
+			admins: ['4'],
 			projects: {
 				create: {
 					id: '2',

@@ -7,15 +7,17 @@ import { useAuth } from '@/shared/contexts/auth-context'
 const formSchema = z.object({
 	email: z.email({ error: 'Please enter a valid email address' }),
 	password: z
-		.string({ error: 'Password must be at least 6 characters long' })
-		.min(6)
+		.string({ error: 'Required field' })
+		.min(6, { error: 'Password must be at least 6 characters long' })
 		.refine(val => /[A-Z]/.test(val), {
 			message: 'Password must contain at least one uppercase letter'
 		})
 		.refine(val => /\d/.test(val), {
 			message: 'Password must contain at least one number'
 		}),
-	userName: z.string({ error: 'User name must be at least 3 characters long' }).min(3)
+	userName: z
+		.string({ error: 'Required field' })
+		.min(3, { error: 'User name must be at least 3 characters long' })
 })
 
 export type TRegisterForm = z.infer<typeof formSchema>

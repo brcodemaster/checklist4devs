@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { HTTPError } from 'ky'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -59,8 +60,8 @@ export const useCreateGroup = () => {
 
 			const previousGroups = queryClient.getQueryData<Group[]>(['groups'])
 
-			await queryClient.setQueryData(['groups'], (old: Group[] | undefined) => {
-				if (!old) return { previousGroups }
+			queryClient.setQueryData(['groups'], (old: Group[] | undefined) => {
+				if (!old) return old
 
 				const now = new Date()
 
@@ -81,7 +82,14 @@ export const useCreateGroup = () => {
 		},
 		onError: async (err, _, context) => {
 			if (context?.previousGroups) {
-				await queryClient.setQueryData(['groups'], context.previousGroups)
+				queryClient.setQueryData(['groups'], context.previousGroups)
+			}
+
+			if (err instanceof HTTPError) {
+				const body = await err.response.json().catch(() => null)
+				if (body?.message) {
+					return toast.error(body.message)
+				}
 			}
 
 			toast.error('Failed to create the group. Please try again.')

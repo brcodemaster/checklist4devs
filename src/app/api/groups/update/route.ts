@@ -8,14 +8,14 @@ import { Prisma } from '@/generated/client'
 
 export async function PATCH(request: NextRequest) {
 	try {
-		await authService.checkAuth(request)
+		const { id: userId } = await authService.checkAuth(request)
 
 		const { id, payload } = (await request.json()) as {
 			id: string
 			payload: Prisma.GroupUncheckedUpdateInput
 		}
 
-		const group = await groupService.update(id, payload)
+		const group = await groupService.update(id, payload, userId)
 
 		return ApiResponse(group, 'Group updated successfully')
 	} catch (error) {

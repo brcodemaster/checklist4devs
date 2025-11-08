@@ -4,8 +4,8 @@ import { Section } from '@/shared/ui'
 
 export default function Page() {
 	return (
-		<Section>
-			<div className='mt-10'>
+		<Section className='mt-10'>
+			<div>
 				<h2 className='text-2xl font-normal'>All public groups & projects</h2>
 			</div>
 

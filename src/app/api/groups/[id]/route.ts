@@ -11,7 +11,9 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
 		const { id } = await params
 
-		const group = await groupService.findById(id)
+		const group = await groupService.findById(id, {
+			include: { developers: true, projects: true }
+		})
 
 		const { userName: creatorName } = await userService.findById(group.creatorId, {
 			select: { userName: true }

@@ -6,12 +6,12 @@ import { z } from 'zod'
 import { sendMessage } from '@/shared/services'
 
 export const formSendMessageSchema = z.object({
-	name: z.string().min(3, 'Your name should be at least 3 characters long'),
-	email: z.email('Please enter a valid email address'),
+	name: z.string().min(3, { error: 'Your name should be at least 3 characters long' }),
+	email: z.email({ error: 'Please enter a valid email address' }),
 	message: z
-		.string('Please fill the field')
-		.min(3, 'Your message should be at least 3 characters long')
-		.max(500, 'Your message cannot exceed 500 characters')
+		.string({ error: 'Please fill the field' })
+		.min(3, { error: 'Your message should be at least 3 characters long' })
+		.max(500, { error: 'Your message cannot exceed 500 characters' })
 })
 
 type TForm = z.infer<typeof formSendMessageSchema>

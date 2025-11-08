@@ -14,7 +14,7 @@ export const GroupCard: React.FC<Props> = ({ group, className }) => {
 		<Link
 			href={`/groups/${group.id}`}
 			className={cn(
-				'bg-card hover:bg-card-hover flex h-[70px] w-full items-center justify-between gap-3 rounded-md border border-white/10 p-3',
+				'bg-card hover:bg-card-hover flex h-[70px] w-full items-center justify-between gap-3 overflow-hidden rounded-md border border-white/10 p-3',
 				className
 			)}
 		>

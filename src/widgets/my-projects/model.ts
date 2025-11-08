@@ -19,15 +19,16 @@ export const useMyProjects = () => {
 		[searchValue]
 	)
 
-	const { data: dataProjects, isLoading } = useQuery({
+	const { data: projects = [], isLoading } = useQuery({
 		queryKey: ['projects', 'mine'],
-		queryFn: async () =>
-			await kyInstance
+		queryFn: async () => {
+			const res = await kyInstance
 				.get('projects/mine')
 				.json<TApiResponse<(Project & { creatorName: string; groupName: string })[]>>()
-	})
 
-	const projects = dataProjects?.data ?? []
+			return res.data
+		}
+	})
 
 	const filteredProjects =
 		debouncedValue && projects

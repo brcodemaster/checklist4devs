@@ -66,9 +66,16 @@ export class GroupService {
 
 	async delete<T extends Prisma.GroupDefaultArgs>(
 		id: string,
+		userId: string,
 		args?: Prisma.SelectSubset<T, Prisma.GroupDefaultArgs>
 	): Promise<Prisma.GroupGetPayload<T>> {
 		const params = args ?? {}
+
+		const { admins: oldAdmins } = await this.findById(id)
+
+		const isAdmin = oldAdmins.some(oldAdmin => oldAdmin === userId)
+
+		if (!isAdmin) throw new ApiError(BASE_ERRORS.BadRequest, 'Only admins can delete the group')
 
 		return (await prisma.group.delete({
 			where: {
@@ -93,15 +100,90 @@ export class GroupService {
 	async update<T extends Prisma.GroupDefaultArgs>(
 		id: string,
 		payload: Prisma.GroupUncheckedUpdateInput,
+		userId: string,
 		args?: Prisma.SelectSubset<T, Prisma.GroupDefaultArgs>
 	): Promise<Prisma.GroupGetPayload<T>> {
 		const params = args ?? {}
+
+		const newAdmins = (payload.admins ?? []) as string[]
+
+		const { admins: oldAdmins } = await this.findById(id)
+
+		const isAdmin = oldAdmins.some(oldAdmin => oldAdmin === userId)
+
+		if (!isAdmin) throw new ApiError(BASE_ERRORS.BadRequest, 'Only admins can update the group')
+
+		const adminIds = Array.from(new Set([...oldAdmins, ...newAdmins]))
 
 		return (await prisma.group.update({
 			where: {
 				id
 			},
-			data: { ...payload, id },
+			data: { ...payload, admins: adminIds, id },
+			...params
+		})) as Prisma.GroupGetPayload<T>
+	}
+
+	async addMember<T extends Prisma.GroupDefaultArgs>(
+		id: string,
+		userId: string,
+		args?: Prisma.SelectSubset<T, Prisma.GroupDefaultArgs>
+	): Promise<Prisma.GroupGetPayload<T>> {
+		const params = args ?? {}
+
+		const group = await this.findById(id)
+
+		return (await prisma.group.update({
+			where: {
+				id: group.id
+			},
+			data: { developers: { connect: { id: userId } } },
+			...params
+		})) as Prisma.GroupGetPayload<T>
+	}
+
+	async kick<T extends Prisma.GroupDefaultArgs>(
+		userId: string,
+		groupId: string,
+		args?: Prisma.SelectSubset<T, Prisma.GroupDefaultArgs>
+	): Promise<Prisma.GroupGetPayload<T>> {
+		const params = args ?? {}
+
+		const group = await this.findById(groupId, { include: { developers: true } })
+
+		const admins = group.admins.filter(admin => admin !== userId)
+		const developers = group.developers.filter(developer => developer.id !== userId)
+
+		return (await prisma.group.update({
+			where: {
+				id: groupId
+			},
+			data: {
+				developers: {
+					set: developers
+				},
+				admins: [...admins]
+			},
+			...params
+		})) as Prisma.GroupGetPayload<T>
+	}
+
+	async demoteToRegular<T extends Prisma.GroupDefaultArgs>(
+		userId: string,
+		groupId: string,
+		args?: Prisma.SelectSubset<T, Prisma.GroupDefaultArgs>
+	): Promise<Prisma.GroupGetPayload<T>> {
+		const params = args ?? {}
+
+		const { admins } = await this.findById(groupId, { include: { developers: true } })
+
+		return (await prisma.group.update({
+			where: {
+				id: groupId
+			},
+			data: {
+				admins: admins.filter(admin => admin !== userId)
+			},
 			...params
 		})) as Prisma.GroupGetPayload<T>
 	}

@@ -843,6 +843,7 @@ export const GroupScalarFieldEnum = {
   slug: 'slug',
   password: 'password',
   isPublic: 'isPublic',
+  admins: 'admins',
   creatorId: 'creatorId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -886,8 +887,11 @@ export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof Task
 
 export const NotificationScalarFieldEnum = {
   id: 'id',
+  index: 'index',
   title: 'title',
   description: 'description',
+  invitedGroupId: 'invitedGroupId',
+  state: 'state',
   isPublic: 'isPublic',
   userId: 'userId',
   createdAt: 'createdAt',
@@ -1015,6 +1019,20 @@ export type EnumTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
  * Reference to a field of type 'TaskStatus[]'
  */
 export type ListEnumTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'NotificationState'
+ */
+export type EnumNotificationStateFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationState'>
+    
+
+
+/**
+ * Reference to a field of type 'NotificationState[]'
+ */
+export type ListEnumNotificationStateFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationState[]'>
     
 
 

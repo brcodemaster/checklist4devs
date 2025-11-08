@@ -1,0 +1,29 @@
+import { NextRequest, NextResponse } from 'next/server'
+
+export async function middleware(req: NextRequest) {
+	const { pathname } = req.nextUrl
+
+	if (
+		pathname.startsWith('/auth') ||
+		pathname.startsWith('/api') ||
+		pathname.startsWith('/_next') ||
+		pathname.startsWith('/favicon') ||
+		pathname.startsWith('/robots') ||
+		pathname.startsWith('/images') ||
+		pathname.startsWith('/uploads') ||
+		pathname.match(/\.(png|jpg|jpeg|gif|svg|ico|webp)$/)
+	) {
+		return NextResponse.next()
+	}
+
+	const accessToken = req.cookies.get('x-access-token')?.value
+	const refreshToken = req.cookies.get('x-refresh-token')?.value
+
+	if (!accessToken && !refreshToken) {
+		const loginUrl = new URL('/auth/login', req.url)
+		loginUrl.searchParams.set('callbackUrl', pathname)
+		return NextResponse.redirect(loginUrl)
+	}
+
+	return NextResponse.next()
+}

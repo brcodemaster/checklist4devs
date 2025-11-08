@@ -57,5 +57,15 @@ export {
 export { Separator } from './separator'
 export { Skeleton } from './skeleton'
 export { Toaster } from './sonner'
+export {
+	Table,
+	TableBody,
+	TableCaption,
+	TableCell,
+	TableFooter,
+	TableHead,
+	TableHeader,
+	TableRow
+} from './table'
 export { Textarea } from './textarea'
 export { Tooltip, TooltipContent, TooltipProvider } from './tooltip'

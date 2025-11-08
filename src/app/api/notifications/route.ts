@@ -8,7 +8,12 @@ export async function GET(request: NextRequest) {
 	try {
 		await authService.checkAuth(request)
 
-		const nots = await notificationService.findAll()
+		const nots = await notificationService.findAll({
+			where: {
+				isPublic: true
+			},
+			orderBy: { index: 'asc' }
+		})
 
 		return ApiResponse(nots, 'Notifications returned successfully')
 	} catch (error) {

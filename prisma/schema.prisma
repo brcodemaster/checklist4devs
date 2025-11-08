@@ -42,7 +42,9 @@ model Group {
   password String?
   isPublic Boolean @default(true)
 
-  creator   User   @relation("user_id_group_creatorId", fields: [creatorId], references: [id])
+  admins String[]
+
+  creator   User   @relation("user_id_group_creatorId", fields: [creatorId], references: [id], onDelete: NoAction)
   creatorId String @map("creator_id")
 
   developers User[] @relation("group_developers_user_groups")
@@ -70,7 +72,7 @@ model Project {
   creator   User   @relation("user_id_project_creatorId", fields: [creatorId], references: [id])
   creatorId String @map("creator_id")
 
-  group   Group  @relation("group_projects_project_group", fields: [groupId], references: [id])
+  group   Group  @relation("group_projects_project_group", fields: [groupId], references: [id], onDelete: Cascade)
   groupId String @map("group_id")
 
   tasks Task[] @relation("project_tasks_task_project")
@@ -108,10 +110,14 @@ model Task {
 }
 
 model Notification {
-  id String @id @default(uuid())
+  id    String @id @default(uuid())
+  index Int    @default(autoincrement())
 
-  title       String
-  description String
+  title          String
+  description    String
+  invitedGroupId String?
+
+  state NotificationState @default(NEW)
 
   isPublic Boolean @default(true)
 
@@ -159,4 +165,9 @@ enum ProjectStatus {
   COMPLETED
   PAUSED
   CANCELED
+}
+
+enum NotificationState {
+  NEW
+  OPENED
 }

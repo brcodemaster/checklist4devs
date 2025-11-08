@@ -10,6 +10,9 @@ export async function GET(request: NextRequest) {
 		await authService.checkAuth(request)
 
 		const groups = await groupService.findAll({
+			where: {
+				isPublic: true
+			},
 			include: {
 				projects: true
 			}

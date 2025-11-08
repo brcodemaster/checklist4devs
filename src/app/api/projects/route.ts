@@ -10,7 +10,11 @@ export async function GET(request: NextRequest) {
 	try {
 		await authService.checkAuth(request)
 
-		const projects = await projectService.findAll()
+		const projects = await projectService.findAll({
+			where: {
+				isPublic: true
+			}
+		})
 
 		const creatorIds = projects.map(project => project.creatorId)
 		const groupIds = projects.map(project => project.groupId)

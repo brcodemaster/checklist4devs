@@ -51,6 +51,7 @@ export type GroupCountAggregateOutputType = {
   slug: number
   password: number
   isPublic: number
+  admins: number
   creatorId: number
   createdAt: number
   updatedAt: number
@@ -86,6 +87,7 @@ export type GroupCountAggregateInputType = {
   slug?: true
   password?: true
   isPublic?: true
+  admins?: true
   creatorId?: true
   createdAt?: true
   updatedAt?: true
@@ -170,6 +172,7 @@ export type GroupGroupByOutputType = {
   slug: string | null
   password: string | null
   isPublic: boolean
+  admins: string[]
   creatorId: string
   createdAt: Date
   updatedAt: Date
@@ -202,6 +205,7 @@ export type GroupWhereInput = {
   slug?: Prisma.StringNullableFilter<"Group"> | string | null
   password?: Prisma.StringNullableFilter<"Group"> | string | null
   isPublic?: Prisma.BoolFilter<"Group"> | boolean
+  admins?: Prisma.StringNullableListFilter<"Group">
   creatorId?: Prisma.StringFilter<"Group"> | string
   createdAt?: Prisma.DateTimeFilter<"Group"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Group"> | Date | string
@@ -216,6 +220,7 @@ export type GroupOrderByWithRelationInput = {
   slug?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrderInput | Prisma.SortOrder
   isPublic?: Prisma.SortOrder
+  admins?: Prisma.SortOrder
   creatorId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -233,6 +238,7 @@ export type GroupWhereUniqueInput = Prisma.AtLeast<{
   slug?: Prisma.StringNullableFilter<"Group"> | string | null
   password?: Prisma.StringNullableFilter<"Group"> | string | null
   isPublic?: Prisma.BoolFilter<"Group"> | boolean
+  admins?: Prisma.StringNullableListFilter<"Group">
   creatorId?: Prisma.StringFilter<"Group"> | string
   createdAt?: Prisma.DateTimeFilter<"Group"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Group"> | Date | string
@@ -247,6 +253,7 @@ export type GroupOrderByWithAggregationInput = {
   slug?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrderInput | Prisma.SortOrder
   isPublic?: Prisma.SortOrder
+  admins?: Prisma.SortOrder
   creatorId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -264,6 +271,7 @@ export type GroupScalarWhereWithAggregatesInput = {
   slug?: Prisma.StringNullableWithAggregatesFilter<"Group"> | string | null
   password?: Prisma.StringNullableWithAggregatesFilter<"Group"> | string | null
   isPublic?: Prisma.BoolWithAggregatesFilter<"Group"> | boolean
+  admins?: Prisma.StringNullableListFilter<"Group">
   creatorId?: Prisma.StringWithAggregatesFilter<"Group"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Group"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Group"> | Date | string
@@ -275,6 +283,7 @@ export type GroupCreateInput = {
   slug?: string | null
   password?: string | null
   isPublic?: boolean
+  admins?: Prisma.GroupCreateadminsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   creator: Prisma.UserCreateNestedOneWithoutCreatedGroupsInput
@@ -288,6 +297,7 @@ export type GroupUncheckedCreateInput = {
   slug?: string | null
   password?: string | null
   isPublic?: boolean
+  admins?: Prisma.GroupCreateadminsInput | string[]
   creatorId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -301,6 +311,7 @@ export type GroupUpdateInput = {
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  admins?: Prisma.GroupUpdateadminsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   creator?: Prisma.UserUpdateOneRequiredWithoutCreatedGroupsNestedInput
@@ -314,6 +325,7 @@ export type GroupUncheckedUpdateInput = {
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  admins?: Prisma.GroupUpdateadminsInput | string[]
   creatorId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -327,6 +339,7 @@ export type GroupCreateManyInput = {
   slug?: string | null
   password?: string | null
   isPublic?: boolean
+  admins?: Prisma.GroupCreateadminsInput | string[]
   creatorId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -338,6 +351,7 @@ export type GroupUpdateManyMutationInput = {
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  admins?: Prisma.GroupUpdateadminsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -348,6 +362,7 @@ export type GroupUncheckedUpdateManyInput = {
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  admins?: Prisma.GroupUpdateadminsInput | string[]
   creatorId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -363,12 +378,21 @@ export type GroupOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
+}
+
 export type GroupCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   password?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
+  admins?: Prisma.SortOrder
   creatorId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -481,8 +505,17 @@ export type GroupUncheckedUpdateManyWithoutDevelopersNestedInput = {
   deleteMany?: Prisma.GroupScalarWhereInput | Prisma.GroupScalarWhereInput[]
 }
 
+export type GroupCreateadminsInput = {
+  set: string[]
+}
+
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
+}
+
+export type GroupUpdateadminsInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type GroupCreateNestedOneWithoutProjectsInput = {
@@ -505,6 +538,7 @@ export type GroupCreateWithoutCreatorInput = {
   slug?: string | null
   password?: string | null
   isPublic?: boolean
+  admins?: Prisma.GroupCreateadminsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   developers?: Prisma.UserCreateNestedManyWithoutGroupsInput
@@ -517,6 +551,7 @@ export type GroupUncheckedCreateWithoutCreatorInput = {
   slug?: string | null
   password?: string | null
   isPublic?: boolean
+  admins?: Prisma.GroupCreateadminsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   developers?: Prisma.UserUncheckedCreateNestedManyWithoutGroupsInput
@@ -539,6 +574,7 @@ export type GroupCreateWithoutDevelopersInput = {
   slug?: string | null
   password?: string | null
   isPublic?: boolean
+  admins?: Prisma.GroupCreateadminsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   creator: Prisma.UserCreateNestedOneWithoutCreatedGroupsInput
@@ -551,6 +587,7 @@ export type GroupUncheckedCreateWithoutDevelopersInput = {
   slug?: string | null
   password?: string | null
   isPublic?: boolean
+  admins?: Prisma.GroupCreateadminsInput | string[]
   creatorId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -587,6 +624,7 @@ export type GroupScalarWhereInput = {
   slug?: Prisma.StringNullableFilter<"Group"> | string | null
   password?: Prisma.StringNullableFilter<"Group"> | string | null
   isPublic?: Prisma.BoolFilter<"Group"> | boolean
+  admins?: Prisma.StringNullableListFilter<"Group">
   creatorId?: Prisma.StringFilter<"Group"> | string
   createdAt?: Prisma.DateTimeFilter<"Group"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Group"> | Date | string
@@ -614,6 +652,7 @@ export type GroupCreateWithoutProjectsInput = {
   slug?: string | null
   password?: string | null
   isPublic?: boolean
+  admins?: Prisma.GroupCreateadminsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   creator: Prisma.UserCreateNestedOneWithoutCreatedGroupsInput
@@ -626,6 +665,7 @@ export type GroupUncheckedCreateWithoutProjectsInput = {
   slug?: string | null
   password?: string | null
   isPublic?: boolean
+  admins?: Prisma.GroupCreateadminsInput | string[]
   creatorId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -654,6 +694,7 @@ export type GroupUpdateWithoutProjectsInput = {
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  admins?: Prisma.GroupUpdateadminsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   creator?: Prisma.UserUpdateOneRequiredWithoutCreatedGroupsNestedInput
@@ -666,6 +707,7 @@ export type GroupUncheckedUpdateWithoutProjectsInput = {
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  admins?: Prisma.GroupUpdateadminsInput | string[]
   creatorId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -678,6 +720,7 @@ export type GroupCreateManyCreatorInput = {
   slug?: string | null
   password?: string | null
   isPublic?: boolean
+  admins?: Prisma.GroupCreateadminsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -688,6 +731,7 @@ export type GroupUpdateWithoutCreatorInput = {
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  admins?: Prisma.GroupUpdateadminsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   developers?: Prisma.UserUpdateManyWithoutGroupsNestedInput
@@ -700,6 +744,7 @@ export type GroupUncheckedUpdateWithoutCreatorInput = {
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  admins?: Prisma.GroupUpdateadminsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   developers?: Prisma.UserUncheckedUpdateManyWithoutGroupsNestedInput
@@ -712,6 +757,7 @@ export type GroupUncheckedUpdateManyWithoutCreatorInput = {
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  admins?: Prisma.GroupUpdateadminsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -722,6 +768,7 @@ export type GroupUpdateWithoutDevelopersInput = {
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  admins?: Prisma.GroupUpdateadminsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   creator?: Prisma.UserUpdateOneRequiredWithoutCreatedGroupsNestedInput
@@ -734,6 +781,7 @@ export type GroupUncheckedUpdateWithoutDevelopersInput = {
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  admins?: Prisma.GroupUpdateadminsInput | string[]
   creatorId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -746,6 +794,7 @@ export type GroupUncheckedUpdateManyWithoutDevelopersInput = {
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  admins?: Prisma.GroupUpdateadminsInput | string[]
   creatorId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -797,6 +846,7 @@ export type GroupSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   slug?: boolean
   password?: boolean
   isPublic?: boolean
+  admins?: boolean
   creatorId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -812,6 +862,7 @@ export type GroupSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   slug?: boolean
   password?: boolean
   isPublic?: boolean
+  admins?: boolean
   creatorId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -824,6 +875,7 @@ export type GroupSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   slug?: boolean
   password?: boolean
   isPublic?: boolean
+  admins?: boolean
   creatorId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -836,12 +888,13 @@ export type GroupSelectScalar = {
   slug?: boolean
   password?: boolean
   isPublic?: boolean
+  admins?: boolean
   creatorId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type GroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "password" | "isPublic" | "creatorId" | "createdAt" | "updatedAt", ExtArgs["result"]["group"]>
+export type GroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "password" | "isPublic" | "admins" | "creatorId" | "createdAt" | "updatedAt", ExtArgs["result"]["group"]>
 export type GroupInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   developers?: boolean | Prisma.Group$developersArgs<ExtArgs>
@@ -868,6 +921,7 @@ export type $GroupPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     slug: string | null
     password: string | null
     isPublic: boolean
+    admins: string[]
     creatorId: string
     createdAt: Date
     updatedAt: Date
@@ -1302,6 +1356,7 @@ export interface GroupFieldRefs {
   readonly slug: Prisma.FieldRef<"Group", 'String'>
   readonly password: Prisma.FieldRef<"Group", 'String'>
   readonly isPublic: Prisma.FieldRef<"Group", 'Boolean'>
+  readonly admins: Prisma.FieldRef<"Group", 'String[]'>
   readonly creatorId: Prisma.FieldRef<"Group", 'String'>
   readonly createdAt: Prisma.FieldRef<"Group", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Group", 'DateTime'>

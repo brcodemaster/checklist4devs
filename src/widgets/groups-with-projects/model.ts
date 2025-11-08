@@ -19,22 +19,25 @@ export const useGroups = () => {
 		[searchValue]
 	)
 
-	const { data: dataGroups, isLoading: groupsIsLoading } = useQuery({
+	const { data: groups = [], isLoading: groupsIsLoading } = useQuery({
 		queryKey: ['groups'],
-		queryFn: async () =>
-			await kyInstance.get('groups').json<
+		queryFn: async () => {
+			const res = await kyInstance.get('groups').json<
 				TApiResponse<
 					(Prisma.GroupGetPayload<{ include: { projects: true } }> & {
 						creatorName: string
 					})[]
 				>
 			>()
+
+			return res.data
+		}
 	})
 
-	const { data: dataProjects, isLoading: projectsIsLoading } = useQuery({
+	const { data: projects = [], isLoading: projectsIsLoading } = useQuery({
 		queryKey: ['projects'],
-		queryFn: async () =>
-			await kyInstance.get('projects').json<
+		queryFn: async () => {
+			const res = await kyInstance.get('projects').json<
 				TApiResponse<
 					(Prisma.ProjectGetPayload<{ include: { group: true } }> & {
 						creatorName: string
@@ -42,10 +45,10 @@ export const useGroups = () => {
 					})[]
 				>
 			>()
-	})
 
-	const projects = dataProjects?.data ?? []
-	const groups = dataGroups?.data ?? []
+			return res.data
+		}
+	})
 
 	const filteredGroups =
 		debouncedValue && groups

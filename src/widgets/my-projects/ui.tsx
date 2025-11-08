@@ -15,7 +15,7 @@ export const MyProjects: React.FC = () => {
 
 	return (
 		<>
-			<div className='grid grid-cols-1 grid-rows-2 items-center gap-2 md:grid-cols-[1fr_auto_auto] md:grid-rows-1'>
+			<div className='grid grid-cols-1 grid-rows-2 items-center gap-2 md:grid-cols-[1fr_auto] md:grid-rows-1'>
 				<div className='relative order-1 row-start-1 w-full'>
 					<Input
 						className='bg-input w-full pl-9 placeholder:opacity-50'
