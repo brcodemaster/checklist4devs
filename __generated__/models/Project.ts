@@ -249,7 +249,6 @@ export type ProjectOrderByWithRelationInput = {
 
 export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  links?: string[]
   name_creatorId?: Prisma.ProjectNameCreatorIdCompoundUniqueInput
   AND?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[]
   OR?: Prisma.ProjectWhereInput[]
@@ -259,6 +258,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   isPublic?: Prisma.BoolFilter<"Project"> | boolean
   type?: Prisma.EnumProjectTypeFilter<"Project"> | $Enums.ProjectType
   status?: Prisma.EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
+  links?: Prisma.StringNullableListFilter<"Project">
   creatorId?: Prisma.StringFilter<"Project"> | string
   groupId?: Prisma.StringFilter<"Project"> | string
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
@@ -266,7 +266,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   creator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   group?: Prisma.XOR<Prisma.GroupScalarRelationFilter, Prisma.GroupWhereInput>
   tasks?: Prisma.TaskListRelationFilter
-}, "id" | "links" | "name_creatorId">
+}, "id" | "name_creatorId">
 
 export type ProjectOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

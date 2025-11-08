@@ -67,7 +67,7 @@ model Project {
   type   ProjectType
   status ProjectStatus @default(IN_DEVELOPMENT)
 
-  links String[] @unique
+  links String[]
 
   creator   User   @relation("user_id_project_creatorId", fields: [creatorId], references: [id])
   creatorId String @map("creator_id")

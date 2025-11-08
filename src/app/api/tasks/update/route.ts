@@ -15,6 +15,8 @@ export async function PATCH(request: NextRequest) {
 			payload: Prisma.TaskUncheckedUpdateInput
 		}
 
+		console.log('PAY: ', payload)
+
 		const task = await taskService.update(id, payload)
 
 		return ApiResponse(task, 'Task updated successfully')

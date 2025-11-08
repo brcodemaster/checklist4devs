@@ -13,7 +13,10 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 		const { id } = await params
 
 		const project = await projectService.findById(id, {
-			include: { tasks: true, group: { include: { developers: true } } }
+			include: {
+				tasks: { orderBy: { index: 'desc' } },
+				group: { include: { developers: true } }
+			}
 		})
 
 		const { userName: creatorName } = await userService.findById(project.creatorId, {
@@ -24,7 +27,11 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 			select: { name: true }
 		})
 
-		const metaProject = { ...project, creatorName, groupName }
+		const metaProject = {
+			...project,
+			creatorName,
+			groupName
+		}
 
 		return ApiResponse(metaProject, 'Project returned successfully')
 	} catch (error) {

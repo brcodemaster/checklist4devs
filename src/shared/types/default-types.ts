@@ -1,6 +1,6 @@
 import { JwtPayload } from 'jsonwebtoken'
 
-import { Project, User } from '@/generated/client'
+import { Prisma, Project, User } from '@/generated/client'
 
 export type TApiResponse<T = unknown> = {
 	success: boolean
@@ -15,3 +15,5 @@ export type TJwtPayload = {
 export type TSafeUser = Omit<User, 'accessToken' | 'refreshToken' | 'password'>
 
 export type TMetaProjects = Project & { creatorName: string; groupName: string }
+
+export type TTaskUpdate = { id: string } & Omit<Prisma.TaskUncheckedUpdateInput, 'id'>
