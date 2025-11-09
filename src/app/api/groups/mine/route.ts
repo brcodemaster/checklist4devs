@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
 
 		const groups = await groupService.findMine(id, { include: { projects: true } })
 
-		const creatorIds = groups.map(group => group.id)
+		const creatorIds = groups.map(group => group.creatorId)
 
 		const creators = await userService.findAll({
 			where: {

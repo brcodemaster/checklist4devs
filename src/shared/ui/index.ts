@@ -38,6 +38,7 @@ export {
 	useFormField
 } from './form'
 export { Input } from './input'
+export { InputLink } from './input-link'
 export { InputPassword } from './input-password'
 export { Label } from './label'
 export { Logo } from './logo'

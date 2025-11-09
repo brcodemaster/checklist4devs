@@ -60,6 +60,8 @@ model Group {
 model Project {
   id String @id @default(uuid())
 
+  index Int @default(autoincrement())
+
   name     String
   password String?
   isPublic Boolean @default(true)

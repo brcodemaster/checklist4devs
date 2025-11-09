@@ -8,10 +8,9 @@ import { Project } from '@/generated/client'
 
 type Props = {
 	project: Project & { creatorName: string; groupName: string }
-	type: string
 }
 
-export const ProjectCard: React.FC<Props> = ({ project, type }) => {
+export const ProjectCard: React.FC<Props> = ({ project }) => {
 	const { icon: Icon, status, text } = getProjectStatus(project.status)
 
 	return (
@@ -26,7 +25,7 @@ export const ProjectCard: React.FC<Props> = ({ project, type }) => {
 						<span className='flex items-center gap-1'>
 							<Bolt className='size-3' />
 							<span className='first-letter:uppercase'>
-								{type.replaceAll('_', ' ')}
+								{project.type.replaceAll('_', ' ')}
 							</span>
 						</span>
 						<span className='flex items-center gap-1'>

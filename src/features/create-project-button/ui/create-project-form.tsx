@@ -16,6 +16,7 @@ import {
 	SelectValue
 } from '@/shared/ui'
 
+import { Group } from '@/generated/client'
 import { ProjectType } from '@/generated/enums'
 
 import { TForm } from '../model'
@@ -23,7 +24,8 @@ import { TForm } from '../model'
 export const CreateProjectForm: React.FC<{
 	form: UseFormReturn<TForm, any, TForm>
 	handleCreate: SubmitHandler<TForm>
-}> = ({ form, handleCreate }) => {
+	groups?: Group[]
+}> = ({ form, handleCreate, groups }) => {
 	return (
 		<Form {...form}>
 			<form
@@ -60,18 +62,19 @@ export const CreateProjectForm: React.FC<{
 							</FormLabel>
 							<FormControl>
 								<Select
-									// defaultValue={groups?.[0].id}
+									defaultValue={groups?.[0].id ?? undefined}
 									onValueChange={field.onChange}
 								>
 									<SelectTrigger className='w-full'>
 										<SelectValue placeholder='Select group to add project' />
 									</SelectTrigger>
 									<SelectContent>
-										{/* {groups?.map(group => (
-											<SelectItem key={group.id} value={group.id}>
-												{group.name}
-											</SelectItem>
-										))} */}
+										{groups &&
+											groups.map(group => (
+												<SelectItem key={group.id} value={group.id}>
+													{group.name}
+												</SelectItem>
+											))}
 									</SelectContent>
 								</Select>
 							</FormControl>
@@ -114,17 +117,14 @@ export const CreateProjectForm: React.FC<{
 								Project type
 							</FormLabel>
 							<FormControl>
-								<Select
-									onValueChange={field.onChange}
-									defaultValue={ProjectType['CMS']}
-								>
+								<Select onValueChange={field.onChange} defaultValue={field.value}>
 									<SelectTrigger className='w-full'>
 										<SelectValue placeholder='Select visibility' />
 									</SelectTrigger>
 									<SelectContent>
-										{Object.entries(ProjectType).map(([key, value]) => (
-											<SelectItem key={key} value={ProjectType[value]}>
-												{key}
+										{Object.values(ProjectType).map((type, idx) => (
+											<SelectItem key={idx} value={type}>
+												{type.replaceAll('_', ' ')}
 											</SelectItem>
 										))}
 									</SelectContent>

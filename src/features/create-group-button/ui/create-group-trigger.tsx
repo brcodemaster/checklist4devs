@@ -35,7 +35,7 @@ export const CreateGroupTrigger: React.FC<
 					<Button variant='secondary' type='reset' onClick={hook.handleReset}>
 						Reset
 					</Button>
-					<Button form='createGroup'>Submit</Button>
+					<Button form='createGroup'>Create</Button>
 				</div>
 			</DialogContent>
 		</Dialog>

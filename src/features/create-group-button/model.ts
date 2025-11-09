@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { kyInstance } from '@/shared/api'
+import { useAuth } from '@/shared/contexts/auth-context'
 
 import { Group } from '@/generated/client'
 
@@ -26,6 +27,8 @@ const formSchema = z.object({
 export type TForm = z.infer<typeof formSchema>
 
 export const useCreateGroup = () => {
+	const { user } = useAuth()
+
 	const defaultValues = {
 		name: '',
 		password: '',
@@ -45,15 +48,15 @@ export const useCreateGroup = () => {
 
 	const { mutateAsync } = useMutation({
 		mutationFn: async (payload: TForm) => {
-			const newGroup = {
+			const json = {
 				name: payload.name,
 				slug: payload.slug,
-				creatorId: '',
+				creatorId: user?.id,
 				isPublic: payload.isPublic,
 				password: payload.password
 			}
 
-			return await kyInstance.post('groups/create', { json: newGroup }).json<Group>()
+			return await kyInstance.post('groups/create', { json }).json<Group>()
 		},
 		onMutate: async (payload: TForm) => {
 			await queryClient.cancelQueries({ queryKey: ['groups'] })
@@ -78,7 +81,9 @@ export const useCreateGroup = () => {
 				return [...old, group]
 			})
 
-			return { previousGroups }
+			const toastId = toast.loading('Creating group...')
+
+			return { previousGroups, toastId }
 		},
 		onError: async (err, _, context) => {
 			if (context?.previousGroups) {
@@ -88,16 +93,18 @@ export const useCreateGroup = () => {
 			if (err instanceof HTTPError) {
 				const body = await err.response.json().catch(() => null)
 				if (body?.message) {
-					return toast.error(body.message)
+					return toast.error(body.message, { id: context?.toastId })
 				}
 			}
 
-			toast.error('Failed to create the group. Please try again.')
+			toast.error('Failed to create the group. Please try again.', { id: context?.toastId })
 		},
-		onSuccess: async () => {
+		onSuccess: async (_, __, context) => {
 			await queryClient.invalidateQueries({ queryKey: ['groups'] })
+			setIsOpen(false)
+			handleReset()
 
-			toast.success('Group created successfully.')
+			toast.success('Group created successfully.', { id: context.toastId })
 		}
 	})
 

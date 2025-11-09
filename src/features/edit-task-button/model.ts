@@ -111,13 +111,14 @@ export const useEditTask = (task: Task) => {
 		defaultValues
 	})
 
-	const handleEdit: SubmitHandler<TForm> = data =>
+	const handleEdit: SubmitHandler<TForm> = data => {
 		mutateAsyncEdit({
 			...task,
 			assignerId: data.assignerId,
 			deadlineAt: data.deadline,
 			text: data.text
 		})
+	}
 
 	const handleReset = () => form.reset(defaultValues)
 

@@ -6,10 +6,11 @@ import { TLoginForm } from '@/features/login/model'
 import { TRegisterForm } from '@/features/register/model'
 
 import { useAuthContext } from './model'
-import { User } from '@/generated/client'
+
+import { TSafeUser } from '../types/default-types'
 
 type TContext = {
-	user: Omit<User, 'accessToken' | 'refreshToken' | 'password'> | null
+	user: TSafeUser | null
 	isAuthenticated: boolean
 	login: (payload: TLoginForm) => void
 	logout: () => void

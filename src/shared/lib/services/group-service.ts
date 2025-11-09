@@ -92,7 +92,15 @@ export class GroupService {
 		const params = args ?? {}
 
 		return (await prisma.group.create({
-			data: payload,
+			data: {
+				...payload,
+				developers: {
+					connect: {
+						id: payload.creatorId
+					}
+				},
+				admins: [payload.creatorId]
+			},
 			...params
 		})) as Prisma.GroupGetPayload<T>
 	}

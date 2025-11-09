@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 import { ApiError, BASE_ERRORS, ErrorApiResponse } from '@/shared/lib'
 import { authService } from '@/shared/lib/services/auth-service'
+import { groupService } from '@/shared/lib/services/group-service'
 
 export async function GET(request: NextRequest) {
 	try {
@@ -12,7 +13,19 @@ export async function GET(request: NextRequest) {
 
 		const { accessToken, refreshToken, password: _password, ...safeUser } = user
 
-		const res = NextResponse.json(safeUser)
+		const groups = await groupService.findAll({
+			where: {
+				OR: [{ creatorId: user.id }, { admins: { has: user.id } }]
+			},
+			select: {
+				id: true,
+				name: true
+			}
+		})
+
+		const safeUserWithGroups = { ...safeUser, groups }
+
+		const res = NextResponse.json(safeUserWithGroups)
 
 		res.cookies.set('x-access-token', accessToken, {
 			httpOnly: true,

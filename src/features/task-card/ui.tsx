@@ -1,7 +1,6 @@
 'use client'
 
 import { Pen, Trash } from 'lucide-react'
-import Image from 'next/image'
 
 import { cn } from '@/shared/lib/utils'
 import { Button, Checkbox, Tooltip } from '@/shared/ui'
@@ -54,13 +53,12 @@ export const TaskCard: React.FC<Props> = ({ task, index, assignee, creator, user
 							<Tooltip>
 								<TooltipTrigger className='cursor-pointer'>
 									<div className='relative ml-2 h-4 w-4' suppressHydrationWarning>
-										<Image
+										<img
 											src='/fire.gif'
 											alt='Fire gif'
 											width={16}
 											height={16}
 											className='size-full object-cover'
-											unoptimized
 											unselectable='off'
 										/>
 									</div>
@@ -77,7 +75,7 @@ export const TaskCard: React.FC<Props> = ({ task, index, assignee, creator, user
 						)}
 						onClick={e => e.stopPropagation()}
 					>
-						{isCreator && (
+						{isCreator && task.status === 'IN_PROGRESS' && (
 							<>
 								<EditTaskTrigger task={task} users={users} />
 								<Button
@@ -85,13 +83,7 @@ export const TaskCard: React.FC<Props> = ({ task, index, assignee, creator, user
 									className='px-2 opacity-100 duration-100 lg:opacity-50 lg:hover:opacity-100'
 									onClick={() => handleDelete.mutateAsync()}
 								>
-									<Trash
-										className={cn(
-											'stroke-secondary size-4',
-											task.status === 'FIRED' && 'stroke-fired',
-											task.status === 'COMPLETED' && 'stroke-completed'
-										)}
-									/>
+									<Trash className={cn('stroke-secondary size-4')} />
 								</Button>
 							</>
 						)}

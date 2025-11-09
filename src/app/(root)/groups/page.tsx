@@ -4,14 +4,12 @@ import { Section } from '@/shared/ui'
 
 export default function Page() {
 	return (
-		<Section>
+		<Section className='flex grow flex-col'>
 			<div className='mt-10'>
 				<h2 className='text-2xl font-normal'>My groups</h2>
 			</div>
 
-			<div className='mt-10 flex flex-col'>
-				<MyGroups />
-			</div>
+			<MyGroups />
 		</Section>
 	)
 }

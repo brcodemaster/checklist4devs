@@ -103,6 +103,7 @@ export type GroupScalarFieldEnum = (typeof GroupScalarFieldEnum)[keyof typeof Gr
 
 export const ProjectScalarFieldEnum = {
   id: 'id',
+  index: 'index',
   name: 'name',
   password: 'password',
   isPublic: 'isPublic',

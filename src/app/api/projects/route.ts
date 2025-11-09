@@ -10,9 +10,15 @@ export async function GET(request: NextRequest) {
 	try {
 		await authService.checkAuth(request)
 
+		const url = new URL(request.nextUrl)
+		const isMine = Boolean((url.searchParams.get('mine') || '') === 'true')
+
 		const projects = await projectService.findAll({
 			where: {
-				isPublic: true
+				isPublic: isMine ? undefined : true
+			},
+			orderBy: {
+				createdAt: 'asc'
 			}
 		})
 

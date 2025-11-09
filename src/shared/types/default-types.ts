@@ -1,6 +1,6 @@
 import { JwtPayload } from 'jsonwebtoken'
 
-import { Prisma, Project, User } from '@/generated/client'
+import { Group, Prisma, Project, User } from '@/generated/client'
 
 export type TApiResponse<T = unknown> = {
 	success: boolean
@@ -12,7 +12,9 @@ export type TJwtPayload = {
 	userId: string
 } & JwtPayload
 
-export type TSafeUser = Omit<User, 'accessToken' | 'refreshToken' | 'password'>
+export type TSafeUser = Omit<User, 'accessToken' | 'refreshToken' | 'password'> & {
+	groups: Group[]
+}
 
 export type TMetaProjects = Project & { creatorName: string; groupName: string }
 

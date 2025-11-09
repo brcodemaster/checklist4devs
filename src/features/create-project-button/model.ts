@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { kyInstance } from '@/shared/api'
+import { useAuth } from '@/shared/contexts/auth-context'
 
 import { Project } from '@/generated/client'
 import { ProjectType } from '@/generated/enums'
@@ -26,12 +27,14 @@ const formSchema = z.object({
 export type TForm = z.infer<typeof formSchema>
 
 export const useCreateProject = () => {
+	const { user } = useAuth()
+
 	const defaultValues = {
 		groupId: '',
 		isPublic: true,
 		name: '',
 		password: '',
-		type: 'CMS'
+		type: 'LANDING_PAGE'
 	} as TForm
 
 	const form = useForm<TForm>({
@@ -45,8 +48,11 @@ export const useCreateProject = () => {
 	const queryClient = useQueryClient()
 
 	const { mutateAsync } = useMutation({
-		mutationFn: async (payload: TForm) =>
-			await kyInstance.post('projects/create', { json: payload }).json<Project>(),
+		mutationFn: async (payload: TForm) => {
+			const json = { ...payload, creatorId: user?.id }
+
+			const res = await kyInstance.post('projects/create', { json }).json<Project>()
+		},
 		onMutate: async (payload: TForm) => {
 			await queryClient.cancelQueries({ queryKey: ['projects'] })
 
@@ -72,7 +78,9 @@ export const useCreateProject = () => {
 				return [...old, newProject]
 			})
 
-			return { previousProjects }
+			const toastId = toast.loading('Creating project...')
+
+			return { previousProjects, toastId }
 		},
 		onError: async (err, _, context) => {
 			if (context?.previousProjects) {
@@ -82,16 +90,18 @@ export const useCreateProject = () => {
 			if (err instanceof HTTPError) {
 				const body = await err.response.json().catch(() => null)
 				if (body?.message) {
-					return toast.error(body.message)
+					return toast.error(body.message, { id: context?.toastId })
 				}
 			}
 
-			toast.error('Failed to create the project. Please try again.')
+			toast.error('Failed to create the project. Please try again.', { id: context?.toastId })
 		},
-		onSuccess: async () => {
+		onSuccess: async (_, __, context) => {
 			await queryClient.invalidateQueries({ queryKey: ['projects'] })
+			setIsOpen(false)
+			handleReset()
 
-			toast.success('Group created successfully.')
+			toast.success('Project created successfully.', { id: context?.toastId })
 		}
 	})
 
@@ -99,5 +109,12 @@ export const useCreateProject = () => {
 
 	const handleReset = () => form.reset(defaultValues)
 
-	return { handleCreate, isOpen, onOpenChange: setIsOpen, handleReset, form }
+	return {
+		handleCreate,
+		isOpen,
+		onOpenChange: setIsOpen,
+		handleReset,
+		form,
+		groups: user?.groups
+	}
 }

@@ -9,12 +9,16 @@ import { TApiResponse } from '@/shared/types/default-types'
 
 import { Group, Prisma } from '@/generated/client'
 
+import { useGroupForms } from '../group-forms/model'
+
 export const useDataTable = () => {
 	const queryClient = useQueryClient()
 	const { user } = useAuth()
 	const { id: groupId } = useParams<{ id: string }>()
 
 	const router = useRouter()
+
+	const { handleDelete } = useGroupForms()
 
 	const { mutateAsync: mutateAsyncKick } = useMutation({
 		mutationFn: async (userId: string) => {
@@ -65,10 +69,6 @@ export const useDataTable = () => {
 			)
 
 			router.refresh()
-
-			if (context.users?.length === 0) {
-				return router.push('/')
-			}
 		},
 		onError: async (err, _, context) => {
 			if (context?.previousGroup) {

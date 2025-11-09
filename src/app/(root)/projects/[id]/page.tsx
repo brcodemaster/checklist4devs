@@ -1,13 +1,14 @@
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
-import { ChevronRight } from 'lucide-react'
+import { Bolt, Boxes, ChevronRight, LinkIcon } from 'lucide-react'
+import { cookies } from 'next/headers'
 import Link from 'next/link'
 
 import { ProjectStats } from '@/widgets/project-stats'
 import { Tasks } from '@/widgets/tasks'
 
-import { groupService } from '@/shared/lib/services/group-service'
-import { projectService } from '@/shared/lib/services/project-service'
-import { userService } from '@/shared/lib/services/user-service'
+import { kyInstance } from '@/shared/api'
+import { getProjectStatus } from '@/shared/lib'
+import { TApiResponse } from '@/shared/types/default-types'
 import { Badge, Button, Section } from '@/shared/ui'
 
 import { Prisma } from '@/generated/client'
@@ -15,33 +16,24 @@ import { Prisma } from '@/generated/client'
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
 	const { id } = await params
 
+	const cookieStore = (await cookies()).toString()
+
 	const queryClient = new QueryClient()
 
 	await queryClient.prefetchQuery({
 		queryKey: ['project', id],
 		queryFn: async () => {
-			const project = await projectService.findById(id, {
-				include: {
-					tasks: { orderBy: { index: 'desc' } },
-					group: { include: { developers: true } }
-				}
-			})
+			const res = await kyInstance
+				.get(`projects/${id}`, { headers: { cookie: cookieStore } })
+				.json<
+					TApiResponse<
+						{ groupName: string; creatorName: string } & Prisma.ProjectGetPayload<{
+							include: { tasks: true; group: { include: { developers: true } } }
+						}>
+					>
+				>()
 
-			const { userName: creatorName } = await userService.findById(project.creatorId, {
-				select: { userName: true }
-			})
-
-			const { name: groupName } = await groupService.findById(project.groupId, {
-				select: { name: true }
-			})
-
-			const metaProject = {
-				...project,
-				creatorName,
-				groupName
-			}
-
-			return metaProject
+			return res.data
 		}
 	})
 
@@ -61,18 +53,51 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 			</Section>
 		)
 
+	const { icon: Icon, status } = getProjectStatus(project.status)
+
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>
-			<Section className='mt-10 flex h-full flex-col'>
+			<Section className='mt-10 flex grow flex-col'>
 				<div className='flex items-center justify-between'>
-					<h2 className='flex items-center gap-2 text-2xl text-white'>
+					<h2 className='flex items-center justify-start gap-2 text-2xl text-white'>
 						{project.name}
 						<Badge
 							variant='secondary'
-							className='font-ibm bg-muted-secondary text-center text-[10px] text-white'
+							className='font-ibm bg-muted-secondary hidden text-center text-[10px] text-white md:flex'
 						>
-							{project.type.replaceAll('_', ' ')}
+							<Boxes className='stroke-white' /> {project.group.name}
 						</Badge>
+						<Badge
+							variant='secondary'
+							className='font-ibm bg-muted-secondary hidden text-center text-[10px] text-white md:flex'
+						>
+							<Bolt className='stroke-white' /> {project.type.replaceAll('_', ' ')}
+						</Badge>
+						<Badge
+							variant='secondary'
+							className='font-ibm bg-muted-secondary hidden text-center text-[10px] text-white sm:flex'
+						>
+							<Icon className='stroke-white' /> {status.replaceAll('_', ' ')}
+						</Badge>
+						{project.links.map((link, idx) => {
+							const url = new URL(link).hostname
+
+							return (
+								<Badge
+									className='font-ibm bg-muted-secondary hover:bg-muted-secondary! group/link hidden w-8 justify-start gap-1 text-[10px] text-white duration-200 hover:w-fit sm:flex'
+									key={idx}
+									variant='secondary'
+									asChild
+								>
+									<Link href={link}>
+										<LinkIcon className='shrink-0' />
+										<span className='opacity-0 duration-200 group-hover/link:opacity-100'>
+											{url}
+										</span>
+									</Link>
+								</Badge>
+							)
+						})}
 					</h2>
 
 					<Button variant='ghost' className='group/settings h-[38px]' asChild>
@@ -90,7 +115,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
 				<ProjectStats projectId={id} />
 
-				<Tasks project={project} users={project.group.developers} />
+				<Tasks project={project} />
 			</Section>
 		</HydrationBoundary>
 	)

@@ -10,6 +10,13 @@ type Props = {
 }
 
 export const RenderGroups: React.FC<Props> = ({ groups, isLoading }) => {
+	if (!isLoading && groups.length === 0)
+		return (
+			<div className='text-secondary-foreground flex min-h-36 grow flex-col items-center justify-center text-base'>
+				Groups not found
+			</div>
+		)
+
 	return (
 		<div className='flex flex-col gap-2 pt-4 md:grid md:grid-cols-2 lg:grid-cols-3'>
 			{isLoading

@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
 	try {
 		const { id } = await authService.me(request)
 
-		const projects = await projectService.findMine(id)
+		const projects = await projectService.findMine(id, { orderBy: { index: 'asc' } })
 
 		const creatorIds = projects.map(project => project.creatorId)
 		const groupIds = projects.map(project => project.groupId)

@@ -1,4 +1,5 @@
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
+import { cookies } from 'next/headers'
 
 import { Table } from '@/widgets/table'
 
@@ -6,8 +7,9 @@ import { TTableUser } from '@/features/data-table'
 
 import { RenderProjects } from '@/entities/render-projects'
 
-import { groupService } from '@/shared/lib/services/group-service'
+import { kyInstance } from '@/shared/api'
 import { userService } from '@/shared/lib/services/user-service'
+import { TApiResponse } from '@/shared/types/default-types'
 import { Section } from '@/shared/ui'
 
 import { Prisma } from '@/generated/client'
@@ -15,17 +17,27 @@ import { Prisma } from '@/generated/client'
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
 	const { id } = await params
 
+	const cookieStore = (await cookies()).toString()
+
 	const queryClient = new QueryClient()
 
 	await queryClient.prefetchQuery({
 		queryKey: ['group', id],
-		queryFn: async () =>
-			await groupService.findById(id, {
-				include: {
-					projects: true,
-					developers: true
-				}
-			})
+		queryFn: async () => {
+			const res = await kyInstance
+				.get(`groups/${id}`, {
+					headers: {
+						cookie: cookieStore
+					}
+				})
+				.json<
+					TApiResponse<
+						Prisma.GroupGetPayload<{ include: { projects: true; developers: true } }>
+					>
+				>()
+
+			return res.data
+		}
 	})
 
 	const group = queryClient.getQueryData<
@@ -77,7 +89,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>
-			<Section className='mt-10'>
+			<Section className='mt-10 flex grow flex-col'>
 				<div className='flex h-9 items-center justify-between'>
 					<h2 className='text-secondary text-lg'>
 						Group <span className='text-2xl font-medium text-white'>{group.name}</span>
@@ -92,11 +104,9 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 					/>
 				</div>
 
-				<div>
-					<h3 className='text-secondary text-lg'>Projects</h3>
+				<h3 className='text-secondary text-lg'>Projects</h3>
 
-					<RenderProjects isLoading={false} projects={metaProjects} />
-				</div>
+				<RenderProjects isLoading={false} projects={metaProjects} />
 			</Section>
 		</HydrationBoundary>
 	)

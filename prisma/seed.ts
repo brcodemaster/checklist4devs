@@ -41,6 +41,7 @@ export async function up() {
 					name: 'Resume builder',
 					status: 'IN_DEVELOPMENT',
 					type: ProjectType.WEB_APP,
+					isPublic: false,
 					links: [
 						'https://resume-builder-five-zeta.vercel.app/',
 						'https://github.com/brcodemaster/resume-builder'
@@ -355,7 +356,7 @@ export async function up() {
 				'https://github.com/brcodemaster/resume-builder'
 			],
 			creator: { connect: { id: '1' } },
-
+			isPublic: false,
 			tasks: {
 				create: [
 					{

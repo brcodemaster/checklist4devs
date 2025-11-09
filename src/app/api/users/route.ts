@@ -11,6 +11,9 @@ export async function GET(request: NextRequest) {
 		const users = await userService.findAll({
 			include: {
 				groups: { select: { id: true, name: true } }
+			},
+			orderBy: {
+				createdAt: 'asc'
 			}
 		})
 

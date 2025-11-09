@@ -31,13 +31,17 @@ export const CreateProjectTrigger: React.FC<
 					<DialogDescription>Fill the fields to create a new project</DialogDescription>
 				</div>
 
-				<CreateProjectForm form={hook.form} handleCreate={hook.handleCreate} />
+				<CreateProjectForm
+					form={hook.form}
+					handleCreate={hook.handleCreate}
+					groups={hook.groups}
+				/>
 
 				<div className='flex items-center justify-end gap-2 pt-2'>
 					<Button variant='secondary' type='reset' onClick={hook.handleReset}>
 						Reset
 					</Button>
-					<Button form='createProject'>Submit</Button>
+					<Button form='createProject'>Create</Button>
 				</div>
 			</DialogContent>
 		</Dialog>
