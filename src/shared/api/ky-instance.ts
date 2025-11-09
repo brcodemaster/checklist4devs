@@ -1,6 +1,8 @@
 import ky from 'ky'
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+
 export const kyInstance = ky.create({
-	prefixUrl: 'http://localhost:3000/api',
+	prefixUrl: `${baseUrl}/api/`,
 	credentials: 'include'
 })
