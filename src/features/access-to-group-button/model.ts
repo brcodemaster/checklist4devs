@@ -17,7 +17,7 @@ export const useAccessToGroupButton = (groupId: string | null) => {
 	const router = useRouter()
 
 	const { mutateAsync } = useMutation({
-		mutationFn: async (payload: { toastId: string | number }) => {
+		mutationFn: async (_payload: { toastId: string | number }) => {
 			const json = {
 				inviteKey: INVITE_KEY,
 				userId: user?.id,

@@ -21,7 +21,7 @@ export const getColumns = (
 		{
 			accessorKey: 'userName',
 			header: 'USER',
-			cell: ({ row, getValue }) => (
+			cell: ({ getValue }) => (
 				<div className='flex h-8 items-center gap-2' suppressHydrationWarning>
 					<div className='bg-muted-secondary overflow-hidden rounded-full p-2'>
 						<User className='stroke-secondary size-4' />

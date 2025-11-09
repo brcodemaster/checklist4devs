@@ -30,7 +30,7 @@ export const sendMessage = async (
 
 		onSuccess(false)
 		return toast.success('Feedback send successfully!')
-	} catch (error) {
+	} catch {
 		return toast.error('Something went wrong please try later!')
 	} finally {
 		onSend()

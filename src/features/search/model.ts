@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useDebounce } from 'react-use'
 
 import { kyInstance } from '@/shared/api'
+import { TApiResponse } from '@/shared/types/default-types'
 
 import { Group, Project, User } from '@/generated/client'
 
@@ -20,10 +21,13 @@ export const useSearch = () => {
 
 	const { data: results = [[], [], []] } = useQuery<[User[], Project[], Group[]]>({
 		queryKey: ['search-result'],
-		queryFn: async () =>
-			await kyInstance
+		queryFn: async () => {
+			const res = await kyInstance
 				.get(`search?value=${encodeURIComponent(debouncedValue)}`)
-				.json<[User[], Project[], Group[]]>(),
+				.json<TApiResponse<[User[], Project[], Group[]]>>()
+
+			return res.data
+		},
 		enabled: !!debouncedValue.trim()
 	})
 

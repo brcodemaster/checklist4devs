@@ -24,7 +24,7 @@ export default function Page() {
 				</div>
 
 				<div className='text-secondary self-center text-center text-sm'>
-					Don't have an account?{' '}
+					Don&apos;t have an account?{' '}
 					<Link href='/auth/register' className='text-white underline hover:no-underline'>
 						Sign Up Now
 					</Link>

@@ -1,5 +1,7 @@
+'use client'
+
 import { HTTPError } from 'ky'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
@@ -16,9 +18,9 @@ export const useAuthContext = () => {
 	const [user, setUser] = useState<TSafeUser | null>(null)
 	const [isLoading, setIsLoading] = useState(false)
 	const [isAuthenticated, setIsAuthenticated] = useState(false)
+	const [callbackUrl, setCallbackUrl] = useState<string | null>(null)
 
 	const pathname = usePathname()
-	const callbackUrl = useSearchParams().get('callbackUrl')
 
 	const login = async (payload: TLoginForm) => {
 		try {
@@ -114,6 +116,9 @@ export const useAuthContext = () => {
 	}
 
 	useEffect(() => {
+		const params = new URLSearchParams(window.location.search)
+		setCallbackUrl(params.get('callbackUrl'))
+
 		if (!PUBLIC_ROUTES.includes(pathname)) checkAuth()
 	}, [pathname])
 

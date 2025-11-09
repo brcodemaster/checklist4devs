@@ -12,7 +12,7 @@ export const Actions: React.FC<{
 	isCurrentUser: boolean
 	isCurrentUserAdmin: boolean
 	userName: string
-}> = ({ isCreator, isCurrentUser, userId, userName, isCurrentUserAdmin }) => {
+}> = ({ isCurrentUser, userId, userName, isCurrentUserAdmin }) => {
 	const { handleKick, handleUpdateToAdmin, handleDemoteToRegular } = useDataTable()
 
 	return (

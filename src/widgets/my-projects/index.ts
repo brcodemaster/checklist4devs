@@ -1,1 +1,1 @@
-export { MyGroups } from './ui'
+export { MyProjects } from './ui'

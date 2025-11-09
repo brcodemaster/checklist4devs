@@ -9,16 +9,12 @@ import { TApiResponse } from '@/shared/types/default-types'
 
 import { Group, Prisma } from '@/generated/client'
 
-import { useGroupForms } from '../group-forms/model'
-
 export const useDataTable = () => {
 	const queryClient = useQueryClient()
 	const { user } = useAuth()
 	const { id: groupId } = useParams<{ id: string }>()
 
 	const router = useRouter()
-
-	const { handleDelete } = useGroupForms()
 
 	const { mutateAsync: mutateAsyncKick } = useMutation({
 		mutationFn: async (userId: string) => {
@@ -158,7 +154,7 @@ export const useDataTable = () => {
 	})
 
 	const { mutateAsync: mutateAsyncDemoteToRegular } = useMutation({
-		mutationFn: async ({ userId, userName }: { userId: string; userName: string }) => {
+		mutationFn: async ({ userId }: { userId: string; userName: string }) => {
 			const json = {
 				groupId,
 				userId

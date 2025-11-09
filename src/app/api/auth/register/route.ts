@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
 
 		const user = await authService.register(body)
 
-		const { accessToken, refreshToken, password: _password, ...safeUser } = user
+		const { accessToken: _accessToken, refreshToken, password: _password, ...safeUser } = user
 
 		const res = ApiResponse(safeUser, 'User registered successfully')
 

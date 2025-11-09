@@ -72,8 +72,6 @@ export const useCreateTask = (projectId: string, users: User[]) => {
 				) => {
 					if (!old) return old
 
-					const now = new Date()
-
 					const updatedProject = {
 						...old,
 						tasks: [

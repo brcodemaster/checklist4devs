@@ -25,7 +25,7 @@ type Props = {
 }
 
 export const EditForm: React.FC<Props> = ({ isPublic, name, slug }) => {
-	const { form, handleDelete, handleSubmit, handleReset } = useGroupForms(name, slug, isPublic)
+	const { form, handleSubmit, handleReset } = useGroupForms(name, slug, isPublic)
 
 	return (
 		<Form {...form}>

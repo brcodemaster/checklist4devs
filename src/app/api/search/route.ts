@@ -1,5 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 
+import { ApiResponse, ErrorApiResponse } from '@/shared/lib'
 import { authService } from '@/shared/lib/services/auth-service'
 
 import { prisma } from '@/prisma-client'
@@ -11,7 +12,7 @@ export async function GET(request: NextRequest) {
 		const url = request.nextUrl
 		const searchValue = url.searchParams.get('value')
 
-		let res
+		let res: any = [[], [], []]
 
 		if (searchValue) {
 			res = await Promise.all([
@@ -29,12 +30,10 @@ export async function GET(request: NextRequest) {
 					where: { name: { contains: searchValue, mode: 'insensitive' } }
 				})
 			])
-
-			return NextResponse.json(res)
 		}
 
-		return NextResponse.json([[], [], []])
+		return ApiResponse(res, 'Search values returned successfully')
 	} catch (error) {
-		return NextResponse.json('Error [SEARCH API]')
+		return ErrorApiResponse(error)
 	}
 }

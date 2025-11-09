@@ -19,7 +19,7 @@ import {
 import { TForm } from '../model'
 
 export const CreateGroupForm: React.FC<{
-	form: UseFormReturn<any>
+	form: UseFormReturn<TForm>
 	handleCreate: SubmitHandler<TForm>
 }> = ({ form, handleCreate }) => {
 	return (

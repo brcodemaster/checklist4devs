@@ -8,6 +8,7 @@ import { z } from 'zod'
 
 import { kyInstance } from '@/shared/api'
 import { useAuth } from '@/shared/contexts/auth-context'
+import { TApiResponse } from '@/shared/types/default-types'
 
 import { Project } from '@/generated/client'
 import { ProjectType } from '@/generated/enums'
@@ -51,7 +52,11 @@ export const useCreateProject = () => {
 		mutationFn: async (payload: TForm) => {
 			const json = { ...payload, creatorId: user?.id }
 
-			const res = await kyInstance.post('projects/create', { json }).json<Project>()
+			const res = await kyInstance
+				.post('projects/create', { json })
+				.json<TApiResponse<Project>>()
+
+			return res.data
 		},
 		onMutate: async (payload: TForm) => {
 			await queryClient.cancelQueries({ queryKey: ['projects'] })

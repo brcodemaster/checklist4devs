@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
 		)
 
 		const assignersObject = Object.fromEntries(
-			creators.map(creator => [creator.id, creator.userName])
+			assigners.map(assigner => [assigner.id, assigner.userName])
 		)
 
 		const metaTasks = tasks.map(task => ({

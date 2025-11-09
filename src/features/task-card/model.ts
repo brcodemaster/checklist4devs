@@ -151,7 +151,7 @@ export const useTaskCard = (task: Task) => {
 
 	useEffect(() => {
 		if (isTaskBurned(task.status)) mutateAsyncUpdateStatus()
-	}, [mutateAsyncUpdateStatus, isTaskBurned])
+	}, [mutateAsyncUpdateStatus, task.status])
 
 	const handleUpdateStatus = () => {
 		if (task.assignerId !== user?.id) return

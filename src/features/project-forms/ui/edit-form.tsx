@@ -31,8 +31,7 @@ type Props = {
 }
 
 export const EditForm: React.FC<Props> = ({ project }) => {
-	const { form, handleSubmit, handleReset, fields, update, append, remove } =
-		useProjectForms(project)
+	const { form, handleSubmit, handleReset, fields, append, remove } = useProjectForms(project)
 
 	return (
 		<Form {...form}>
@@ -167,7 +166,7 @@ export const EditForm: React.FC<Props> = ({ project }) => {
 					<FormField
 						control={form.control}
 						name='links'
-						render={({ field }) => (
+						render={({ field: _field }) => (
 							<FormItem className='grid px-6 lg:grid-cols-2'>
 								<FormLabel className='text-sm font-light text-white lg:text-base'>
 									Links

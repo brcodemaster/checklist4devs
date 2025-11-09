@@ -48,6 +48,8 @@ export const useEditTask = (task: Task) => {
 			}
 
 			const res = await kyInstance.patch(`tasks/update`, { json }).json<TApiResponse<Task>>()
+
+			return res.data
 		},
 		onMutate: async (payload: TTaskUpdate) => {
 			await queryClient.cancelQueries({ queryKey: ['project', id] })
