@@ -1,0 +1,10 @@
+{
+	"functions": {
+		"api/**/*.js": {
+			"includeFiles": "__generated__/**"
+		},
+		"api/**/*.ts": {
+			"includeFiles": "__generated__/**"
+		}
+	}
+}
