@@ -24,7 +24,7 @@ export const useLogin = () => {
 
 	const defaultValues = {
 		email: '',
-		password: 'Bekzod2001'
+		password: ''
 	}
 
 	const form = useForm<TLoginForm>({

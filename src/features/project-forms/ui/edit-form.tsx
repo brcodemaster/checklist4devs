@@ -2,6 +2,7 @@
 
 import { Minus, Plus } from 'lucide-react'
 
+import { PROJECT_STATUS, PROJECT_TYPE } from '@/shared/constants'
 import {
 	Button,
 	Form,
@@ -20,7 +21,6 @@ import {
 } from '@/shared/ui'
 
 import { Prisma } from '@/generated/client'
-import { ProjectStatus, ProjectType } from '@/generated/enums'
 
 import { useProjectForms } from '../model'
 
@@ -76,7 +76,7 @@ export const EditForm: React.FC<Props> = ({ project }) => {
 											<SelectValue placeholder='Project type' />
 										</SelectTrigger>
 										<SelectContent>
-											{Object.values(ProjectType).map((type, idx) => (
+											{PROJECT_TYPE.map((type, idx) => (
 												<SelectItem value={type} key={type + idx}>
 													{type.replaceAll('_', ' ')}
 												</SelectItem>
@@ -105,7 +105,7 @@ export const EditForm: React.FC<Props> = ({ project }) => {
 											<SelectValue placeholder='Project status' />
 										</SelectTrigger>
 										<SelectContent>
-											{Object.values(ProjectStatus).map((type, idx) => (
+											{Object.values(PROJECT_STATUS).map((type, idx) => (
 												<SelectItem value={type} key={type + idx}>
 													{type.replaceAll('_', ' ')}
 												</SelectItem>

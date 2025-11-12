@@ -1,6 +1,6 @@
 import { Check, Pause, Settings, X } from 'lucide-react'
 
-import { ProjectStatus } from '@/generated/enums'
+import { ProjectStatus } from '../types/default-types'
 
 export const getProjectStatus = (status: ProjectStatus) => {
 	if (status === 'CANCELED')

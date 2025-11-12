@@ -1,5 +1,6 @@
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
+import { PROJECT_TYPE } from '@/shared/constants'
 import {
 	Form,
 	FormControl,
@@ -17,7 +18,6 @@ import {
 } from '@/shared/ui'
 
 import { Group } from '@/generated/client'
-import { ProjectType } from '@/generated/enums'
 
 import { TForm } from '../model'
 
@@ -122,7 +122,7 @@ export const CreateProjectForm: React.FC<{
 										<SelectValue placeholder='Select visibility' />
 									</SelectTrigger>
 									<SelectContent>
-										{Object.values(ProjectType).map((type, idx) => (
+										{PROJECT_TYPE.map((type, idx) => (
 											<SelectItem key={idx} value={type}>
 												{type.replaceAll('_', ' ')}
 											</SelectItem>

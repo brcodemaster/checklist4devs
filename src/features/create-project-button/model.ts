@@ -7,11 +7,11 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { kyInstance } from '@/shared/api'
+import { PROJECT_TYPE } from '@/shared/constants'
 import { useAuth } from '@/shared/contexts/auth-context'
 import { TApiResponse } from '@/shared/types/default-types'
 
 import { Project } from '@/generated/client'
-import { ProjectType } from '@/generated/enums'
 
 const formSchema = z.object({
 	name: z
@@ -21,7 +21,7 @@ const formSchema = z.object({
 		.string({ error: 'Required field' })
 		.min(3, { error: 'Group password must be at least 3 characters' }),
 	isPublic: z.boolean(),
-	type: z.enum(ProjectType),
+	type: z.enum(PROJECT_TYPE),
 	groupId: z.string()
 })
 

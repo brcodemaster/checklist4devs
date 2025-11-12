@@ -6,7 +6,7 @@ import * as React from 'react'
 
 import { cn } from '@/shared/lib/utils'
 
-import { TaskStatus } from '@/generated/enums'
+import { TaskStatus } from '../types/default-types'
 
 function Checkbox({
 	className,
@@ -44,9 +44,10 @@ function Checkbox({
 							'size-3.5',
 							status === 'COMPLETED' ? 'stroke-accent' : 'stroke-white'
 						)}
+						suppressHydrationWarning
 					/>
 				) : (
-					<X className='size-3.5 stroke-red-900' />
+					<X className='size-3.5 stroke-red-900' suppressHydrationWarning />
 				)}
 			</CheckboxPrimitive.Indicator>
 		</CheckboxPrimitive.Root>

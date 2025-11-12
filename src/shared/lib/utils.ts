@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const isTaskBurned = (status: TaskStatus): boolean => {
-	if (status !== 'IN_PROGRESS') return false
+	if (status === 'FIRED') return true
 
 	return false
 }

@@ -24,6 +24,16 @@ export const TaskCard: React.FC<Props> = ({ task, index, assignee, creator, user
 	const { handleDelete, handleUpdateStatus, isBurningDayNear, prettyDateMaker, isCreator } =
 		useTaskCard(task)
 
+	if (task.text === 'new task and project') {
+		console.log(`
+				${assignee}\n
+
+		${task.text}\n
+		
+		${task.status}
+		`)
+	}
+
 	return (
 		<div
 			className={cn(
@@ -47,6 +57,7 @@ export const TaskCard: React.FC<Props> = ({ task, index, assignee, creator, user
 								status={task.status}
 								checked={task.status !== 'IN_PROGRESS'}
 								className='cursor-pointer'
+								suppressHydrationWarning
 							/>
 							Task for {assignee}
 						</h4>
@@ -108,6 +119,7 @@ export const TaskCard: React.FC<Props> = ({ task, index, assignee, creator, user
 					task.status === 'FIRED' && 'text-fired',
 					task.status === 'COMPLETED' && 'text-completed'
 				)}
+				suppressHydrationWarning
 			>
 				<p>{prettyDateMaker(new Date(task.createdAt))}</p>
 				<p className='flex items-center gap-1'>
@@ -117,6 +129,7 @@ export const TaskCard: React.FC<Props> = ({ task, index, assignee, creator, user
 							task.status === 'FIRED' && 'stroke-fired fill-fired',
 							task.status === 'COMPLETED' && 'stroke-completed fill-completed'
 						)}
+						suppressHydrationWarning
 					/>
 					{creator}
 				</p>

@@ -26,7 +26,9 @@ export default function AuthLayout({
 								className='size-full overflow-hidden object-cover object-top'
 							/>
 						</Avatar>
-						<p className='text-secondary font-medium'>Developer of checklist4devs</p>
+						<p className='text-sm font-medium text-white'>
+							Developer of checklist4devs
+						</p>
 					</div>
 				</div>
 			</div>

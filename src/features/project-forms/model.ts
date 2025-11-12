@@ -9,19 +9,19 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { kyInstance } from '@/shared/api'
+import { PROJECT_STATUS, PROJECT_TYPE } from '@/shared/constants'
 import { useAuth } from '@/shared/contexts/auth-context'
 import { TMetaProjects } from '@/shared/types/default-types'
 
 import { Group, Prisma } from '@/generated/client'
-import { ProjectStatus, ProjectType } from '@/generated/enums'
 
 const formSchema = z.object({
 	name: z
 		.string({ error: 'Required field' })
 		.min(3, { error: 'Group name must be at least 3 characters long' }),
-	type: z.enum(ProjectType),
+	type: z.enum(PROJECT_TYPE),
 	isPublic: z.boolean(),
-	status: z.enum(ProjectStatus),
+	status: z.enum(PROJECT_STATUS),
 	links: z.array(z.object({ value: z.string() })),
 	password: z.string().optional()
 })

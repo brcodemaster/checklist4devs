@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { HTTPError } from 'ky'
 import { useParams } from 'next/navigation'
-import { useEffect } from 'react'
 import { toast } from 'sonner'
 
 import { kyInstance } from '@/shared/api'
@@ -149,13 +148,13 @@ export const useTaskCard = (task: Task) => {
 		}
 	})
 
-	useEffect(() => {
-		if (isTaskBurned(task.status)) mutateAsyncUpdateStatus()
-	}, [mutateAsyncUpdateStatus, task.status])
+	// не работает потому что если task status === FIRED то обновление не происходит потому что FIRED не принимает mutateUpdateAsync вообще
+	// useEffect(() => {
+	// 	if (isTaskBurned(task.status)) mutateAsyncUpdateStatus()
+	// }, [mutateAsyncUpdateStatus])
 
 	const handleUpdateStatus = () => {
 		if (task.assignerId !== user?.id) return
-
 		if (task.status === 'FIRED') return
 
 		mutateAsyncUpdateStatus()
