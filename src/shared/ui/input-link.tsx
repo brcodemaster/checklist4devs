@@ -2,10 +2,23 @@
 'use client'
 
 import { ComponentProps, useState } from 'react'
+import { toast } from 'sonner'
 
 import { Button, Input } from '@/shared/ui'
 
 import { cn } from '../lib'
+
+// InputLink.tsx
+
+// InputLink.tsx
+
+// InputLink.tsx
+
+// InputLink.tsx
+
+// InputLink.tsx
+
+// InputLink.tsx
 
 // InputLink.tsx
 
@@ -44,8 +57,14 @@ export function InputLink({ handleClick, className, placeholder, icon: Icon, ...
 				type='button'
 				className='border-muted-secondary absolute top-1/2 right-2 size-6 -translate-y-1/2 cursor-pointer rounded-sm border p-1 opacity-0 duration-200 group-hover/input:opacity-100'
 				onClick={() => {
-					handleClick(inputValue)
-					setInputValue('')
+					try {
+						new URL(inputValue)
+
+						handleClick(inputValue)
+						setInputValue('')
+					} catch {
+						toast.info('Invalid URL format. Please correct the link and try again')
+					}
 				}}
 				variant='ghost'
 				size='icon'

@@ -90,3 +90,18 @@ export const TASK_STATUS = {
 	COMPLETED: 'COMPLETED',
 	FIRED: 'FIRED'
 } as const
+
+export const FAQS = [
+	{
+		question: 'How do I create a project?',
+		answer: 'Go to the Projects page, click "Create Project", fill in the required fields, and submit.'
+	},
+	{
+		question: 'Why am I seeing an error on Vercel?',
+		answer: 'Make sure Prisma is only used on the server. Client-side code should not import Prisma Client or generated enums directly.'
+	},
+	{
+		question: 'How do I reset my password?',
+		answer: 'Navigate to your profile settings and click "Reset Password". Follow the instructions in the email you receive.'
+	}
+] as const

@@ -84,7 +84,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
 							return (
 								<Badge
-									className='font-ibm bg-muted-secondary hover:bg-muted-secondary! group/link hidden w-8 justify-start gap-1 text-[10px] text-white duration-200 hover:w-fit sm:flex'
+									className='font-ibm bg-muted-secondary! group/link hidden w-8 justify-start gap-1 text-[10px] text-white hover:w-fit sm:flex'
 									key={idx}
 									variant='secondary'
 									asChild

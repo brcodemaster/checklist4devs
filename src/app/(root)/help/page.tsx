@@ -3,58 +3,54 @@
 import Link from 'next/link'
 import { FC } from 'react'
 
-const faqs = [
-	{
-		question: 'How do I create a project?',
-		answer: 'Go to the Projects page, click "Create Project", fill in the required fields, and submit.'
-	},
-	{
-		question: 'Why am I seeing an error on Vercel?',
-		answer: 'Make sure Prisma is only used on the server. Client-side code should not import Prisma Client or generated enums directly.'
-	},
-	{
-		question: 'How do I reset my password?',
-		answer: 'Navigate to your profile settings and click "Reset Password". Follow the instructions in the email you receive.'
-	}
-]
+import { FAQS } from '@/shared/constants'
+import { Section } from '@/shared/ui'
 
 const HelpPage: FC = () => {
 	return (
-		<div className='mx-auto max-w-4xl space-y-6 p-6'>
-			<h1 className='text-3xl font-bold'>Help & FAQ</h1>
-			<p className='text-gray-500'>
-				Here you can find answers to the most common questions. If you need further
-				assistance, feel free to{' '}
-				<Link href='/contact' className='text-blue-500 underline'>
-					contact our support team
-				</Link>
-				.
-			</p>
+		<Section className='mt-10 flex grow flex-col space-y-6'>
+			<div>
+				<h1 className='text-3xl font-bold'>Help & FAQ</h1>
+				<p className='text-secondary'>
+					Here you can find answers to the most common questions. If you need further
+					assistance, feel free to{' '}
+					<Link href='/contact' className='underline hover:no-underline'>
+						contact our support team
+					</Link>
+					.
+				</p>
+			</div>
 
-			<section className='space-y-4'>
-				{faqs.map((faq, idx) => (
-					<div key={idx} className='rounded-lg border bg-gray-50 p-4'>
-						<h2 className='font-semibold'>{faq.question}</h2>
-						<p className='mt-1 text-gray-600'>{faq.answer}</p>
+			<div className='space-y-4'>
+				{FAQS.map((faq, idx) => (
+					<div key={idx} className='bg-card border-muted-secondary rounded-lg border p-4'>
+						<h2 className='text-secondary font-semibold'>{faq.question}</h2>
+						<p className='text-secondary-foreground mt-1'>{faq.answer}</p>
 					</div>
 				))}
-			</section>
+			</div>
 
-			<section className='mt-6'>
+			<div className='mt-6'>
 				<h2 className='mb-2 text-xl font-semibold'>Quick Links</h2>
-				<ul className='list-inside list-disc space-y-1 text-blue-500'>
+				<ul className='text-secondary list-inside list-disc space-y-1'>
 					<li>
-						<Link href='/projects'>Go to Projects</Link>
+						<Link href='/projects' className='underline hover:no-underline'>
+							Go to Projects
+						</Link>
 					</li>
 					<li>
-						<Link href='/profile'>Your Profile Settings</Link>
+						<Link href='/settings' className='underline hover:no-underline'>
+							Your Profile Settings
+						</Link>
 					</li>
 					<li>
-						<Link href='/contact'>Contact Support</Link>
+						<Link href='/contact' className='underline hover:no-underline'>
+							Contact Support
+						</Link>
 					</li>
 				</ul>
-			</section>
-		</div>
+			</div>
+		</Section>
 	)
 }
 

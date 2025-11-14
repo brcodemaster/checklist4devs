@@ -18,7 +18,7 @@ function InputPassword({ className, ...props }: ComponentProps<'input'>) {
 				className={cn('pr-10', className)}
 			/>
 			<div
-				className='border-muted-secondary absolute top-1/2 right-1 -translate-y-1/2 cursor-pointer rounded-md border p-1'
+				className='border-muted-secondary absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer rounded-md border p-1'
 				onClick={() => setIsShow(!isShow)}
 			>
 				{isShow ? <Eye className='size-4' /> : <EyeOff className='size-4' />}

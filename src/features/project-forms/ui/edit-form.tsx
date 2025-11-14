@@ -13,6 +13,7 @@ import {
 	FormMessage,
 	Input,
 	InputLink,
+	InputPassword,
 	Select,
 	SelectContent,
 	SelectItem,
@@ -152,8 +153,8 @@ export const EditForm: React.FC<Props> = ({ project }) => {
 									Password
 								</FormLabel>
 								<FormControl>
-									<Input
-										className='placeholder:text-secondary-foreground h-9 bg-neutral-800 placeholder:text-sm md:h-10'
+									<InputPassword
+										className='placeholder:text-secondary-foreground h-9 bg-neutral-800 md:h-10'
 										{...field}
 										placeholder={'Enter project password'}
 									/>
