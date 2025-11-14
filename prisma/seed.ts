@@ -2,7 +2,8 @@ import { hashSync } from 'bcrypt'
 
 import { devs } from './constants'
 import { prisma } from './prisma-client'
-import { ProjectType } from '@/generated/enums'
+
+import { ProjectType } from '../generated'
 
 export async function up() {
 	await Promise.all(

@@ -22,7 +22,7 @@
 		"paths": {
 			"@/*": ["src/*"],
 			"@/prisma-client": ["prisma/prisma-client"],
-			"@/generated/*": ["__generated__/*"]
+			"@/generated/*": ["generated/index"]
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
