@@ -13,8 +13,7 @@
 		"prisma:studio": "prisma studio",
 		"prisma:generate": "prisma generate",
 		"prisma:rs": "npm run prisma:force:push && npm run prisma:seed",
-		"postinstall": "prisma generate && cp __generated__/libquery_engine-debian-openssl-3.0.x.so.node prisma/__generated__",
-		"copy:prisma": "cp __generated__/libquery_engine-debian-openssl-3.0.x.so.node prisma/__generated__"
+		"postinstall": "prisma generate"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.2.2",
