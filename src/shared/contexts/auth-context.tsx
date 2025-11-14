@@ -12,10 +12,10 @@ import { TSafeUser } from '../types/default-types'
 type TContext = {
 	user: TSafeUser | null
 	isAuthenticated: boolean
-	login: (payload: TLoginForm) => void
-	logout: () => void
-	checkAuth: () => void
-	register: (payload: TRegisterForm) => void
+	login: (payload: TLoginForm) => Promise<string | number | undefined>
+	logout: () => Promise<string | number | undefined>
+	checkAuth: () => Promise<string | number | undefined>
+	register: (payload: TRegisterForm) => Promise<string | number | undefined>
 	isLoading: boolean
 }
 

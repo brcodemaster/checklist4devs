@@ -17,8 +17,8 @@ export const Tasks: React.FC<{
 
 	if (filteredTasks.length === 0)
 		return (
-			<div className='text-secondary-foreground flex min-h-36 grow items-center justify-center text-center'>
-				Tasks not found
+			<div className='text-secondary-foreground flex min-h-36 grow flex-col items-center justify-center gap-3 text-center'>
+				<CreateTaskTrigger users={project.group.developers} projectId={project.id} />
 			</div>
 		)
 

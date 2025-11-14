@@ -27,7 +27,7 @@ const formSchema = z.object({
 export type TForm = z.infer<typeof formSchema>
 
 export const useCreateGroup = () => {
-	const { user } = useAuth()
+	const { user, checkAuth } = useAuth()
 
 	const defaultValues = {
 		name: '',
@@ -101,6 +101,7 @@ export const useCreateGroup = () => {
 		},
 		onSuccess: async (_, __, context) => {
 			await queryClient.invalidateQueries({ queryKey: ['groups'] })
+			await checkAuth()
 			setIsOpen(false)
 			handleReset()
 

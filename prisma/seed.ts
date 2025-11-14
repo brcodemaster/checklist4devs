@@ -1,6 +1,6 @@
-import { ProjectType } from '__generated__/enums'
 import { hashSync } from 'bcrypt'
 
+import { ProjectType } from './__generated__/enums'
 import { devs } from './constants'
 import { prisma } from './prisma-client'
 

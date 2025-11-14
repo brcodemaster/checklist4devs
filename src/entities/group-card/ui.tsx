@@ -1,8 +1,9 @@
-import { Prisma } from '__generated__/browser'
 import { Boxes } from 'lucide-react'
 import Link from 'next/link'
 
 import { cn } from '@/shared/lib/utils'
+
+import { Prisma } from '@/generated/client'
 
 type Props = {
 	group: Prisma.GroupGetPayload<{ include: { projects: true } }> & { creatorName: string }
