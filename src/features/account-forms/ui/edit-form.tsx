@@ -9,23 +9,15 @@ import {
 	FormLabel,
 	FormMessage,
 	Input,
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue
+	InputPassword
 } from '@/shared/ui'
 
-import { useGroupForms } from '../model'
+import { User } from '@/generated/index'
 
-type Props = {
-	name: string
-	slug: string | null
-	isPublic: boolean
-}
+import { useAccountForms } from '../model'
 
-export const EditForm: React.FC<Props> = ({ isPublic, name, slug }) => {
-	const { form, handleSubmit, handleReset } = useGroupForms(name, slug, isPublic)
+export const EditForm: React.FC<{ user: User }> = ({ user }) => {
+	const { form, handleSubmit, handleReset } = useAccountForms(user)
 
 	return (
 		<Form {...form}>
@@ -36,17 +28,17 @@ export const EditForm: React.FC<Props> = ({ isPublic, name, slug }) => {
 				<div className='flex flex-col gap-4 py-6'>
 					<FormField
 						control={form.control}
-						name='name'
+						name='userName'
 						render={({ field }) => (
 							<FormItem className='grid px-6 lg:grid-cols-2'>
 								<FormLabel className='text-sm font-light text-white lg:text-base'>
-									Name
+									Username
 								</FormLabel>
 								<FormControl>
 									<Input
 										className='placeholder:text-secondary-foreground h-9 bg-neutral-800 placeholder:text-sm md:h-10'
 										{...field}
-										placeholder={'Enter group name'}
+										placeholder={'Enter user name'}
 									/>
 								</FormControl>
 								<FormMessage className='col-end-3' />
@@ -55,17 +47,17 @@ export const EditForm: React.FC<Props> = ({ isPublic, name, slug }) => {
 					/>
 					<FormField
 						control={form.control}
-						name='slug'
+						name='email'
 						render={({ field }) => (
-							<FormItem className='grid grid-cols-1 px-6 lg:grid-cols-2'>
+							<FormItem className='grid px-6 lg:grid-cols-2'>
 								<FormLabel className='text-sm font-light text-white lg:text-base'>
-									Slug
+									Email
 								</FormLabel>
 								<FormControl>
 									<Input
 										className='placeholder:text-secondary-foreground h-9 bg-neutral-800 placeholder:text-sm md:h-10'
 										{...field}
-										placeholder={'Enter group slug'}
+										placeholder={'Enter email'}
 									/>
 								</FormControl>
 								<FormMessage className='col-end-3' />
@@ -74,25 +66,18 @@ export const EditForm: React.FC<Props> = ({ isPublic, name, slug }) => {
 					/>
 					<FormField
 						control={form.control}
-						name='isPublic'
+						name='password'
 						render={({ field }) => (
 							<FormItem className='grid grid-cols-1 px-6 lg:grid-cols-2'>
 								<FormLabel className='text-sm font-light text-white lg:text-base'>
-									Visibility
+									Password
 								</FormLabel>
 								<FormControl>
-									<Select
-										value={String(field.value)}
-										onValueChange={val => field.onChange(val === 'true')}
-									>
-										<SelectTrigger className='w-full'>
-											<SelectValue placeholder='Group visibility' />
-										</SelectTrigger>
-										<SelectContent>
-											<SelectItem value={String(false)}>Private</SelectItem>
-											<SelectItem value={String(true)}>Public</SelectItem>
-										</SelectContent>
-									</Select>
+									<InputPassword
+										className='placeholder:text-secondary-foreground h-9 bg-neutral-800 placeholder:text-sm md:h-10'
+										{...field}
+										placeholder={'Enter password'}
+									/>
 								</FormControl>
 								<FormMessage className='col-end-3' />
 							</FormItem>

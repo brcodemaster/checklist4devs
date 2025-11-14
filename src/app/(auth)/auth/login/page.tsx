@@ -2,15 +2,9 @@ import Link from 'next/link'
 
 import { Login } from '@/features/login'
 
-import { Logo } from '@/shared/ui'
-
 export default function Page() {
 	return (
 		<div className='border-r-muted-secondary bg-background flex h-full flex-col items-center border-r p-8 xl:w-[560px]'>
-			<div className='flex items-center justify-start gap-1 self-start'>
-				<Logo width={30} height={29} />
-				<p className='text-xl font-semibold'>checklist4devs</p>
-			</div>
 			<div className='flex max-w-[560px] grow flex-col items-start py-8 lg:p-10'>
 				<div>
 					<h3 className='text-3xl'>Welcome back</h3>

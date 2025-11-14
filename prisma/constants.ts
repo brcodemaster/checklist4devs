@@ -9,9 +9,9 @@ export const devs = [
 	},
 	{
 		id: '2',
-		userName: 'DevMaster',
-		email: 'devmaster@mail.ru',
-		password: hashSync('Bekzod2001', 10)
+		userName: 'Behruz',
+		email: 'behruzravshanbekov79gmail.com',
+		password: hashSync('Behruz2005', 10)
 	},
 	{
 		id: '3',

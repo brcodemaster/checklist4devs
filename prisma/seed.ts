@@ -2,8 +2,7 @@ import { hashSync } from 'bcrypt'
 
 import { devs } from './constants'
 import { prisma } from './prisma-client'
-
-import { ProjectType } from '../generated'
+import { ProjectType } from '@/generated/index'
 
 export async function up() {
 	await Promise.all(
@@ -20,7 +19,6 @@ export async function up() {
 		data: {
 			id: '1',
 			name: 'bb',
-			slug: 'We are bears',
 			password: hashSync('123456', 10),
 			creator: { connect: { id: '1' } },
 			developers: {

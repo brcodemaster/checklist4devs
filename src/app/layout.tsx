@@ -6,7 +6,7 @@ import { Providers } from '@/shared/providers'
 import './globals.css'
 
 export const metadata: Metadata = {
-	title: 'Checklist4Devs'
+	title: 'checklist4Devs'
 }
 
 export default function zzLayout({

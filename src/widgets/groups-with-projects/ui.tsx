@@ -13,7 +13,8 @@ import { Input } from '@/shared/ui'
 import { useGroups } from './model'
 
 export const GroupsWithProjects: React.FC = () => {
-	const { groups, projects, groupsIsLoading, projectsIsLoading, handleChange } = useGroups()
+	const { groups, projects, groupsIsLoading, projectsIsLoading, handleChange, debouncedValue } =
+		useGroups()
 
 	return (
 		<>
@@ -33,8 +34,24 @@ export const GroupsWithProjects: React.FC = () => {
 				</div>
 			</div>
 
-			<RenderGroups groups={groups} isLoading={groupsIsLoading} />
-			<RenderProjects projects={projects} isLoading={projectsIsLoading} />
+			{groups.length === 0 &&
+			projects.length === 0 &&
+			!groupsIsLoading &&
+			!projectsIsLoading ? (
+				<div className='text-secondary-foreground flex min-h-36 grow flex-col items-center justify-center text-base'>
+					Results for &quot;{debouncedValue}&quot; is not found
+				</div>
+			) : groups.length === 0 && projects.length > 0 ? (
+				<>
+					<RenderGroups groups={groups} isLoading={groupsIsLoading} />
+					<RenderProjects projects={projects} isLoading={projectsIsLoading} />
+				</>
+			) : (
+				<>
+					<RenderGroups groups={groups} isLoading={groupsIsLoading} />
+					<RenderProjects projects={projects} isLoading={projectsIsLoading} />
+				</>
+			)}
 		</>
 	)
 }

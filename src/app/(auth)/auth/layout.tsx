@@ -14,8 +14,11 @@ export default function AuthLayout({
 						“
 					</span>
 					<p className='z-10 max-w-lg text-3xl font-normal text-balance'>
-						Checklist4Devs has become the silent partner of modern dev teams — ensuring
-						every release feels effortless
+						<span className='bg-accent-foreground rounded-xs p-1 px-2'>
+							Checklist4Devs
+						</span>{' '}
+						has become the silent partner of modern dev teams — ensuring every release
+						feels effortless
 					</p>
 
 					<div className='flex items-center gap-2 self-start pt-10'>

@@ -31,7 +31,7 @@ export const useCreateProject = () => {
 	const { user } = useAuth()
 
 	const defaultValues = {
-		groupId: '',
+		groupId: user?.groups?.[0].id || '',
 		isPublic: true,
 		name: '',
 		password: '',

@@ -68,6 +68,7 @@ export const useGroups = () => {
 		projects: filteredProjects,
 		groupsIsLoading,
 		projectsIsLoading,
-		handleChange: setSearchValue
+		handleChange: setSearchValue,
+		debouncedValue
 	}
 }

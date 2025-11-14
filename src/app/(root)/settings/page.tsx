@@ -1,61 +1,28 @@
-'use client'
+import { cookies } from 'next/headers'
 
-import Link from 'next/link'
-import { FC } from 'react'
+import { Delete, Edit } from '@/widgets/account-forms'
 
-const faqs = [
-	{
-		question: 'How do I create a project?',
-		answer: 'Go to the Projects page, click "Create Project", fill in the required fields, and submit.'
-	},
-	{
-		question: 'Why am I seeing an error on Vercel?',
-		answer: 'Make sure Prisma is only used on the server. Client-side code should not import Prisma Client or generated enums directly.'
-	},
-	{
-		question: 'How do I reset my password?',
-		answer: 'Navigate to your profile settings and click "Reset Password". Follow the instructions in the email you receive.'
-	}
-]
+import { jwtService } from '@/shared/lib/services/jwt-service'
+import { userService } from '@/shared/lib/services/user-service'
+import { Section } from '@/shared/ui'
 
-const HelpPage: FC = () => {
+export default async function Page() {
+	const token = (await cookies()).get('x-access-token')?.value || ''
+	const { userId } = jwtService.decode(token)
+
+	const user = await userService.findById(userId)
+
+	if (!user)
+		return (
+			<Section className='text-secondary mt-10 flex h-full grow flex-col items-center justify-center overflow-hidden text-xl'>
+				User with this ID: #{userId} is not found
+			</Section>
+		)
+
 	return (
-		<div className='mx-auto max-w-4xl space-y-6 p-6'>
-			<h1 className='text-3xl font-bold'>Help & FAQ</h1>
-			<p className='text-gray-500'>
-				Here you can find answers to the most common questions. If you need further
-				assistance, feel free to{' '}
-				<Link href='/contact' className='text-blue-500 underline'>
-					contact our support team
-				</Link>
-				.
-			</p>
-
-			<section className='space-y-4'>
-				{faqs.map((faq, idx) => (
-					<div key={idx} className='rounded-lg border bg-gray-50 p-4'>
-						<h2 className='font-semibold'>{faq.question}</h2>
-						<p className='mt-1 text-gray-600'>{faq.answer}</p>
-					</div>
-				))}
-			</section>
-
-			<section className='mt-6'>
-				<h2 className='mb-2 text-xl font-semibold'>Quick Links</h2>
-				<ul className='list-inside list-disc space-y-1 text-blue-500'>
-					<li>
-						<Link href='/projects'>Go to Projects</Link>
-					</li>
-					<li>
-						<Link href='/profile'>Your Profile Settings</Link>
-					</li>
-					<li>
-						<Link href='/contact'>Contact Support</Link>
-					</li>
-				</ul>
-			</section>
-		</div>
+		<Section className='mt-10'>
+			<Edit user={user} />
+			<Delete user={user} />
+		</Section>
 	)
 }
-
-export default HelpPage

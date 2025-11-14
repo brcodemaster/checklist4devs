@@ -71,7 +71,7 @@ export const Sidebar: React.FC = () => {
 										'group-hover/aside:invisible group-hover/aside:opacity-0'
 								)}
 							>
-								Toggle on hover
+								Collapse sidebar
 							</span>
 						</Button>
 					</li>

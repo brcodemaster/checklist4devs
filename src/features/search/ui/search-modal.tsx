@@ -3,7 +3,7 @@
 import { Boxes, ChevronDown, Search, User, Users } from 'lucide-react'
 import Link from 'next/link'
 
-import { Input } from '@/shared/ui'
+import { DialogClose, Input } from '@/shared/ui'
 
 import { useSearch } from '../model'
 
@@ -33,13 +33,15 @@ export const SearchModal: React.FC = () => {
 								key={u.id}
 								className='hover:bg-muted-secondary flex w-full items-center justify-between rounded-sm p-1 px-2'
 							>
-								<Link
-									href={`/users/${u.id}`}
-									className='flex w-full items-center gap-2'
-								>
-									<User className='size-4 stroke-white' />
-									{u.userName}
-								</Link>
+								<DialogClose asChild>
+									<Link
+										href={`/users/${u.id}`}
+										className='flex w-full items-center gap-2'
+									>
+										<User className='size-4 stroke-white' />
+										{u.userName}
+									</Link>
+								</DialogClose>
 								<ChevronDown className='size-4 -rotate-90 stroke-white' />
 							</li>
 						))}
@@ -56,13 +58,15 @@ export const SearchModal: React.FC = () => {
 								key={p.id}
 								className='hover:bg-muted-secondary flex w-full items-center justify-between rounded-sm p-1 px-2'
 							>
-								<Link
-									href={`/projects/${p.id}`}
-									className='flex w-full items-center gap-2'
-								>
-									<Boxes className='size-4 stroke-white' /> {p.name}
-								</Link>{' '}
-								<ChevronDown className='size-4 -rotate-90 stroke-white' />
+								<DialogClose asChild>
+									<Link
+										href={`/projects/${p.id}`}
+										className='flex w-full items-center gap-2'
+									>
+										<Boxes className='size-4 stroke-white' /> {p.name}
+									</Link>{' '}
+									<ChevronDown className='size-4 -rotate-90 stroke-white' />
+								</DialogClose>
 							</li>
 						))}
 					</ul>
@@ -78,14 +82,16 @@ export const SearchModal: React.FC = () => {
 								key={g.id}
 								className='hover:bg-muted-secondary flex w-full items-center justify-between rounded-sm p-1 px-2'
 							>
-								<Link
-									href={`/groups/${g.id}`}
-									className='flex w-full items-center gap-2'
-								>
-									<Users className='size-4 stroke-white' />
-									{g.name}
-								</Link>{' '}
-								<ChevronDown className='size-4 -rotate-90 stroke-white' />
+								<DialogClose asChild>
+									<Link
+										href={`/groups/${g.id}`}
+										className='flex w-full items-center gap-2'
+									>
+										<Users className='size-4 stroke-white' />
+										{g.name}
+									</Link>{' '}
+									<ChevronDown className='size-4 -rotate-90 stroke-white' />
+								</DialogClose>
 							</li>
 						))}
 					</ul>

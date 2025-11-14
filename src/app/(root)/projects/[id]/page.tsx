@@ -58,49 +58,57 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>
 			<Section className='mt-10 flex grow flex-col'>
-				<div className='flex items-center justify-between'>
-					<h2 className='flex items-center justify-start gap-2 text-2xl text-white'>
-						{project.name}
-						<Badge
-							variant='secondary'
-							className='font-ibm bg-muted-secondary hidden text-center text-[10px] text-white md:flex'
-						>
-							<Boxes className='stroke-white' /> {project.group.name}
-						</Badge>
-						<Badge
-							variant='secondary'
-							className='font-ibm bg-muted-secondary hidden text-center text-[10px] text-white md:flex'
-						>
-							<Bolt className='stroke-white' /> {project.type.replaceAll('_', ' ')}
-						</Badge>
-						<Badge
-							variant='secondary'
-							className='font-ibm bg-muted-secondary hidden text-center text-[10px] text-white sm:flex'
-						>
-							<Icon className='stroke-white' /> {status.replaceAll('_', ' ')}
-						</Badge>
-						{project.links.map((link, idx) => {
-							const url = new URL(link).hostname
+				<div className='flex items-center justify-between gap-2'>
+					<div className='invisible-scroll relative flex w-full items-center gap-1 overflow-hidden'>
+						<h2 className='flex items-center justify-start gap-2 text-2xl whitespace-nowrap text-white'>
+							{project.name}
+						</h2>
+						<div className='relative flex w-full items-center gap-1 overflow-x-auto pl-2'>
+							<Badge
+								variant='secondary'
+								className='font-ibm bg-muted-secondary hidden text-center text-[10px] text-white md:flex'
+							>
+								<Boxes className='stroke-white' /> {project.group.name}
+							</Badge>
+							<Badge
+								variant='secondary'
+								className='font-ibm bg-muted-secondary hidden text-center text-[10px] text-white md:flex'
+							>
+								<Bolt className='stroke-white' />{' '}
+								{project.type.replaceAll('_', ' ')}
+							</Badge>
+							<Badge
+								variant='secondary'
+								className='font-ibm bg-muted-secondary hidden text-center text-[10px] text-white sm:flex'
+							>
+								<Icon className='stroke-white' /> {status.replaceAll('_', ' ')}
+							</Badge>
+							{project.links.map((link, idx) => {
+								const url = new URL(link).hostname
 
-							return (
-								<Badge
-									className='font-ibm bg-muted-secondary! group/link hidden w-8 justify-start gap-1 text-[10px] text-white hover:w-fit sm:flex'
-									key={idx}
-									variant='secondary'
-									asChild
-								>
-									<Link href={link}>
-										<LinkIcon className='shrink-0' />
-										<span className='opacity-0 duration-200 group-hover/link:opacity-100'>
-											{url}
-										</span>
-									</Link>
-								</Badge>
-							)
-						})}
-					</h2>
+								return (
+									<Badge
+										className='font-ibm bg-muted-secondary! hidden justify-start gap-1 text-[10px] text-white sm:flex'
+										key={idx}
+										variant='secondary'
+										asChild
+									>
+										<Link href={link}>
+											<LinkIcon className='shrink-0' />
+											<span>{url}</span>
+										</Link>
+									</Badge>
+								)
+							})}
+						</div>
+						<div className='from-background absolute top-1/2 -right-0.5 z-0 h-full w-9 -translate-y-1/2 bg-linear-to-l to-transparent' />
+					</div>
 
-					<Button variant='ghost' className='group/settings h-[38px]' asChild>
+					<Button
+						variant='ghost'
+						className='group/settings relative z-1 h-[38px] shrink-0'
+						asChild
+					>
 						<Link
 							href={`${id}/settings`}
 							className='border-muted-secondary w-fit items-center gap-1 border hover:border-white/30'

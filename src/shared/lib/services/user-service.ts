@@ -74,11 +74,13 @@ export class UserService {
 	): Promise<Prisma.UserGetPayload<T>> {
 		const params = args ?? {}
 
+		const { password } = await this.findById(id)
+
 		return (await prisma.user.update({
 			where: {
 				id
 			},
-			data: { ...payload, id },
+			data: { ...payload, password: payload.password || password, id },
 			...params
 		})) as Prisma.UserGetPayload<T>
 	}

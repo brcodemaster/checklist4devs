@@ -89,13 +89,15 @@ export const useProjectForms = (
 				}
 			)
 
-			return { previousGroup }
+			const toastId = toast.loading('Updating project...')
+
+			return { previousGroup, toastId }
 		},
-		onSuccess: () => {
+		onSuccess: (_, __, context) => {
 			queryClient.invalidateQueries({ queryKey: ['group', id] })
 			queryClient.invalidateQueries({ queryKey: ['groups'] })
 
-			return toast.success('Group updated successfully')
+			return toast.success('Group updated successfully', { id: context.toastId })
 		},
 		onError: async (err, _, context) => {
 			if (context?.previousGroup)
@@ -104,11 +106,11 @@ export const useProjectForms = (
 			if (err instanceof HTTPError) {
 				const body = await err.response.json().catch(() => null)
 				if (body?.message) {
-					return toast.error(body.message)
+					return toast.error(body.message, { id: context?.toastId })
 				}
 			}
 
-			return toast.error('Something went wrong')
+			return toast.error('Something went wrong', { id: context?.toastId })
 		}
 	})
 
@@ -146,15 +148,17 @@ export const useProjectForms = (
 				return old.filter(group => group.groupId !== id)
 			})
 
-			return { previousGroup, previousProjects }
+			const toastId = toast.loading('Deleting project...')
+
+			return { previousGroup, previousProjects, toastId }
 		},
-		onSuccess: async () => {
+		onSuccess: async (_, __, context) => {
 			await queryClient.invalidateQueries({ queryKey: ['groups'] })
 			await queryClient.invalidateQueries({ queryKey: ['projects'] })
 
 			router.push('/')
 
-			return toast.success('Group deleted successfully')
+			return toast.success('Project deleted successfully', { id: context.toastId })
 		},
 		onError: async (err, _, context) => {
 			if (context?.previousGroup && context.previousProjects) {
@@ -165,11 +169,11 @@ export const useProjectForms = (
 			if (err instanceof HTTPError) {
 				const body = await err.response.json().catch(() => null)
 				if (body?.message) {
-					return toast.error(body.message)
+					return toast.error(body.message, { id: context?.toastId })
 				}
 			}
 
-			return toast.error('Something went wrong')
+			return toast.error('Something went wrong', { id: context?.toastId })
 		}
 	})
 

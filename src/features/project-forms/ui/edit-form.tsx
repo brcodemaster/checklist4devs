@@ -3,6 +3,7 @@
 import { Minus, Plus } from 'lucide-react'
 
 import { PROJECT_STATUS, PROJECT_TYPE } from '@/shared/constants'
+import { cn } from '@/shared/lib'
 import {
 	Button,
 	Form,
@@ -169,7 +170,12 @@ export const EditForm: React.FC<Props> = ({ project }) => {
 						name='links'
 						render={({ field: _field }) => (
 							<FormItem className='grid px-6 lg:grid-cols-2'>
-								<FormLabel className='text-sm font-light text-white lg:text-base'>
+								<FormLabel
+									className={cn(
+										'text-sm font-light text-white lg:text-base',
+										fields.length > 1 ? 'self-start' : 'self-center'
+									)}
+								>
 									Links
 								</FormLabel>
 								<FormControl>
@@ -211,10 +217,10 @@ export const EditForm: React.FC<Props> = ({ project }) => {
 				</div>
 				<div className='border-t-muted-secondary/80 flex items-center justify-end gap-2 border-t p-4 px-6'>
 					<Button size='sm' variant='secondary' type='reset' onClick={handleReset}>
-						Cancel
+						Reset
 					</Button>
 					<Button size='sm' type='submit'>
-						Save
+						Update
 					</Button>
 				</div>
 			</form>
