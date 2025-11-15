@@ -16,7 +16,8 @@ const formSchema = z.object({
 		.string({ error: 'Required field' })
 		.min(3, { error: 'Task must be at least 3 characters' }),
 	assignerId: z.string(),
-	deadline: z.date()
+	deadline: z.date(),
+	tag: z.optional(z.string({ error: 'Required field' }))
 })
 
 export type TForm = z.infer<typeof formSchema>
@@ -27,7 +28,8 @@ export const useCreateTask = (projectId: string, users: User[]) => {
 	const defaultValues = {
 		text: '',
 		assignerId: users[0].id,
-		deadline: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)
+		deadline: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+		tag: ''
 	} as TForm
 
 	const form = useForm<TForm>({
@@ -45,6 +47,7 @@ export const useCreateTask = (projectId: string, users: User[]) => {
 			const json = {
 				deadlineAt: payload.deadline,
 				text: payload.text,
+				tag: payload.tag,
 				assignerId: payload.assignerId,
 				projectId,
 				creatorId: user?.id

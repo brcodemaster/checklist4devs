@@ -13,7 +13,7 @@ export default function RootLayout({
 			<Header />
 			<div className='relative flex w-full grow overflow-hidden'>
 				<Sidebar />
-				<main className='flex h-full w-full flex-col overflow-y-auto pb-5 pl-0 md:pl-[51px]'>
+				<main className='custom-scroll flex h-full w-full flex-col overflow-y-auto pb-5 pl-0 md:pl-[51px]'>
 					{children}
 				</main>
 			</div>

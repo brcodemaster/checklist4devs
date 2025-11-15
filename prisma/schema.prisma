@@ -93,6 +93,7 @@ model Task {
   index Int    @default(autoincrement())
 
   text String
+  tag  String?
 
   status TaskStatus @default(IN_PROGRESS)
 

@@ -14,6 +14,7 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
+	Input,
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
@@ -78,6 +79,24 @@ export const EditTaskForm: React.FC<{
 								<Textarea
 									className='placeholder:text-secondary-foreground h-9 bg-neutral-800 placeholder:text-sm md:h-10'
 									placeholder='Bear coders'
+									{...field}
+								/>
+							</FormControl>
+							<FormMessage className='col-end-3' />
+						</FormItem>
+					)}
+				/>
+
+				<FormField
+					control={form.control}
+					name='tag'
+					render={({ field }) => (
+						<FormItem className='p-0 lg:grid-cols-2'>
+							<FormLabel className='text-sm font-light text-white'>Tag</FormLabel>
+							<FormControl>
+								<Input
+									className='placeholder:text-secondary-foreground h-9 bg-neutral-800 placeholder:text-sm md:h-10'
+									placeholder='Enter tag'
 									{...field}
 								/>
 							</FormControl>

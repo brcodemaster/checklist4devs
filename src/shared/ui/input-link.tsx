@@ -34,6 +34,8 @@ import { cn } from '../lib'
 
 // InputLink.tsx
 
+// InputLink.tsx
+
 type Props = {
 	handleClick: (value: string) => void
 	className?: string
@@ -55,7 +57,7 @@ export function InputLink({ handleClick, className, placeholder, icon: Icon, ...
 			/>
 			<Button
 				type='button'
-				className='border-muted-secondary absolute top-1/2 right-2 size-6 -translate-y-1/2 cursor-pointer rounded-sm border p-1 opacity-0 duration-200 group-hover/input:opacity-100'
+				className='border-muted-secondary absolute top-1/2 right-2 size-6 -translate-y-1/2 cursor-pointer rounded-sm border p-1 duration-200 lg:opacity-0 lg:group-hover/input:opacity-100'
 				onClick={() => {
 					try {
 						new URL(inputValue)

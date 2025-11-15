@@ -62,7 +62,7 @@ export const CreateProjectForm: React.FC<{
 							</FormLabel>
 							<FormControl>
 								<Select
-									defaultValue={groups?.[0].id ?? undefined}
+									defaultValue={groups?.[0]?.id ?? undefined}
 									onValueChange={field.onChange}
 								>
 									<SelectTrigger className='w-full'>

@@ -36,8 +36,8 @@ export async function up() {
 			projects: {
 				create: {
 					id: '1',
-					password: hashSync('123456', 10),
 					name: 'Resume builder',
+					password: hashSync('123456', 10),
 					status: 'IN_DEVELOPMENT',
 					type: ProjectType.WEB_APP,
 					isPublic: false,
@@ -51,6 +51,7 @@ export async function up() {
 							{
 								id: '1',
 								text: 'Setup the initial project repository, configure Git, initialize README, add .gitignore, and create the main branch for development with all collaborators having access permissions properly configured.',
+								tag: '123',
 								status: 'COMPLETED',
 								assigner: { connect: { id: '1' } },
 								creator: { connect: { id: '1' } },
@@ -59,6 +60,7 @@ export async function up() {
 							{
 								id: '2',
 								text: 'Design database schema including users, projects, tasks, and their relationships, make sure to include all necessary constraints, indexes, and foreign keys to ensure data integrity and optimal performance in all queries.',
+								tag: 'Backend',
 								status: 'IN_PROGRESS',
 								assigner: { connect: { id: '2' } },
 								creator: { connect: { id: '1' } },
@@ -67,6 +69,7 @@ export async function up() {
 							{
 								id: '3',
 								text: 'Implement backend logic for user authentication, registration, password reset, role management, and API token generation, ensuring security best practices including hashing passwords, validating input, and preventing unauthorized access to sensitive data.',
+								tag: 'Security',
 								status: 'IN_PROGRESS',
 								assigner: { connect: { id: '3' } },
 								creator: { connect: { id: '1' } },
@@ -75,6 +78,7 @@ export async function up() {
 							{
 								id: '4',
 								text: 'Write comprehensive API documentation covering all endpoints, parameters, response structures, error codes, examples, and authentication methods, so that frontend developers, QA engineers, and external clients can integrate with the backend easily and correctly.',
+								tag: 'Documentation',
 								status: 'IN_PROGRESS',
 								assigner: { connect: { id: '4' } },
 								creator: { connect: { id: '1' } },
@@ -83,6 +87,7 @@ export async function up() {
 							{
 								id: '5',
 								text: 'Setup Next.js frontend project, configure TypeScript, Tailwind CSS, ESLint, Prettier, Husky hooks, and folder structure for scalable development and maintainability with multiple teams working in parallel on different modules.',
+								tag: 'Frontend Setup',
 								status: 'IN_PROGRESS',
 								assigner: { connect: { id: '2' } },
 								creator: { connect: { id: '1' } },
@@ -91,6 +96,7 @@ export async function up() {
 							{
 								id: '6',
 								text: 'Create reusable React components for dashboard, user profile, project cards, task lists, modals, notifications, and forms, following best practices for accessibility, performance optimization, state management, and responsive design across all devices.',
+								tag: 'Frontend',
 								status: 'IN_PROGRESS',
 								assigner: { connect: { id: '3' } },
 								creator: { connect: { id: '1' } },
@@ -99,6 +105,7 @@ export async function up() {
 							{
 								id: '7',
 								text: 'Write unit and integration tests for backend services, API routes, database models, and utility functions, ensuring coverage for all edge cases, error handling, and expected behavior using Jest and testing-library for maintainable and reliable code.',
+								tag: 'Testing',
 								status: 'COMPLETED',
 								assigner: { connect: { id: '4' } },
 								creator: { connect: { id: '2' } },
@@ -107,6 +114,7 @@ export async function up() {
 							{
 								id: '8',
 								text: 'Setup CI/CD pipeline with GitHub Actions, automate testing, linting, building, and deployment processes for frontend and backend, integrate notifications for failures, and ensure smooth and safe deployment to staging and production environments.',
+								tag: 'DevOps',
 								status: 'IN_PROGRESS',
 								assigner: { connect: { id: '5' } },
 								creator: { connect: { id: '2' } },
@@ -115,6 +123,7 @@ export async function up() {
 							{
 								id: '9',
 								text: 'Deploy the application to staging server, configure environment variables, SSL certificates, reverse proxy, domain routing, logging, and monitoring to ensure secure and stable access for QA team and early testers with minimal downtime.',
+								tag: 'Deployment',
 								status: 'FIRED',
 								assigner: { connect: { id: '1' } },
 								creator: { connect: { id: '3' } },
@@ -123,6 +132,7 @@ export async function up() {
 							{
 								id: '10',
 								text: 'Implement user authentication flows including signup, login, forgot password, and logout, integrate frontend with backend, handle validation and error messages, and ensure secure token storage and session management across multiple devices.',
+								tag: 'Authentication',
 								status: 'IN_PROGRESS',
 								assigner: { connect: { id: '2' } },
 								creator: { connect: { id: '3' } },

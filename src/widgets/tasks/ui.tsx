@@ -13,14 +13,7 @@ export const Tasks: React.FC<{
 		include: { tasks: true; group: { include: { developers: true } } }
 	}>
 }> = ({ project }) => {
-	const { data, handleChange, filteredTasks, usersObject } = useTasks(project)
-
-	if (filteredTasks.length === 0)
-		return (
-			<div className='text-secondary-foreground flex min-h-36 grow flex-col items-center justify-center gap-3 text-center'>
-				<CreateTaskTrigger users={project.group.developers} projectId={project.id} />
-			</div>
-		)
+	const { data, handleChange, filteredTasks, usersObject, debouncedValue } = useTasks(project)
 
 	return (
 		<>
@@ -30,9 +23,9 @@ export const Tasks: React.FC<{
 				<CreateTaskTrigger users={project.group.developers} projectId={project.id} />
 			</div>
 
-			<div className='flex flex-col gap-2 pt-5 md:grid md:grid-cols-2 lg:grid-cols-3'>
-				{filteredTasks.length > 0 &&
-					filteredTasks.map((task, idx) => (
+			{filteredTasks.length > 0 ? (
+				<div className='flex flex-col gap-2 pt-5 md:grid md:grid-cols-2 lg:grid-cols-3'>
+					{filteredTasks.map((task, idx) => (
 						<TaskCard
 							key={task.id}
 							task={task}
@@ -42,7 +35,16 @@ export const Tasks: React.FC<{
 							users={project.group.developers}
 						/>
 					))}
-			</div>
+				</div>
+			) : debouncedValue.trim() ? (
+				<div className='text-secondary-foreground flex min-h-36 grow flex-col items-center justify-center gap-3 text-center'>
+					Results for &quot;{debouncedValue}&quot; not found
+				</div>
+			) : (
+				<div className='text-secondary-foreground flex min-h-36 grow flex-col items-center justify-center gap-3 text-center'>
+					Tasks not found
+				</div>
+			)}
 		</>
 	)
 }

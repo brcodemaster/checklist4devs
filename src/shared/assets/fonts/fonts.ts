@@ -8,7 +8,8 @@ export const circular = localFont({
 	],
 	display: 'swap',
 	preload: false,
-	variable: '--circular-font-variable'
+	variable: '--circular-font-variable',
+	fallback: ['sans-serif']
 })
 
 export const ibmPlex = IBM_Plex_Mono({

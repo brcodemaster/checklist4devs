@@ -20,6 +20,7 @@ const formSchema = z.object({
 		.min(3, { error: 'Task must be at least 3 characters' }),
 	assignerId: z.string(),
 	deadline: z.date(),
+	tag: z.optional(z.string({ error: 'Required field' })),
 	projectId: z.string()
 })
 
@@ -36,6 +37,7 @@ export const useEditTask = (task: Task) => {
 		assignerId: task.assignerId,
 		deadline: new Date(task.deadlineAt),
 		projectId: id,
+		tag: task.tag || '',
 		text: task.text
 	} as TForm
 

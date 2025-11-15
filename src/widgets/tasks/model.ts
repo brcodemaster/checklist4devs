@@ -50,10 +50,12 @@ export const useTasks = (
 
 	const filteredTasks =
 		debouncedValue && data
-			? data.tasks.filter(task =>
-					task.text.toLowerCase().includes(debouncedValue.toLowerCase())
+			? data.tasks.filter(
+					task =>
+						task.text.toLowerCase().includes(debouncedValue.toLowerCase()) ||
+						task.tag?.toLocaleLowerCase().includes(debouncedValue.toLocaleLowerCase())
 				)
 			: data.tasks
 
-	return { data, handleChange: setSearchValue, filteredTasks, usersObject }
+	return { data, handleChange: setSearchValue, filteredTasks, usersObject, debouncedValue }
 }

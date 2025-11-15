@@ -63,7 +63,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 						<h2 className='flex items-center justify-start gap-2 text-2xl whitespace-nowrap text-white'>
 							{project.name}
 						</h2>
-						<div className='relative flex w-full items-center gap-1 overflow-x-auto pl-2'>
+						<div className='invisible-scroll relative flex w-full items-center gap-1 overflow-x-auto pl-2'>
 							<Badge
 								variant='secondary'
 								className='font-ibm bg-muted-secondary hidden text-center text-[10px] text-white md:flex'

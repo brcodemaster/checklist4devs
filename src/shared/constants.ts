@@ -17,14 +17,14 @@ export const mobileNavigation = [
 		link: '/'
 	},
 	{
-		icon: Boxes,
-		name: 'Projects',
-		link: '/projects'
-	},
-	{
 		icon: Folders,
 		name: 'Groups',
 		link: '/groups'
+	},
+	{
+		icon: Boxes,
+		name: 'Projects',
+		link: '/projects'
 	},
 	{
 		icon: Settings,

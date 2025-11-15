@@ -9,7 +9,7 @@ export default function Page() {
 				<div>
 					<h3 className='text-3xl'>Welcome back</h3>
 					<p className='text-secondary pt-2 text-sm font-medium'>
-						Sign in to your account
+						Sign in to your account{' '}
 					</p>
 				</div>
 

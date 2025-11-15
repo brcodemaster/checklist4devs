@@ -22,7 +22,7 @@ const formSchema = z.object({
 		.min(3, { error: 'Group password must be at least 3 characters' }),
 	isPublic: z.boolean(),
 	type: z.enum(PROJECT_TYPE),
-	groupId: z.string()
+	groupId: z.string().nonempty({ error: 'Required field' })
 })
 
 export type TForm = z.infer<typeof formSchema>
@@ -31,7 +31,7 @@ export const useCreateProject = () => {
 	const { user } = useAuth()
 
 	const defaultValues = {
-		groupId: user?.groups?.[0].id || '',
+		groupId: user?.groups?.[0]?.id || '',
 		isPublic: true,
 		name: '',
 		password: '',

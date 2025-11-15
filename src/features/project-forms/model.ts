@@ -94,7 +94,8 @@ export const useProjectForms = (
 			return { previousGroup, toastId }
 		},
 		onSuccess: (_, __, context) => {
-			queryClient.invalidateQueries({ queryKey: ['group', id] })
+			queryClient.invalidateQueries({ queryKey: ['project', id] })
+			queryClient.invalidateQueries({ queryKey: ['projects'] })
 			queryClient.invalidateQueries({ queryKey: ['groups'] })
 
 			return toast.success('Group updated successfully', { id: context.toastId })
