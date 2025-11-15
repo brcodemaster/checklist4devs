@@ -49,6 +49,8 @@ export const useEditTask = (task: Task) => {
 				payload
 			}
 
+			console.log(json)
+
 			const res = await kyInstance.patch(`tasks/update`, { json }).json<TApiResponse<Task>>()
 
 			return res.data
@@ -120,7 +122,8 @@ export const useEditTask = (task: Task) => {
 			...task,
 			assignerId: data.assignerId,
 			deadlineAt: data.deadline,
-			text: data.text
+			text: data.text,
+			tag: data.tag
 		})
 	}
 

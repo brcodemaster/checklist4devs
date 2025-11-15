@@ -98,8 +98,6 @@ export const useAuthContext = () => {
 		try {
 			const user = await kyInstance.get('auth/me').json<TSafeUser>()
 
-			console.log(user)
-
 			setUser(user)
 			setIsAuthenticated(true)
 		} catch (error) {

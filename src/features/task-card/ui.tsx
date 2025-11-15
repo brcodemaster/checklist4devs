@@ -1,6 +1,7 @@
 'use client'
 
 import { Pen, Trash } from 'lucide-react'
+import Image from 'next/image'
 
 import { cn } from '@/shared/lib/utils'
 import { Button, Checkbox, Tooltip } from '@/shared/ui'
@@ -22,16 +23,6 @@ type Props = {
 export const TaskCard: React.FC<Props> = ({ task, index, assignee, creator, users }) => {
 	const { handleDelete, handleUpdateStatus, isBurningDayNear, prettyDateMaker, isCreator } =
 		useTaskCard(task)
-
-	if (task.text === 'new task and project') {
-		console.log(`
-				${assignee}\n
-
-		${task.text}\n
-		
-		${task.status}
-		`)
-	}
 
 	return (
 		<div
@@ -64,11 +55,12 @@ export const TaskCard: React.FC<Props> = ({ task, index, assignee, creator, user
 							<Tooltip>
 								<TooltipTrigger className='cursor-pointer'>
 									<div className='relative ml-2 h-4 w-4' suppressHydrationWarning>
-										<img
+										<Image
 											src='/fire.gif'
 											alt='Fire gif'
 											width={16}
 											height={16}
+											unoptimized
 											className='size-full object-cover'
 											unselectable='off'
 										/>
