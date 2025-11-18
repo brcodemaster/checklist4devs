@@ -4,15 +4,19 @@ import { useState } from 'react'
 import { useDebounce } from 'react-use'
 
 import { kyInstance } from '@/shared/api'
+import { isBurningDayNear } from '@/shared/lib/utils'
 import { TApiResponse } from '@/shared/types/default-types'
 
-import { Prisma } from '@/generated/client'
+import { Prisma, TaskStatus } from '@/generated/client'
 
 export const useTasks = (
 	project: Prisma.ProjectGetPayload<{
 		include: { tasks: true; group: { include: { developers: true } } }
 	}>
 ) => {
+	const [dateValue, setDateValue] = useState<'today' | 'month' | 'all' | 'week'>('all')
+	const [statusValue, setStatusValue] = useState<TaskStatus | 'all' | 'burning'>('all')
+
 	const [searchValue, setSearchValue] = useState('')
 	const [debouncedValue, setDebouncedValue] = useState('')
 
@@ -48,7 +52,7 @@ export const useTasks = (
 		project.group.developers.map(developer => [developer.id, developer.userName])
 	)
 
-	const filteredTasks =
+	const tasks =
 		debouncedValue && data
 			? data.tasks.filter(
 					task =>
@@ -57,5 +61,49 @@ export const useTasks = (
 				)
 			: data.tasks
 
-	return { data, handleChange: setSearchValue, filteredTasks, usersObject, debouncedValue }
+	const dateTasks = tasks.filter(task => {
+		const createdAt = new Date(task.createdAt)
+		const now = new Date()
+
+		if (dateValue === 'all') return true
+
+		if (dateValue === 'today') {
+			return createdAt.toDateString() === now.toDateString()
+		}
+
+		if (dateValue === 'week') {
+			const diff = now.getTime() - createdAt.getTime()
+			const days = diff / (1000 * 60 * 60 * 24)
+			return days <= 7
+		}
+
+		if (dateValue === 'month') {
+			const diff = now.getTime() - createdAt.getTime()
+			const days = diff / (1000 * 60 * 60 * 24)
+			return days <= 30
+		}
+	})
+
+	const statusTasks = dateTasks.filter(task => {
+		if (statusValue === 'all') return true
+
+		if (statusValue === 'burning')
+			return isBurningDayNear(task.deadlineAt) && task.status === 'IN_PROGRESS'
+
+		return task.status === statusValue
+	})
+
+	const filteredTasks = statusTasks
+
+	return {
+		data,
+		handleChange: setSearchValue,
+		filteredTasks,
+		usersObject,
+		debouncedValue,
+		statusValue,
+		setStatusValue,
+		dateValue,
+		setDateValue
+	}
 }

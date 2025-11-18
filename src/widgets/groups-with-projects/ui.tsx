@@ -43,8 +43,8 @@ export const GroupsWithProjects: React.FC = () => {
 				</div>
 			) : groups.length === 0 && projects.length > 0 ? (
 				<>
-					<RenderGroups groups={groups} isLoading={groupsIsLoading} />
 					<RenderProjects projects={projects} isLoading={projectsIsLoading} />
+					<RenderGroups groups={groups} isLoading={groupsIsLoading} />
 				</>
 			) : (
 				<>

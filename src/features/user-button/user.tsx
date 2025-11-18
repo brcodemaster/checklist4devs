@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { LogoutButton } from '@/features/logout-button'
 
 import { userNavigation } from '@/shared/constants'
-import { useAuth } from '@/shared/contexts/auth-context'
 import {
 	Avatar,
 	AvatarFallback,
@@ -15,11 +14,13 @@ import {
 	PopoverTrigger
 } from '@/shared/ui'
 
+import { useUserButton } from './model'
+
 export const UserButton: React.FC = () => {
-	const { user } = useAuth()
+	const { isOpen, onOpenChange, user } = useUserButton()
 
 	return (
-		<Popover>
+		<Popover open={isOpen} onOpenChange={onOpenChange}>
 			<PopoverTrigger>
 				<Avatar className='size-7 cursor-pointer'>
 					<AvatarImage src='/user.png' className='' />
@@ -33,7 +34,7 @@ export const UserButton: React.FC = () => {
 				</div>
 				<ul className='border-muted-secondary my-1 border-y py-1'>
 					{userNavigation.map(({ icon: Icon, link, name }, idx) => (
-						<li key={name + idx}>
+						<li key={name + idx} onClick={() => onOpenChange(!isOpen)}>
 							<Link
 								href={link}
 								className='hover:bg-secondary-foreground/30 group/item flex items-center gap-1 rounded-sm px-2 py-1.5 text-xs'

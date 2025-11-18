@@ -17,9 +17,12 @@ import { User } from '@/generated/client'
 import { useCreateTask } from '../model'
 
 export const CreateTaskTrigger: React.FC<
-	{ users: User[]; projectId: string } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'>
-> = ({ users, projectId, ...props }) => {
-	const hook = useCreateTask(projectId, users)
+	{ users: User[]; projectId: string; lastIndex: number } & Omit<
+		ButtonHTMLAttributes<HTMLButtonElement>,
+		'onClick'
+	>
+> = ({ users, projectId, lastIndex, ...props }) => {
+	const hook = useCreateTask(projectId, users, lastIndex)
 
 	return (
 		<Dialog open={hook.isOpen} onOpenChange={() => hook.onOpenChange(!hook.isOpen)}>

@@ -10,13 +10,12 @@ export async function PATCH(request: NextRequest) {
 	try {
 		await authService.checkAuth(request)
 
-		const { id, payload, userId } = (await request.json()) as {
-			userId?: string
+		const { id, payload } = (await request.json()) as {
 			id: string
 			payload: Prisma.TaskUncheckedUpdateInput
 		}
 
-		const task = await taskService.update(id, payload, userId)
+		const task = await taskService.updateStatus(id, payload)
 
 		return ApiResponse(task, 'Task updated successfully')
 	} catch (error) {

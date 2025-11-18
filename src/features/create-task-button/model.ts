@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { HTTPError } from 'ky'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -22,8 +23,10 @@ const formSchema = z.object({
 
 export type TForm = z.infer<typeof formSchema>
 
-export const useCreateTask = (projectId: string, users: User[]) => {
+export const useCreateTask = (projectId: string, users: User[], lastIndex: number) => {
 	const { user } = useAuth()
+
+	const router = useRouter()
 
 	const defaultValues = {
 		text: '',
@@ -50,6 +53,7 @@ export const useCreateTask = (projectId: string, users: User[]) => {
 				tag: payload.tag,
 				assignerId: payload.assignerId,
 				projectId,
+				index: lastIndex + 1,
 				creatorId: user?.id
 			} as Task
 
@@ -115,6 +119,7 @@ export const useCreateTask = (projectId: string, users: User[]) => {
 			toast.error('Failed to create the task. Please try again.', { id: context?.toastId })
 		},
 		onSuccess: async (_, __, context) => {
+			router.refresh()
 			await queryClient.invalidateQueries({ queryKey: ['project', projectId] })
 
 			setIsOpen(false)

@@ -10,6 +10,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { kyInstance } from '@/shared/api'
+import { useAuth } from '@/shared/contexts/auth-context'
 import { TApiResponse, TTaskUpdate } from '@/shared/types/default-types'
 
 import { Prisma, Task } from '@/generated/client'
@@ -30,6 +31,7 @@ export const useEditTask = (task: Task) => {
 	const [isOpen, setIsOpen] = useState(false)
 
 	const { id } = useParams<{ id: string }>()
+	const { user } = useAuth()
 
 	const queryClient = useQueryClient()
 
@@ -45,11 +47,10 @@ export const useEditTask = (task: Task) => {
 		mutationKey: ['editedTask', task.id],
 		mutationFn: async (payload: TTaskUpdate) => {
 			const json = {
+				userId: user?.id,
 				id: payload.id,
 				payload
 			}
-
-			console.log(json)
 
 			const res = await kyInstance.patch(`tasks/update`, { json }).json<TApiResponse<Task>>()
 

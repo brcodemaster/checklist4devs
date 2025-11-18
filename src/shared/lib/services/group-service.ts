@@ -119,7 +119,8 @@ export class GroupService {
 
 		const isAdmin = oldAdmins.some(oldAdmin => oldAdmin === userId)
 
-		if (!isAdmin) throw new ApiError(BASE_ERRORS.BadRequest, 'Only admins can update the group')
+		if (!isAdmin)
+			throw new ApiError(BASE_ERRORS.BadRequest, 'You must be an admin to update this group')
 
 		const adminIds = Array.from(new Set([...oldAdmins, ...newAdmins]))
 

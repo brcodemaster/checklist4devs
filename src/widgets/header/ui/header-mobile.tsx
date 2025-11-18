@@ -4,10 +4,10 @@ import Link from 'next/link'
 import { FeedbackButton } from '@/features/feedback'
 import { NotificationButton } from '@/features/notifications'
 import { SearchButton } from '@/features/search'
+import { UserButton } from '@/features/user-button'
 
 import { ActivePath } from '@/entities/active-path'
 import { MenuBar } from '@/entities/menu-bar'
-import { UserButton } from '@/entities/user'
 
 import { Button, Logo, Section } from '@/shared/ui'
 

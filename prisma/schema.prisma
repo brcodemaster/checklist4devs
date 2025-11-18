@@ -90,7 +90,7 @@ model Project {
 
 model Task {
   id    String @id @default(uuid())
-  index Int    @default(autoincrement())
+  index Int
 
   text String
   tag  String?

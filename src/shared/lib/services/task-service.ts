@@ -75,6 +75,29 @@ export class TaskService {
 	): Promise<Prisma.TaskGetPayload<T>> {
 		const params = args ?? {}
 
+		const project = await prisma.project.findUnique({
+			where: {
+				id: payload.projectId
+			},
+			include: { group: { include: { developers: true } } }
+		})
+
+		if (!project)
+			throw new ApiError(
+				BASE_ERRORS.NotFound,
+				`Project with this ID: #${payload.projectId} is not found`
+			)
+
+		const isCreatorHasIsGroup = project.group.developers.some(
+			developer => developer.id === payload.creatorId
+		)
+
+		if (!isCreatorHasIsGroup)
+			throw new ApiError(
+				BASE_ERRORS.BadRequest,
+				'Only project members are allowed to create tasks'
+			)
+
 		return (await prisma.task.create({
 			data: payload,
 			...params
@@ -84,9 +107,64 @@ export class TaskService {
 	async update<T extends Prisma.TaskDefaultArgs>(
 		id: string,
 		payload: Prisma.TaskUncheckedUpdateInput,
+		userId?: string,
 		args?: Prisma.SelectSubset<T, Prisma.TaskDefaultArgs>
 	): Promise<Prisma.TaskGetPayload<T>> {
 		const params = args ?? {}
+
+		const task = await prisma.task.findUnique({
+			where: {
+				id
+			},
+			include: { project: { include: { group: { include: { developers: true } } } } }
+		})
+
+		if (!userId)
+			throw new ApiError(
+				BASE_ERRORS.BadRequest,
+				`Something went wrongSyntaxError: Unexpected end of JSON input`
+			)
+
+		const isMemberHasInGroup = task?.project.group.developers.some(
+			developer => developer.id === userId
+		)
+
+		if (!task)
+			throw new ApiError(BASE_ERRORS.NotFound, `Task with this ID: #${id} is not found`)
+
+		if (!isMemberHasInGroup)
+			throw new ApiError(
+				BASE_ERRORS.BadRequest,
+				'Only group members are allowed to update tasks'
+			)
+
+		if (task.status !== 'IN_PROGRESS')
+			throw new ApiError(BASE_ERRORS.NotFound, `You can update tasks that are in progress`)
+
+		return (await prisma.task.update({
+			where: {
+				id
+			},
+			data: { ...payload, id },
+			...params
+		})) as Prisma.TaskGetPayload<T>
+	}
+
+	async updateStatus<T extends Prisma.TaskDefaultArgs>(
+		id: string,
+		payload: Prisma.TaskUncheckedUpdateInput,
+		args?: Prisma.SelectSubset<T, Prisma.TaskDefaultArgs>
+	): Promise<Prisma.TaskGetPayload<T>> {
+		const params = args ?? {}
+
+		const task = await prisma.task.findUnique({
+			where: {
+				id
+			}
+		})
+
+		if (!task)
+			throw new ApiError(BASE_ERRORS.NotFound, `Task with this ID: #${id} is not found`)
 
 		return (await prisma.task.update({
 			where: {

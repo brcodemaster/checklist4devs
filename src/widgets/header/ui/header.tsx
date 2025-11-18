@@ -3,8 +3,7 @@ import Link from 'next/link'
 
 import { FeedbackButton } from '@/features/feedback'
 import { NotificationButton } from '@/features/notifications'
-
-import { UserButton } from '@/entities/user'
+import { UserButton } from '@/features/user-button'
 
 import { cn } from '@/shared/lib/utils'
 import { Button, Logo } from '@/shared/ui'

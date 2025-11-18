@@ -27,7 +27,7 @@ export const useTaskCard = (task: Task) => {
 			}
 
 			const res = await kyInstance
-				.patch('tasks/update', {
+				.patch('tasks/update-status', {
 					json
 				})
 				.json<TApiResponse<Task>>()
@@ -62,6 +62,7 @@ export const useTaskCard = (task: Task) => {
 								: t
 						)
 					}
+
 					return updatedProject
 				}
 			)
@@ -147,11 +148,6 @@ export const useTaskCard = (task: Task) => {
 			toast.success('Task deleted successfully.', { id: context?.toastId })
 		}
 	})
-
-	// не работает потому что если task status === FIRED то обновление не происходит потому что FIRED не принимает mutateUpdateAsync вообще
-	// useEffect(() => {
-	// 	if (isTaskBurned(task.status)) mutateAsyncUpdateStatus()
-	// }, [mutateAsyncUpdateStatus])
 
 	const handleUpdateStatus = () => {
 		if (task.assignerId !== user?.id) return
