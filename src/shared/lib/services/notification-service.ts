@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from '@/generated/client'
+import { Notification, Prisma, PrismaClient } from '@/generated/client'
 import { prisma } from '@/prisma-client'
 
 import { ApiError, BASE_ERRORS } from '../errors'
@@ -96,6 +96,28 @@ export class NotificationService {
 				id
 			},
 			data: { ...payload, id },
+			...params
+		})) as Prisma.NotificationGetPayload<T>
+	}
+
+	async send<T extends Prisma.NotificationDefaultArgs>(
+		email: string,
+		message: string,
+		args?: Prisma.SelectSubset<T, Prisma.NotificationDefaultArgs>
+	): Promise<Prisma.NotificationGetPayload<T>> {
+		const params = args ?? {}
+
+		if (email !== 'bekzodrn@mail.ru')
+			throw new ApiError(BASE_ERRORS.Forbidden, `The path is locked for you`)
+
+		const newNotification = {
+			title: 'Message from creator of Checklist4devs',
+			description: message,
+			isPublic: true
+		} as Notification
+
+		return (await prisma.notification.create({
+			data: { ...newNotification },
 			...params
 		})) as Prisma.NotificationGetPayload<T>
 	}

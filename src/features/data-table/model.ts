@@ -87,7 +87,7 @@ export const useDataTable = () => {
 			const json = {
 				id: groupId,
 				payload: {
-					admins: [userId]
+					admin: userId
 				}
 			}
 
@@ -145,7 +145,7 @@ export const useDataTable = () => {
 			if (err instanceof HTTPError) {
 				const body = await err.response.json().catch(() => null)
 				if (body?.message) {
-					return toast.error(body.message)
+					return toast.error(body.message, { id: context?.toastId })
 				}
 			}
 
@@ -212,7 +212,7 @@ export const useDataTable = () => {
 			if (err instanceof HTTPError) {
 				const body = await err.response.json().catch(() => null)
 				if (body?.message) {
-					return toast.error(body.message)
+					return toast.error(body.message, { id: context?.toastId })
 				}
 			}
 

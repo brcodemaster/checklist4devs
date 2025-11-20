@@ -6,14 +6,18 @@ import { notificationService } from '@/shared/lib/services/notification-service'
 
 export async function GET(request: NextRequest) {
 	try {
-		await authService.checkAuth(request)
+		const { id } = await authService.checkAuth(request)
 
-		const nots = await notificationService.findAll({
+		const publicNots = await notificationService.findAll({
 			where: {
 				isPublic: true
 			},
 			orderBy: { index: 'asc' }
 		})
+
+		const personalNots = await notificationService.findMine(id, { orderBy: { index: 'asc' } })
+
+		const nots = [...publicNots, personalNots]
 
 		return ApiResponse(nots, 'Notifications returned successfully')
 	} catch (error) {

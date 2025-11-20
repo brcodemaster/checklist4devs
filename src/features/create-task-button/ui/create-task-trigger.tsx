@@ -25,7 +25,7 @@ export const CreateTaskTrigger: React.FC<
 	const hook = useCreateTask(projectId, users, lastIndex)
 
 	return (
-		<Dialog open={hook.isOpen} onOpenChange={() => hook.onOpenChange(!hook.isOpen)}>
+		<Dialog open={hook.isOpen} onOpenChange={hook.onOpenChange}>
 			<DialogTrigger asChild>
 				<Button {...props}>+ Create task</Button>
 			</DialogTrigger>

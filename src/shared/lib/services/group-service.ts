@@ -107,28 +107,35 @@ export class GroupService {
 
 	async update<T extends Prisma.GroupDefaultArgs>(
 		id: string,
-		payload: Prisma.GroupUncheckedUpdateInput,
+		payload: Prisma.GroupUncheckedUpdateInput & { admin: string },
 		userId: string,
 		args?: Prisma.SelectSubset<T, Prisma.GroupDefaultArgs>
 	): Promise<Prisma.GroupGetPayload<T>> {
 		const params = args ?? {}
 
-		const newAdmins = (payload.admins ?? []) as string[]
+		const newAdmin = payload.admin
 
 		const { admins: oldAdmins } = await this.findById(id)
 
 		const isAdmin = oldAdmins.some(oldAdmin => oldAdmin === userId)
 
+		const isAlsoAdmin = oldAdmins.some(oldAdmin => oldAdmin === newAdmin)
+
 		if (!isAdmin)
 			throw new ApiError(BASE_ERRORS.BadRequest, 'You must be an admin to update this group')
 
-		const adminIds = Array.from(new Set([...oldAdmins, ...newAdmins]))
+		if (isAlsoAdmin)
+			throw new ApiError(BASE_ERRORS.Conflict, `This user is already an admin of this group`)
+
+		const adminIds = Array.from(new Set([...oldAdmins, newAdmin]))
+
+		const { admin: _admin, ...safePayload } = payload
 
 		return (await prisma.group.update({
 			where: {
 				id
 			},
-			data: { ...payload, admins: adminIds, id },
+			data: { ...safePayload, admins: adminIds, id },
 			...params
 		})) as Prisma.GroupGetPayload<T>
 	}
@@ -178,20 +185,36 @@ export class GroupService {
 	}
 
 	async demoteToRegular<T extends Prisma.GroupDefaultArgs>(
+		id: string,
 		userId: string,
 		groupId: string,
 		args?: Prisma.SelectSubset<T, Prisma.GroupDefaultArgs>
 	): Promise<Prisma.GroupGetPayload<T>> {
 		const params = args ?? {}
 
-		const { admins } = await this.findById(groupId, { include: { developers: true } })
+		const { admins: oldAdmins } = await this.findById(id)
+
+		const isAdmin = oldAdmins.some(oldAdmin => oldAdmin === id)
+
+		const isAlsoRegular = !oldAdmins.includes(userId)
+
+		if (!isAdmin)
+			throw new ApiError(BASE_ERRORS.BadRequest, 'You must be an admin to update this group')
+
+		if (isAlsoRegular)
+			throw new ApiError(
+				BASE_ERRORS.Conflict,
+				`This user is already an regular member of this group`
+			)
+
+		const adminIds = oldAdmins.filter(oldAdmin => oldAdmin !== userId)
 
 		return (await prisma.group.update({
 			where: {
 				id: groupId
 			},
 			data: {
-				admins: admins.filter(admin => admin !== userId)
+				admins: adminIds
 			},
 			...params
 		})) as Prisma.GroupGetPayload<T>

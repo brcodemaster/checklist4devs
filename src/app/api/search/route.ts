@@ -12,15 +12,10 @@ export async function GET(request: NextRequest) {
 		const url = request.nextUrl
 		const searchValue = url.searchParams.get('value')
 
-		let res: any = [[], [], []]
+		let res: any = [[], []]
 
 		if (searchValue) {
 			res = await Promise.all([
-				await prisma.user.findMany({
-					where: {
-						userName: { contains: searchValue, mode: 'insensitive' }
-					}
-				}),
 				await prisma.project.findMany({
 					where: {
 						name: { contains: searchValue, mode: 'insensitive' }

@@ -21,19 +21,30 @@ export const Notifications: React.FC<{
 				<ul className='bg-foreground flex h-[400px] flex-col gap-1 overflow-y-auto p-4'>
 					{nots.map((not, idx) => (
 						<li
-							className={cn(
-								'hover:bg-muted flex flex-col rounded-sm p-2 px-4',
-								not.state === 'NEW' && 'bg-muted'
-							)}
+							className='hover:bg-muted flex flex-col rounded-sm p-2 px-4'
 							onClick={onClick}
-							key={not.id}
+							key={not.id + idx}
 						>
 							<Link href={`/notifications/${not.id}`}>
-								<div className='text-md flex items-center gap-2 font-medium text-white'>
-									<span className='text-secondary-foreground text-lg'>
+								<div
+									className={cn(
+										'text-md flex items-center gap-2 font-medium',
+										not.state === 'NEW' ? 'text-white' : 'text-secondary'
+									)}
+								>
+									<span
+										className={cn(
+											'text-lg',
+											not.state === 'NEW'
+												? 'text-white'
+												: 'text-secondary-foreground'
+										)}
+									>
 										#{idx + 1}
 									</span>
-									Someone invited you to join the group
+									{not.title
+										? not.title
+										: 'Someone invited you to join the group'}
 								</div>
 							</Link>
 						</li>

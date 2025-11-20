@@ -30,12 +30,6 @@ import { cn } from '../lib'
 
 // InputLink.tsx
 
-// InputLink.tsx
-
-// InputLink.tsx
-
-// InputLink.tsx
-
 type Props = {
 	handleClick: (value: string) => void
 	className?: string
@@ -43,8 +37,15 @@ type Props = {
 	icon: React.ComponentType<{ className?: string }>
 } & ComponentProps<'input'>
 
-export function InputLink({ handleClick, className, placeholder, icon: Icon, ...props }: Props) {
-	const [inputValue, setInputValue] = useState('')
+export function InputLink({
+	handleClick,
+	className,
+	placeholder,
+	icon: Icon,
+	value,
+	...props
+}: Props) {
+	const [inputValue, setInputValue] = useState((value as string) ?? '')
 
 	return (
 		<div className='group/input relative'>
@@ -65,7 +66,7 @@ export function InputLink({ handleClick, className, placeholder, icon: Icon, ...
 						handleClick(inputValue)
 						setInputValue('')
 					} catch {
-						toast.info('Invalid URL format. Please correct the link and try again')
+						toast.info('Please correct the link and try again')
 					}
 				}}
 				variant='ghost'

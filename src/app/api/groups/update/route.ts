@@ -12,7 +12,7 @@ export async function PATCH(request: NextRequest) {
 
 		const { id, payload } = (await request.json()) as {
 			id: string
-			payload: Prisma.GroupUncheckedUpdateInput
+			payload: Prisma.GroupUncheckedUpdateInput & { admin: string }
 		}
 
 		const group = await groupService.update(id, payload, userId)

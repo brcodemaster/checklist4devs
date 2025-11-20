@@ -28,7 +28,6 @@ export const EditTaskTrigger: React.FC<Props> = ({ task, users }) => {
 				<Button
 					variant='ghost'
 					className='px-2 opacity-100 duration-100 lg:opacity-50 lg:hover:opacity-100'
-					onClick={() => hook.onOpenChange(!hook.isOpen)}
 				>
 					<Edit
 						className={cn(
@@ -39,7 +38,7 @@ export const EditTaskTrigger: React.FC<Props> = ({ task, users }) => {
 					/>
 				</Button>
 			</DialogTrigger>
-			<DialogContent showCloseButton={false} onOpenAutoFocus={e => e.preventDefault()}>
+			<DialogContent>
 				<div className='space-y-1'>
 					<DialogTitle>Edit existing task</DialogTitle>
 					<DialogDescription>Fill the fields to update the task</DialogDescription>

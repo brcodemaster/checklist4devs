@@ -35,7 +35,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 	if (notification.title === 'Invitation')
 		return (
 			<Section className='mt-10'>
-				<div className='w-fit'>
+				<div>
 					<div className='flex items-center gap-4'>
 						<Button variant='ghost' className='group/settings' asChild>
 							<Link
@@ -49,7 +49,9 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 							</Link>
 						</Button>
 
-						<h3 className='text-center text-2xl text-white'>{notification.title}</h3>
+						<h3 className='w-full text-center text-2xl text-white'>
+							{notification.title}
+						</h3>
 					</div>
 					<p className='text-secondary pt-8 text-lg'>{notification.description}</p>
 					{notification.state === 'NEW' && (
@@ -66,26 +68,24 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 		)
 
 	return (
-		<Section className='mt-10 flex grow flex-col items-center justify-center overflow-hidden'>
-			<div className='max-w-[500px]'>
-				<div>
-					<div className='flex items-center gap-4'>
-						<Button variant='ghost' className='group/settings' asChild>
-							<Link
-								href={`/`}
-								className='border-muted-secondary w-fit items-center gap-1 border hover:border-white/30'
-							>
-								<ChevronLeft className='stroke-secondary-foreground size-4 shrink-0 duration-200 group-hover/settings:stroke-white' />
-								<p className='text-secondary-foreground flex items-center text-sm font-extralight duration-200 group-hover/settings:text-white'>
-									back to home
-								</p>
-							</Link>
-						</Button>
+		<Section className='mt-10 flex grow flex-col overflow-hidden'>
+			<div>
+				<div className='flex items-center gap-4'>
+					<Button variant='ghost' className='group/settings' asChild>
+						<Link
+							href={`/`}
+							className='border-muted-secondary w-fit items-center gap-1 border hover:border-white/30'
+						>
+							<ChevronLeft className='stroke-secondary-foreground size-4 shrink-0 duration-200 group-hover/settings:stroke-white' />
+							<p className='text-secondary-foreground flex items-center text-sm font-extralight duration-200 group-hover/settings:text-white'>
+								back to home
+							</p>
+						</Link>
+					</Button>
 
-						<h3 className='text-center text-2xl text-white'>{notification.title}</h3>
-					</div>
-					<p className='text-secondary pt-2 text-lg'>{notification.description}</p>
+					<h3 className='w-full text-center text-2xl text-white'>{notification.title}</h3>
 				</div>
+				<p className='text-secondary pt-10 text-lg'>{notification.description}</p>
 			</div>
 		</Section>
 	)

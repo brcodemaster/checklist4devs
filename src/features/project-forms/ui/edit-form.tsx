@@ -183,7 +183,7 @@ export const EditForm: React.FC<Props> = ({ project }) => {
 										{fields.map((field, idx) => (
 											<InputLink
 												key={field.id}
-												value={form.watch(`links.${idx}.value`)}
+												value={field.value}
 												onChange={e =>
 													form.setValue(
 														`links.${idx}.value`,

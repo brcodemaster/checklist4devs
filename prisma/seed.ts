@@ -21,6 +21,7 @@ export async function up() {
 			name: 'bb',
 			password: hashSync('123456', 10),
 			creator: { connect: { id: '1' } },
+
 			developers: {
 				connect: [
 					{ id: '1' },
@@ -36,6 +37,7 @@ export async function up() {
 			projects: {
 				create: {
 					id: '1',
+
 					name: 'Resume builder',
 					password: hashSync('123456', 10),
 					status: 'IN_DEVELOPMENT',
@@ -51,6 +53,7 @@ export async function up() {
 							{
 								id: '1',
 								index: 1,
+
 								text: 'Setup the initial project repository, configure Git, initialize README, add .gitignore, and create the main branch for development with all collaborators having access permissions properly configured.',
 								tag: 'UI',
 								status: 'COMPLETED',

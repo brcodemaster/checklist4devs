@@ -93,15 +93,27 @@ export const TASK_STATUS = {
 
 export const FAQS = [
 	{
+		question: 'Who can create groups?',
+		answer: 'Go to the Groups page, click "Create Group", fill in the required fields, and submit.'
+	},
+	{
+		question: 'How do I change the admin of a group?',
+		answer: 'Go to the Groups page, select a member from the list, and assign them as the new admin.'
+	},
+	{
 		question: 'How do I create a project?',
 		answer: 'Go to the Projects page, click "Create Project", fill in the required fields, and submit.'
 	},
 	{
-		question: 'Why am I seeing an error on Vercel?',
-		answer: 'Make sure Prisma is only used on the server. Client-side code should not import Prisma Client or generated enums directly.'
+		question: 'How do I create a task?',
+		answer: 'Open a project, go to the Tasks tab, click “New Task”, enter the task details (title, description, assigned users, deadline).'
 	},
 	{
-		question: 'How do I reset my password?',
-		answer: 'Navigate to your profile settings and click "Reset Password". Follow the instructions in the email you receive.'
+		question: 'How do task deadlines (burn date) work?',
+		answer: 'Each task has a deadline which indicates when the task expires. After this date, the task is considered overdue.'
+	},
+	{
+		question: 'Can one task have multiple assignees?',
+		answer: 'No. Each task can have only one assignee. The creator of the task is saved separately as the task author, but the executor is always a single user.'
 	}
 ] as const

@@ -126,8 +126,8 @@ model Notification {
 
   isPublic Boolean @default(true)
 
-  user   User   @relation("user_notifications_notification_user", fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  user   User?   @relation("user_notifications_notification_user", fields: [userId], references: [id], onDelete: Cascade)
+  userId String?
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

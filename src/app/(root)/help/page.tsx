@@ -34,6 +34,11 @@ const HelpPage: FC = () => {
 				<h2 className='mb-2 text-xl font-semibold'>Quick Links</h2>
 				<ul className='text-secondary list-inside list-disc space-y-1'>
 					<li>
+						<Link href='/groups' className='underline hover:no-underline'>
+							Go to Groups
+						</Link>
+					</li>
+					<li>
 						<Link href='/projects' className='underline hover:no-underline'>
 							Go to Projects
 						</Link>
@@ -41,11 +46,6 @@ const HelpPage: FC = () => {
 					<li>
 						<Link href='/settings' className='underline hover:no-underline'>
 							Your Profile Settings
-						</Link>
-					</li>
-					<li>
-						<Link href='/contact' className='underline hover:no-underline'>
-							Contact Support
 						</Link>
 					</li>
 				</ul>

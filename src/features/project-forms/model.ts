@@ -98,6 +98,8 @@ export const useProjectForms = (
 			queryClient.invalidateQueries({ queryKey: ['projects'] })
 			queryClient.invalidateQueries({ queryKey: ['groups'] })
 
+			router.prefetch(`/projects/${id}`)
+
 			return toast.success('Group updated successfully', { id: context.toastId })
 		},
 		onError: async (err, _, context) => {
