@@ -106,7 +106,7 @@ export const useDataTable = () => {
 
 			const previousGroup = queryClient.getQueryData<
 				Prisma.GroupGetPayload<{
-					include: { developers: true; projects: true }
+					include: { developers: { include: { user: true } }; projects: true }
 				}>
 			>(['group', groupId])
 
@@ -114,7 +114,7 @@ export const useDataTable = () => {
 				['group', groupId],
 				(
 					old: Prisma.GroupGetPayload<{
-						include: { developers: true; projects: true }
+						include: { developers: { include: { user: true } }; projects: true }
 					}>
 				) => {
 					if (!old) return old
@@ -175,7 +175,7 @@ export const useDataTable = () => {
 
 			const previousGroup = queryClient.getQueryData<
 				Prisma.GroupGetPayload<{
-					include: { developers: true; projects: true }
+					include: { developers: { include: { user: true } }; projects: true }
 				}>
 			>(['group', groupId])
 
@@ -183,7 +183,7 @@ export const useDataTable = () => {
 				['group', groupId],
 				(
 					old: Prisma.GroupGetPayload<{
-						include: { developers: true; projects: true }
+						include: { developers: { include: { user: true } }; projects: true }
 					}>
 				) => {
 					if (!old) return old

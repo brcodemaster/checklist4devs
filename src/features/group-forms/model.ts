@@ -59,13 +59,17 @@ export const useGroupForms = (name?: string, slug?: string | null, isPublic?: bo
 			await queryClient.cancelQueries({ queryKey: ['groups', id] })
 
 			const previousGroup = queryClient.getQueryData<
-				Prisma.GroupGetPayload<{ include: { developers: true; projects: true } }>
+				Prisma.GroupGetPayload<{
+					include: { developers: { include: { user: true } }; projects: true }
+				}>
 			>(['group', id])
 
 			queryClient.setQueryData(
 				['group', id],
 				(
-					old: Prisma.GroupGetPayload<{ include: { developers: true; projects: true } }>
+					old: Prisma.GroupGetPayload<{
+						include: { developers: { include: { user: true } }; projects: true }
+					}>
 				) => {
 					if (!old) return old
 
@@ -111,14 +115,18 @@ export const useGroupForms = (name?: string, slug?: string | null, isPublic?: bo
 			await queryClient.cancelQueries({ queryKey: ['group', id] })
 
 			const previousGroup = queryClient.getQueryData<
-				Prisma.GroupGetPayload<{ include: { developers: true; projects: true } }>
+				Prisma.GroupGetPayload<{
+					include: { developers: { include: { user: true } }; projects: true }
+				}>
 			>(['group', id])
 			const previousProjects = queryClient.getQueryData<TMetaProjects[]>(['projects'])
 
 			queryClient.setQueryData(
 				['groups'],
 				(
-					old: Prisma.GroupGetPayload<{ include: { developers: true; projects: true } }>[]
+					old: Prisma.GroupGetPayload<{
+						include: { developers: { include: { user: true } }; projects: true }
+					}>[]
 				) => {
 					if (!old) return old
 

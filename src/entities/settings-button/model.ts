@@ -13,10 +13,14 @@ export const useSettingsButton = () => {
 	const queryClient = useQueryClient()
 
 	const group = queryClient.getQueryData<
-		Prisma.GroupGetPayload<{ include: { developers: true; projects: true } }>
+		Prisma.GroupGetPayload<{
+			include: { developers: { include: { user: true } }; projects: true }
+		}>
 	>(['group', id])
 
-	const isInGroup = group?.developers.some(developer => developer.id === user?.id) || false
+	const developers = group?.developers.map(({ user }) => user)
+
+	const isInGroup = developers?.some(developer => developer.id === user?.id) || false
 
 	return { isInGroup, id }
 }
