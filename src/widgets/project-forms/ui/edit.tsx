@@ -4,7 +4,7 @@ import { Prisma } from '@/generated/client'
 
 type Props = {
 	project: Prisma.ProjectGetPayload<{
-		include: { tasks: true; group: { include: { developers: true } } }
+		include: { tasks: true; group: { include: { developers: { include: { user: true } } } } }
 	}>
 }
 export const Edit: React.FC<Props> = ({ project }) => {

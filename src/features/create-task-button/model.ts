@@ -64,7 +64,10 @@ export const useCreateTask = (projectId: string, users: User[], lastIndex: numbe
 
 			const previousProject = queryClient.getQueryData<
 				Prisma.ProjectGetPayload<{
-					include: { tasks: true; group: { include: { developers: true } } }
+					include: {
+						tasks: true
+						group: { include: { developers: { include: { user: true } } } }
+					}
 				}>
 			>(['project', projectId])
 
@@ -73,7 +76,10 @@ export const useCreateTask = (projectId: string, users: User[], lastIndex: numbe
 				(
 					old:
 						| Prisma.ProjectGetPayload<{
-								include: { tasks: true; group: { include: { developers: true } } }
+								include: {
+									tasks: true
+									group: { include: { developers: { include: { user: true } } } }
+								}
 						  }>
 						| undefined
 				) => {
@@ -91,7 +97,10 @@ export const useCreateTask = (projectId: string, users: User[], lastIndex: numbe
 							...old.tasks
 						]
 					} as Prisma.ProjectGetPayload<{
-						include: { tasks: true; group: { include: { developers: true } } }
+						include: {
+							tasks: true
+							group: { include: { developers: { include: { user: true } } } }
+						}
 					}>
 
 					return updatedProject

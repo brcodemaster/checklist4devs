@@ -79,7 +79,7 @@ export class TaskService {
 			where: {
 				id: payload.projectId
 			},
-			include: { group: { include: { developers: true } } }
+			include: { group: { include: { developers: { include: { user: true } } } } }
 		})
 
 		if (!project)
@@ -88,9 +88,9 @@ export class TaskService {
 				`Project with this ID: #${payload.projectId} is not found`
 			)
 
-		const isCreatorHasIsGroup = project.group.developers.some(
-			developer => developer.id === payload.creatorId
-		)
+		const developers = project.group.developers.map(({ user }) => user)
+
+		const isCreatorHasIsGroup = developers.some(developer => developer.id === payload.creatorId)
 
 		if (!isCreatorHasIsGroup)
 			throw new ApiError(

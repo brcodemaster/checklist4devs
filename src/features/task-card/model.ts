@@ -39,7 +39,10 @@ export const useTaskCard = (task: Task) => {
 
 			const previousProject = queryClient.getQueryData<
 				Prisma.ProjectGetPayload<{
-					include: { tasks: true; group: { include: { developers: true } } }
+					include: {
+						tasks: true
+						group: { include: { developers: { include: { user: true } } } }
+					}
 				}>
 			>(['project', id])
 
@@ -101,7 +104,10 @@ export const useTaskCard = (task: Task) => {
 
 			const previousProject = queryClient.getQueryData<
 				Prisma.ProjectGetPayload<{
-					include: { tasks: true; group: { include: { developers: true } } }
+					include: {
+						tasks: true
+						group: { include: { developers: { include: { user: true } } } }
+					}
 				}>
 			>(['project', id])
 
@@ -110,7 +116,10 @@ export const useTaskCard = (task: Task) => {
 				(
 					old:
 						| Prisma.ProjectGetPayload<{
-								include: { tasks: true; group: { include: { developers: true } } }
+								include: {
+									tasks: true
+									group: { include: { developers: { include: { user: true } } } }
+								}
 						  }>
 						| undefined
 				) => {

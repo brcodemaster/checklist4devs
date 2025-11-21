@@ -28,7 +28,7 @@ import { useProjectForms } from '../model'
 
 type Props = {
 	project: Prisma.ProjectGetPayload<{
-		include: { tasks: true; group: { include: { developers: true } } }
+		include: { tasks: true; group: { include: { developers: { include: { user: true } } } } }
 	}>
 }
 

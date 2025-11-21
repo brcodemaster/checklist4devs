@@ -30,7 +30,7 @@ export type TForm = z.infer<typeof formSchema>
 
 export const useProjectForms = (
 	project?: Prisma.ProjectGetPayload<{
-		include: { tasks: true; group: { include: { developers: true } } }
+		include: { tasks: true; group: { include: { developers: { include: { user: true } } } } }
 	}>
 ) => {
 	const { id } = useParams<{ id: string }>()

@@ -87,7 +87,7 @@ export class UserService {
 
 	async invite<T extends Prisma.UserDefaultArgs>(
 		email: string,
-		group: Prisma.GroupGetPayload<{ include: { developers: true } }>,
+		group: Prisma.GroupGetPayload<{ include: { developers: { include: { user: true } } } }>,
 		userId: string,
 		args?: Prisma.SelectSubset<T, Prisma.UserDefaultArgs>
 	): Promise<Prisma.UserGetPayload<T>> {
@@ -97,7 +97,9 @@ export class UserService {
 
 		const isAdmin = group.admins.some(oldAdmin => oldAdmin === userId) || false
 
-		const isInGroup = group.developers.some(developer => developer.id === user?.id)
+		const developers = group.developers.map(({ user }) => user)
+
+		const isInGroup = developers.some(developer => developer.id === user?.id)
 
 		if (isInGroup)
 			throw new ApiError(BASE_ERRORS.Conflict, 'This user is already a member of this group')

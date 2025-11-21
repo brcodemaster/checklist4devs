@@ -36,7 +36,10 @@ export const useTasks = (
 			const res = await kyInstance.get(`projects/${id}`).json<
 				TApiResponse<
 					Prisma.ProjectGetPayload<{
-						include: { tasks: true; group: { include: { developers: true } } }
+						include: {
+							tasks: true
+							group: { include: { developers: { include: { user: true } } } }
+						}
 					}>
 				>
 			>()
