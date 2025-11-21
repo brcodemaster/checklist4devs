@@ -14,7 +14,9 @@ export async function POST(request: NextRequest) {
 			groupId: string
 		}
 
-		const group = await groupService.findById(groupId, { include: { developers: true } })
+		const group = await groupService.findById(groupId, {
+			include: { developers: { include: { user: true } } }
+		})
 
 		const { email } = await userService.invite(invitedUserEmail, group, userId)
 

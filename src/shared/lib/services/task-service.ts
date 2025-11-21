@@ -116,7 +116,11 @@ export class TaskService {
 			where: {
 				id
 			},
-			include: { project: { include: { group: { include: { developers: true } } } } }
+			include: {
+				project: {
+					include: { group: { include: { developers: { include: { user: true } } } } }
+				}
+			}
 		})
 
 		if (!userId)
@@ -125,9 +129,9 @@ export class TaskService {
 				`Something went wrongSyntaxError: Unexpected end of JSON input`
 			)
 
-		const isMemberHasInGroup = task?.project.group.developers.some(
-			developer => developer.id === userId
-		)
+		const developers = task?.project.group.developers.map(({ user }) => user)
+
+		const isMemberHasInGroup = developers?.some(developer => developer.id === userId)
 
 		if (!task)
 			throw new ApiError(BASE_ERRORS.NotFound, `Task with this ID: #${id} is not found`)

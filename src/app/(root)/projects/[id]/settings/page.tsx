@@ -17,11 +17,13 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 	const project = await projectService.findById(id, {
 		include: {
 			tasks: true,
-			group: { include: { developers: true } }
+			group: { include: { developers: { include: { user: true } } } }
 		}
 	})
 
-	const isInGroup = project?.group.developers.some(developer => developer.id === userId)
+	const developers = project.group.developers.map(({ user }) => user)
+
+	const isInGroup = developers.some(developer => developer.id === userId)
 
 	if (!isInGroup)
 		return (

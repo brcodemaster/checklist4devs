@@ -75,7 +75,6 @@ export class AuthService {
 	}
 
 	async refreshToken(
-		token: string,
 		userId: string
 	): Promise<
 		Omit<User, 'accessToken' | 'refreshToken'> & { accessToken: string; refreshToken: string }

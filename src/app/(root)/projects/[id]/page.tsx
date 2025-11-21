@@ -28,7 +28,10 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 				.json<
 					TApiResponse<
 						{ groupName: string; creatorName: string } & Prisma.ProjectGetPayload<{
-							include: { tasks: true; group: { include: { developers: true } } }
+							include: {
+								tasks: true
+								group: { include: { developers: { include: { user: true } } } }
+							}
 						}>
 					>
 				>()
