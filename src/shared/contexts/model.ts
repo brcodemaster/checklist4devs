@@ -100,6 +100,17 @@ export const useAuthContext = () => {
 
 			setUser(user)
 			setIsAuthenticated(true)
+		} catch {
+			refreshToken()
+		}
+	}
+
+	const refreshToken = async () => {
+		try {
+			const user = await kyInstance.post('auth/refresh').json<TSafeUser>()
+
+			setUser(user)
+			setIsAuthenticated(true)
 		} catch (error) {
 			setIsAuthenticated(false)
 			setUser(null)
@@ -122,15 +133,5 @@ export const useAuthContext = () => {
 		if (!PUBLIC_ROUTES.includes(pathname)) checkAuth()
 	}, [pathname])
 
-	const value = {
-		user,
-		login,
-		logout,
-		checkAuth,
-		isAuthenticated,
-		isLoading,
-		register
-	}
-
-	return { value }
+	return { user, login, logout, checkAuth, isAuthenticated, isLoading, register }
 }

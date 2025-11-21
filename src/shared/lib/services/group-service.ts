@@ -36,7 +36,9 @@ export class GroupService {
 					{
 						developers: {
 							some: {
-								id: userId
+								user: {
+									id: userId
+								}
 							}
 						}
 					}
@@ -165,10 +167,11 @@ export class GroupService {
 	): Promise<Prisma.GroupGetPayload<T>> {
 		const params = args ?? {}
 
-		const group = await this.findById(groupId, { include: { developers: true } })
+		const group = await this.findById(groupId, {
+			include: { developers: { include: { user: true } } }
+		})
 
 		const admins = group.admins.filter(admin => admin !== userId)
-		const developers = group.developers.filter(developer => developer.id !== userId)
 
 		return (await prisma.group.update({
 			where: {
@@ -176,9 +179,11 @@ export class GroupService {
 			},
 			data: {
 				developers: {
-					set: developers
+					deleteMany: {
+						userId
+					}
 				},
-				admins: [...admins]
+				admins
 			},
 			...params
 		})) as Prisma.GroupGetPayload<T>

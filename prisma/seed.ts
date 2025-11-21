@@ -4,6 +4,9 @@ import { devs } from './constants'
 import { prisma } from './prisma-client'
 import { ProjectType } from '@/generated/index'
 
+const developerIds = ['1', '2', '3', '4', '5', '6', '7']
+const adminIds = new Set(['1'])
+
 export async function up() {
 	await Promise.all(
 		devs.map(dev =>
@@ -19,19 +22,13 @@ export async function up() {
 		data: {
 			id: '1',
 			name: 'bb',
-			password: hashSync('123456', 10),
+			password: hashSync('Bekzod2001', 10),
 			creator: { connect: { id: '1' } },
-
+			isPublic: false,
 			developers: {
-				connect: [
-					{ id: '1' },
-					{ id: '2' },
-					{ id: '3' },
-					{ id: '4' },
-					{ id: '5' },
-					{ id: '6' },
-					{ id: '7' }
-				]
+				createMany: {
+					data: developerIds.map(userId => ({ userId }))
+				}
 			},
 			admins: ['1'],
 			projects: {
@@ -169,7 +166,9 @@ export async function up() {
 			password: hashSync('123456', 10),
 			creator: { connect: { id: '3' } },
 			developers: {
-				connect: [{ id: '4' }, { id: '5' }, { id: '6' }, { id: '7' }]
+				createMany: {
+					data: developerIds.map(userId => ({ userId }))
+				}
 			},
 			admins: ['4'],
 			projects: {

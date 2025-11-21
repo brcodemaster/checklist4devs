@@ -41,7 +41,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 		Prisma.ProjectGetPayload<{
 			include: {
 				tasks: { orderBy: { index: 'desc' } }
-				group: { include: { developers: true } }
+				group: { include: { developers: { include: { user: true } } } }
 			}
 		}>
 	>(['project', id])

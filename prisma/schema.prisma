@@ -28,7 +28,7 @@ model User {
   createdTasks    Task[]    @relation("user_created_tasks_task_creator")
   tasks           Task[]    @relation("user_assigned_tasks_task_assigner")
 
-  groups Group[] @relation("group_developers_user_groups")
+  groups GroupDeveloper[] @relation("groupDeveloper_user_user_groups")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -49,7 +49,7 @@ model Group {
   creator   User   @relation("user_id_group_creatorId", fields: [creatorId], references: [id], onDelete: NoAction)
   creatorId String @map("creator_id")
 
-  developers User[] @relation("group_developers_user_groups")
+  developers GroupDeveloper[] @relation("group_developer_groupDeveloper_group")
 
   projects Project[] @relation("group_projects_project_group")
 
@@ -57,6 +57,22 @@ model Group {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("groups")
+}
+
+model GroupDeveloper {
+  id String @id @default(uuid())
+
+  group   Group  @relation("group_developer_groupDeveloper_group", fields: [groupId], references: [id])
+  groupId String
+
+  user   User   @relation("groupDeveloper_user_user_groups", fields: [userId], references: [id])
+  userId String
+
+  role     UserRole @default(REGULAR)
+  joinedAt DateTime @default(now())
+
+  @@unique([groupId, userId])
+  @@map("group_developers")
 }
 
 model Project {
@@ -175,4 +191,9 @@ enum ProjectStatus {
 enum NotificationState {
   NEW
   OPENED
+}
+
+enum UserRole {
+  REGULAR
+  ADMIN
 }

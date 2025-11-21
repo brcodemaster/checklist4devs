@@ -41,7 +41,9 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 	})
 
 	const group = queryClient.getQueryData<
-		Prisma.GroupGetPayload<{ include: { developers: true; projects: true } }>
+		Prisma.GroupGetPayload<{
+			include: { developers: { include: { user: true } }; projects: true }
+		}>
 	>(['group', id])
 
 	if (!group)
@@ -73,10 +75,10 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
 	const metaDevelopers = group.developers.map(developer => {
 		return {
-			id: developer.id,
-			userName: developer.userName,
-			joinedAt: new Date(),
-			role: adminIds.has(developer.id) ? 'ADMIN' : 'REGULAR'
+			id: developer.user.id,
+			userName: developer.user.userName,
+			joinedAt: new Date(developer.joinedAt),
+			role: adminIds.has(developer.user.id) ? 'ADMIN' : 'REGULAR'
 		} as TTableUser
 	})
 

@@ -15,7 +15,7 @@ import { useTasks } from '../model'
 
 export const Tasks: React.FC<{
 	project: Prisma.ProjectGetPayload<{
-		include: { tasks: true; group: { include: { developers: true } } }
+		include: { tasks: true; group: { include: { developers: { include: { user: true } } } } }
 	}>
 }> = ({ project }) => {
 	const {
@@ -27,7 +27,8 @@ export const Tasks: React.FC<{
 		dateValue,
 		setDateValue,
 		setStatusValue,
-		statusValue
+		statusValue,
+		users
 	} = useTasks(project)
 
 	return (
@@ -50,7 +51,7 @@ export const Tasks: React.FC<{
 					<FilterStatus statusValue={statusValue} setStatusValue={setStatusValue} />
 					<CreateTaskTrigger
 						className='w-full'
-						users={project.group.developers}
+						users={users}
 						projectId={project.id}
 						lastIndex={data.tasks.length}
 					/>
@@ -66,7 +67,7 @@ export const Tasks: React.FC<{
 							index={task.index}
 							assignee={usersObject[task.assignerId]}
 							creator={usersObject[task.creatorId]}
-							users={project.group.developers}
+							users={users}
 						/>
 					))}
 				</div>

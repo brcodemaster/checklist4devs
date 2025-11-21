@@ -16,13 +16,7 @@ export class AuthService {
 	async me(request: NextRequest): Promise<User> {
 		const token = this.jwtService.getAccessTokenFromRequest(request)
 
-		const isValidToken = this.jwtService.verify(token)
-
-		if (!isValidToken) {
-			const { id } = await this.refreshToken(token)
-
-			return await this.userService.findById(id)
-		}
+		this.jwtService.verify(token)
 
 		const { userId } = this.jwtService.decode(token)
 
@@ -31,9 +25,7 @@ export class AuthService {
 
 	async login(
 		payload: Pick<User, 'email' | 'password'>
-	): Promise<
-		Omit<User, 'accessToken' | 'refreshToken'> & { accessToken: string; refreshToken: string }
-	> {
+	): Promise<Omit<User, 'accessToken'> & { accessToken: string }> {
 		const { email, password } = payload
 
 		const user = await userService.findOne(email)
@@ -50,14 +42,9 @@ export class AuthService {
 			'accessToken'
 		)
 
-		const refreshToken = this.jwtService.sign(
-			{ userId: user.id, sub: `user-${user.email}`, jti: crypto.randomUUID() },
-			'refreshToken'
-		)
+		const updatedUser = await userService.update(user.id, { accessToken })
 
-		const updatedUser = await userService.update(user.id, { accessToken, refreshToken })
-
-		return { ...updatedUser, accessToken, refreshToken }
+		return { ...updatedUser, accessToken }
 	}
 
 	async logout(payload: Pick<User, 'id'>): Promise<User> {
@@ -88,12 +75,11 @@ export class AuthService {
 	}
 
 	async refreshToken(
-		token: string
+		token: string,
+		userId: string
 	): Promise<
 		Omit<User, 'accessToken' | 'refreshToken'> & { accessToken: string; refreshToken: string }
 	> {
-		const { userId } = this.jwtService.decode(token)
-
 		const user = await this.userService.findById(userId)
 
 		const accessToken = this.jwtService.sign(

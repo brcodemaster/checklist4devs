@@ -15,14 +15,17 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 		const group = await groupService.findById(id, {
 			include: {
 				developers: {
+					include: {
+						user: true
+					},
 					orderBy: {
-						createdAt: 'desc'
+						joinedAt: 'asc'
 					}
 				}
 			}
 		})
 
-		const isMember = group.developers.some(developer => developer.id === userId)
+		const isMember = group.developers.some(developer => developer.userId === userId)
 
 		const projects = await projectService.findAll({
 			where: {

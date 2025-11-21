@@ -14,7 +14,7 @@ type TContext = {
 	isAuthenticated: boolean
 	login: (payload: TLoginForm) => Promise<string | number | undefined>
 	logout: () => Promise<string | number | undefined>
-	checkAuth: () => Promise<string | number | undefined>
+	checkAuth: () => Promise<void>
 	register: (payload: TRegisterForm) => Promise<string | number | undefined>
 	isLoading: boolean
 }
@@ -22,7 +22,7 @@ type TContext = {
 export const AuthContext = createContext<TContext | null>(null)
 
 export const AuthContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
-	const { value } = useAuthContext()
+	const value = useAuthContext()
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

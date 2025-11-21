@@ -1,7 +1,7 @@
 import ms from 'ms'
 import { NextRequest } from 'next/server'
 
-import { ApiResponse, ErrorApiResponse } from '@/shared/lib'
+import { ApiError, ApiResponse, BASE_ERRORS, ErrorApiResponse } from '@/shared/lib'
 import { authService } from '@/shared/lib/services/auth-service'
 
 import { Prisma } from '@/generated/client'
@@ -26,6 +26,8 @@ export async function POST(request: NextRequest) {
 			maxAge: ms('1h') / 1000,
 			path: '/'
 		})
+
+		if (!refreshToken) throw new ApiError(BASE_ERRORS.Unauthorized, `User not authorized`)
 
 		res.cookies.set('x-refresh-token', refreshToken, {
 			httpOnly: true,

@@ -12,7 +12,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
 		const user = await userService.findById(id, {
 			include: {
-				groups: { select: { id: true, name: true } }
+				groups: { include: { group: { select: { id: true, name: true } } } }
 			}
 		})
 

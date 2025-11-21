@@ -11,7 +11,7 @@ import { Prisma, TaskStatus } from '@/generated/client'
 
 export const useTasks = (
 	project: Prisma.ProjectGetPayload<{
-		include: { tasks: true; group: { include: { developers: true } } }
+		include: { tasks: true; group: { include: { developers: { include: { user: true } } } } }
 	}>
 ) => {
 	const [dateValue, setDateValue] = useState<'today' | 'month' | 'all' | 'week'>('all')
@@ -49,7 +49,7 @@ export const useTasks = (
 	})
 
 	const usersObject = Object.fromEntries(
-		project.group.developers.map(developer => [developer.id, developer.userName])
+		project.group.developers.map(({ user: developer }) => [developer.id, developer.userName])
 	)
 
 	const tasks =
@@ -95,6 +95,8 @@ export const useTasks = (
 
 	const filteredTasks = statusTasks
 
+	const users = project.group.developers.map(({ user }) => user)
+
 	return {
 		data,
 		handleChange: setSearchValue,
@@ -104,6 +106,7 @@ export const useTasks = (
 		statusValue,
 		setStatusValue,
 		dateValue,
-		setDateValue
+		setDateValue,
+		users
 	}
 }

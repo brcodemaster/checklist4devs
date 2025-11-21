@@ -28,15 +28,19 @@ export const useDataTable = () => {
 			await queryClient.cancelQueries({ queryKey: ['group', groupId] })
 
 			const previousGroup = queryClient.getQueryData<
-				Prisma.GroupGetPayload<{ include: { developers: true; projects: true } }>
+				Prisma.GroupGetPayload<{
+					include: { developers: { include: { user: true } }; projects: true }
+				}>
 			>(['group', groupId])
 
 			const newGroup = queryClient.setQueryData<
-				Prisma.GroupGetPayload<{ include: { developers: true; projects: true } }>
+				Prisma.GroupGetPayload<{
+					include: { developers: { include: { user: true } }; projects: true }
+				}>
 			>(['group', groupId], old => {
 				if (!old) return old
 
-				const developers = old.developers.filter(developer => developer.id !== userId)
+				const developers = old.developers.filter(developer => developer.user.id !== userId)
 
 				return { ...old, developers }
 			})

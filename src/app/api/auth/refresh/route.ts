@@ -1,22 +1,31 @@
 import ms from 'ms'
 import { NextRequest } from 'next/server'
 
-import { ApiResponse, ErrorApiResponse } from '@/shared/lib'
+import { ApiError, ApiResponse, BASE_ERRORS, ErrorApiResponse } from '@/shared/lib'
 import { authService } from '@/shared/lib/services/auth-service'
-import { jwtService } from '@/shared/lib/services/jwt-service'
+
+import { prisma } from '@/prisma-client'
 
 export async function POST(request: NextRequest) {
 	try {
-		await authService.checkAuth(request)
+		const token = request.cookies.get('x-access-token')?.value || ''
+		const xRefreshToken = request.cookies.get('x-refresh-token')?.value || ''
 
-		const token = jwtService.getAccessTokenFromRequest(request)
+		const isRegisteredUser = await prisma.user.findFirst({
+			where: {
+				refreshToken: xRefreshToken
+			}
+		})
+
+		if (!isRegisteredUser)
+			throw new ApiError(BASE_ERRORS.Unauthorized, `User not authenticated`)
 
 		const {
 			accessToken,
 			refreshToken,
 			password: _password,
 			...safeUser
-		} = await authService.refreshToken(token)
+		} = await authService.refreshToken(token, isRegisteredUser.id)
 
 		const res = ApiResponse(safeUser, 'Tokens updated successfully')
 

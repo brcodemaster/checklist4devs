@@ -15,7 +15,11 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 		const project = await projectService.findById(id, {
 			include: {
 				tasks: { orderBy: { index: 'desc' } },
-				group: { include: { developers: { orderBy: { createdAt: 'asc' } } } }
+				group: {
+					include: {
+						developers: { include: { user: true }, orderBy: { joinedAt: 'asc' } }
+					}
+				}
 			}
 		})
 
