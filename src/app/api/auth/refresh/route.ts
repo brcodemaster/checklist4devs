@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
 			refreshToken,
 			password: _password,
 			...safeUser
-		} = await authService.refreshToken(token, isRegisteredUser.id)
+		} = await authService.refreshToken(isRegisteredUser.id)
 
 		const res = ApiResponse(safeUser, 'Tokens updated successfully')
 
