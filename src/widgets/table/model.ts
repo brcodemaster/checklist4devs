@@ -35,7 +35,9 @@ export const useTable = (creatorIds: string[], creatorId: string, developers: TT
 		}>
 	>(['group', id])
 
-	const isInGroup = group?.developers.some(developer => developer.id === user?.id) || false
+	const devs = group?.developers.map(({ user }) => user)
+
+	const isInGroup = devs?.some(developer => developer.id === user?.id) || false
 
 	const filteredDevelopers =
 		debouncedValue && developers
