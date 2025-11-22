@@ -8,7 +8,7 @@ import { cn } from '@/shared/lib'
 import { Notification } from '@/generated/client'
 
 export const Notifications: React.FC<{
-	nots: Notification[] | undefined
+	nots: Notification[]
 	onClick: () => void
 }> = ({ nots, onClick }) => {
 	return (
@@ -17,7 +17,7 @@ export const Notifications: React.FC<{
 				<h2 className='text-lg'>Notifications</h2>
 			</div>
 
-			{nots && nots.length > 0 ? (
+			{nots.length > 0 ? (
 				<ul className='bg-foreground flex h-[400px] flex-col gap-1 overflow-y-auto p-4'>
 					{nots.map((not, idx) => (
 						<li

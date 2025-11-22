@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
 
 		const personalNots = await notificationService.findMine(id, { orderBy: { index: 'asc' } })
 
-		const nots = [...publicNots, personalNots]
+		const nots = [...publicNots, ...personalNots]
 
 		return ApiResponse(nots, 'Notifications returned successfully')
 	} catch (error) {
