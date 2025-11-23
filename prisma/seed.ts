@@ -4,7 +4,7 @@ import { devs } from './constants'
 import { prisma } from './prisma-client'
 import { ProjectType } from '@/generated/index'
 
-const developerIds = ['1', '2', '3', '4', '5', '6', '7']
+const developerIds = ['1', '3', '4', '5', '6', '7']
 const adminIds = new Set(['1'])
 
 export async function up() {
