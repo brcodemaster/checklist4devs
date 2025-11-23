@@ -31,11 +31,11 @@ export const useCreateProject = () => {
 	const { user } = useAuth()
 
 	const defaultValues = {
-		groupId: user?.groups?.[0]?.id || '',
+		groupId: user?.groups?.[0].group.id || '',
 		isPublic: true,
 		name: '',
 		password: '',
-		type: 'LANDING_PAGE'
+		type: PROJECT_TYPE[0]
 	} as TForm
 
 	const form = useForm<TForm>({
@@ -120,6 +120,6 @@ export const useCreateProject = () => {
 		onOpenChange: setIsOpen,
 		handleReset,
 		form,
-		groups: user?.groups
+		groups: user?.groups.map(({ group }) => group)
 	}
 }

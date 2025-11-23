@@ -77,15 +77,16 @@ export const CreateGroupForm: React.FC<{
 							</FormLabel>
 							<FormControl>
 								<Select
-									onValueChange={value => field.onChange(value === 'true')}
-									defaultValue='true'
+									onValueChange={value => field.onChange(value === 'public')}
+									defaultValue={field.value ? 'public' : 'private'}
+									value={field.value ? 'public' : 'private'}
 								>
 									<SelectTrigger className='w-full'>
 										<SelectValue placeholder='Select visibility' />
 									</SelectTrigger>
 									<SelectContent>
-										<SelectItem value='true'>Public</SelectItem>
-										<SelectItem value='false'>Private</SelectItem>
+										<SelectItem value='public'>Public</SelectItem>
+										<SelectItem value='private'>Private</SelectItem>
 									</SelectContent>
 								</Select>
 							</FormControl>

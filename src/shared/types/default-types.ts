@@ -1,6 +1,6 @@
 import { JwtPayload } from 'jsonwebtoken'
 
-import { Group, Prisma, Project, User } from '@/generated/client'
+import { Prisma, Project } from '@/generated/client'
 
 import { PROJECT_STATUS, PROJECT_TYPE, TASK_STATUS } from '../constants'
 
@@ -14,9 +14,12 @@ export type TJwtPayload = {
 	userId: string
 } & JwtPayload
 
-export type TSafeUser = Omit<User, 'accessToken' | 'refreshToken' | 'password'> & {
-	groups: Group[]
-}
+export type TSafeUser = Omit<
+	Prisma.UserGetPayload<{
+		include: { groups: { include: { group: { select: { id: true; name: true } } } } }
+	}>,
+	'accessToken' | 'refreshToken' | 'password'
+>
 
 export type TMetaProjects = Project & { creatorName: string; groupName: string }
 

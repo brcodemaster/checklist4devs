@@ -10,8 +10,6 @@ import { useSettingsButton } from './model'
 export const SettingsButton: React.FC = () => {
 	const { isInGroup, id } = useSettingsButton()
 
-	console.log(isInGroup)
-
 	if (isInGroup)
 		return (
 			<Button variant='ghost' className='group/settings h-[38px]' asChild>

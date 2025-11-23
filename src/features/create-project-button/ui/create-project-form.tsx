@@ -17,14 +17,14 @@ import {
 	SelectValue
 } from '@/shared/ui'
 
-import { Group } from '@/generated/client'
+import { Prisma } from '@/generated/client'
 
 import { TForm } from '../model'
 
 export const CreateProjectForm: React.FC<{
 	form: UseFormReturn<TForm, any, TForm>
 	handleCreate: SubmitHandler<TForm>
-	groups?: Group[]
+	groups?: Prisma.GroupGetPayload<{ select: { id: true; name: true } }>[]
 }> = ({ form, handleCreate, groups }) => {
 	return (
 		<Form {...form}>
@@ -62,8 +62,9 @@ export const CreateProjectForm: React.FC<{
 							</FormLabel>
 							<FormControl>
 								<Select
-									defaultValue={groups?.[0]?.id ?? undefined}
+									defaultValue={field.value}
 									onValueChange={field.onChange}
+									value={field.value}
 								>
 									<SelectTrigger className='w-full'>
 										<SelectValue placeholder='Select group to add project' />
@@ -92,15 +93,16 @@ export const CreateProjectForm: React.FC<{
 							</FormLabel>
 							<FormControl>
 								<Select
-									onValueChange={value => field.onChange(value === 'true')}
-									defaultValue='true'
+									onValueChange={value => field.onChange(value === 'public')}
+									defaultValue={field.value ? 'public' : 'private'}
+									value={field.value ? 'public' : 'private'}
 								>
 									<SelectTrigger className='w-full'>
 										<SelectValue placeholder='Select visibility' />
 									</SelectTrigger>
 									<SelectContent>
-										<SelectItem value='true'>Public</SelectItem>
-										<SelectItem value='false'>Private</SelectItem>
+										<SelectItem value='public'>Public</SelectItem>
+										<SelectItem value='private'>Private</SelectItem>
 									</SelectContent>
 								</Select>
 							</FormControl>
@@ -117,7 +119,11 @@ export const CreateProjectForm: React.FC<{
 								Project type
 							</FormLabel>
 							<FormControl>
-								<Select onValueChange={field.onChange} defaultValue={field.value}>
+								<Select
+									onValueChange={field.onChange}
+									defaultValue={field.value}
+									value={field.value}
+								>
 									<SelectTrigger className='w-full'>
 										<SelectValue placeholder='Select visibility' />
 									</SelectTrigger>

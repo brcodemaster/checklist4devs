@@ -17,16 +17,16 @@ export const ApiResponse = <T = unknown>(
 
 export const ErrorApiResponse = (error: unknown): NextResponse<TApiResponse<null>> => {
 	if (error instanceof ApiError) {
-		if (error.name === 'TokenExpiredError') {
-			return NextResponse.json(
-				{
-					success: false,
-					message: error.message,
-					data: null
-				},
-				{ status: error.statusCode, statusText: error.name }
-			)
-		}
+		// if (error.name === 'TokenExpiredError') {
+		// 	return NextResponse.json(
+		// 		{
+		// 			success: false,
+		// 			message: error.message,
+		// 			data: null
+		// 		},
+		// 		{ status: error.statusCode, statusText: error.name }
+		// 	)
+		// }
 
 		return NextResponse.json(
 			{
