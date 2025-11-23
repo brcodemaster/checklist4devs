@@ -34,7 +34,8 @@ export class NotificationService {
 
 		return (await prisma.notification.findMany({
 			where: {
-				userId
+				userId,
+				isPublic: false
 			},
 			...params
 		})) as Prisma.NotificationGetPayload<T>[]

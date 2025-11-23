@@ -6,7 +6,7 @@ import { notificationService } from '@/shared/lib/services/notification-service'
 
 export async function GET(request: NextRequest) {
 	try {
-		const { id } = await authService.checkAuth(request)
+		await authService.checkAuth(request)
 
 		const publicNots = await notificationService.findAll({
 			where: {
@@ -15,9 +15,7 @@ export async function GET(request: NextRequest) {
 			orderBy: { index: 'asc' }
 		})
 
-		const personalNots = await notificationService.findMine(id, { orderBy: { index: 'asc' } })
-
-		const nots = [...publicNots, ...personalNots]
+		const nots = [...publicNots]
 
 		return ApiResponse(nots, 'Notifications returned successfully')
 	} catch (error) {
