@@ -17,9 +17,8 @@ export async function middleware(req: NextRequest) {
 	}
 
 	const accessToken = req.cookies.get('x-access-token')?.value
-	const refreshToken = req.cookies.get('x-refresh-token')?.value
 
-	if (!accessToken && !refreshToken) {
+	if (!accessToken) {
 		const loginUrl = new URL('/auth/login', req.url)
 		loginUrl.searchParams.set('callbackUrl', pathname)
 		return NextResponse.redirect(loginUrl)

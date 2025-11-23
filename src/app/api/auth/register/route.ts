@@ -11,19 +11,14 @@ export async function POST(request: NextRequest) {
 
 		const user = await authService.register(body)
 
-		const { accessToken: _accessToken, refreshToken, password: _password, ...safeUser } = user
+		const {
+			accessToken: _accessToken,
+			refreshToken: _refreshToken,
+			password: _password,
+			...safeUser
+		} = user
 
-		const res = ApiResponse(safeUser, 'User registered successfully')
-
-		res.cookies.set('x-refresh-token', refreshToken, {
-			httpOnly: true,
-			secure: process.env.NODE_ENV === 'production',
-			sameSite: 'lax',
-			maxAge: 0,
-			path: '/'
-		})
-
-		return res
+		return ApiResponse(safeUser, 'User registered successfully')
 	} catch (error) {
 		return ErrorApiResponse(error)
 	}

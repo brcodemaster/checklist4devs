@@ -21,8 +21,12 @@ export class JwtService {
 			this.jwt.verify(token, this.getSecretKey())
 
 			return true
-		} catch {
-			return false
+		} catch (err: any) {
+			if (err.name === 'TokenExpiredError') {
+				return false
+			}
+
+			throw new ApiError(BASE_ERRORS.InvalidTokenError, 'Token is invalid')
 		}
 	}
 

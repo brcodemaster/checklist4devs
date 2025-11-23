@@ -13,14 +13,23 @@ export class AuthService {
 		private readonly userService: TUserService
 	) {}
 
-	async me(request: NextRequest): Promise<User> {
+	async me(request: NextRequest): Promise<
+		Prisma.UserGetPayload<{
+			include: { groups: { include: { group: { select: { id: true; name: true } } } } }
+		}>
+	> {
 		const token = this.jwtService.getAccessTokenFromRequest(request)
 
-		this.jwtService.verify(token)
-
 		const { userId } = this.jwtService.decode(token)
+		const isValidToken = this.jwtService.verify(token)
 
-		return await this.userService.findById(userId)
+		if (!isValidToken) {
+			return await this.refreshToken(userId)
+		}
+
+		return await this.userService.findById(userId, {
+			include: { groups: { include: { group: { select: { name: true, id: true } } } } }
+		})
 	}
 
 	async login(
@@ -42,7 +51,16 @@ export class AuthService {
 			'accessToken'
 		)
 
-		const updatedUser = await userService.update(user.id, { accessToken })
+		const refreshToken = this.jwtService.sign(
+			{ userId: user.id, sub: `user-${user.email}`, jti: crypto.randomUUID() },
+			'refreshToken'
+		)
+
+		const updatedUser = await userService.update(
+			user.id,
+			{ accessToken, refreshToken },
+			{ include: { groups: { include: { group: { select: { id: true, name: true } } } } } }
+		)
 
 		return { ...updatedUser, accessToken }
 	}
@@ -50,12 +68,10 @@ export class AuthService {
 	async logout(payload: Pick<User, 'id'>): Promise<User> {
 		const { id } = payload
 
-		return await this.userService.update(id, { accessToken: null })
+		return await this.userService.update(id, { accessToken: null, refreshToken: null })
 	}
 
-	async register(
-		payload: Omit<Prisma.UserUncheckedCreateInput, 'id'>
-	): Promise<Omit<User, 'refreshToken'> & { refreshToken: string }> {
+	async register(payload: Omit<Prisma.UserUncheckedCreateInput, 'id'>): Promise<User> {
 		const user = await this.userService.findOne(payload.email)
 
 		if (user) throw new ApiError(BASE_ERRORS.Conflict, 'User with this email is already exists')
@@ -64,36 +80,38 @@ export class AuthService {
 
 		const newUser = await this.userService.create({ ...payload, password: hashedPassword })
 
-		const refreshToken = this.jwtService.sign(
-			{ userId: newUser.id, sub: `user-${newUser.email}`, jti: crypto.randomUUID() },
-			'refreshToken'
-		)
-
-		const updatedUser = await this.userService.update(newUser.id, { refreshToken })
-
-		return { ...updatedUser, refreshToken }
+		return newUser
 	}
 
-	async refreshToken(
-		userId: string
-	): Promise<
-		Omit<User, 'accessToken' | 'refreshToken'> & { accessToken: string; refreshToken: string }
+	async refreshToken(userId: string): Promise<
+		Omit<
+			Prisma.UserGetPayload<{
+				include: { groups: { include: { group: { select: { id: true; name: true } } } } }
+			}>,
+			'accessToken'
+		> & { accessToken: string }
 	> {
 		const user = await this.userService.findById(userId)
+
+		if (!user.refreshToken)
+			throw new ApiError(BASE_ERRORS.Unauthorized, `User not authenticated`)
+
+		const isValidRefresh = jwtService.verify(user.refreshToken)
+
+		if (!isValidRefresh) throw new ApiError(BASE_ERRORS.Unauthorized, `User not authenticated`)
 
 		const accessToken = this.jwtService.sign(
 			{ userId: user.id, sub: `user-${user.email}`, jti: crypto.randomUUID() },
 			'accessToken'
 		)
 
-		const refreshToken = this.jwtService.sign(
-			{ userId: user.id, sub: `user-${user.email}`, jti: crypto.randomUUID() },
-			'refreshToken'
+		const updatedUser = await userService.update(
+			user.id,
+			{ accessToken },
+			{ include: { groups: { include: { group: { select: { id: true, name: true } } } } } }
 		)
 
-		const updatedUser = await userService.update(user.id, { accessToken, refreshToken })
-
-		return { ...updatedUser, accessToken, refreshToken }
+		return { ...updatedUser, accessToken }
 	}
 
 	async checkAuth(request: NextRequest) {
