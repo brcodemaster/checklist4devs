@@ -1,5 +1,5 @@
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
-import { Bolt, Boxes, ChevronRight, LinkIcon } from 'lucide-react'
+import { Bolt, Boxes, ChevronRight, Github, LinkIcon } from 'lucide-react'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 
@@ -77,13 +77,13 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 						<div className='invisible-scroll relative flex w-full items-center gap-1 overflow-x-auto pl-2'>
 							<Badge
 								variant='secondary'
-								className='font-ibm bg-muted-secondary hidden text-center text-[10px] text-white md:flex'
+								className='font-ibm bg-muted-secondary flex text-center text-[10px] text-white'
 							>
 								<Boxes className='stroke-white' /> {project.group.name}
 							</Badge>
 							<Badge
 								variant='secondary'
-								className='font-ibm bg-muted-secondary hidden text-center text-[10px] text-white md:flex'
+								className='font-ibm bg-muted-secondary flex text-center text-[10px] text-white'
 							>
 								<Bolt className='stroke-white' />{' '}
 								{project.type.replaceAll('_', ' ')}
@@ -99,13 +99,17 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
 								return (
 									<Badge
-										className='font-ibm bg-muted-secondary! hidden justify-start gap-1 text-[10px] text-white sm:flex'
+										className='font-ibm bg-muted-secondary! flex justify-start gap-1 text-[10px] text-white'
 										key={idx}
 										variant='secondary'
 										asChild
 									>
 										<Link href={link}>
-											<LinkIcon className='shrink-0' />
+											{url === 'github.com' ? (
+												<Github className='shrink-0' />
+											) : (
+												<LinkIcon className='shrink-0' />
+											)}
 											<span>{url}</span>
 										</Link>
 									</Badge>

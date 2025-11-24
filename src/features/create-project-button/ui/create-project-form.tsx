@@ -65,9 +65,16 @@ export const CreateProjectForm: React.FC<{
 									defaultValue={field.value}
 									onValueChange={field.onChange}
 									value={field.value}
+									disabled={groups?.length === 0}
 								>
 									<SelectTrigger className='w-full'>
-										<SelectValue placeholder='Select group to add project' />
+										<SelectValue
+											placeholder={
+												groups && groups?.length > 0
+													? 'Select group to add project'
+													: 'There is no groups yet. Create group first'
+											}
+										/>
 									</SelectTrigger>
 									<SelectContent>
 										{groups &&
