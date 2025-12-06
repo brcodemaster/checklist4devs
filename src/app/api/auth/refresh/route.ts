@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 
 		const {
 			accessToken,
-			refreshToken,
+			refreshToken: _refreshToken,
 			password: _password,
 			...safeUser
 		} = await authService.refreshToken(userId)

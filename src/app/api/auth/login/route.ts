@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 
 		const user = await authService.login(body)
 
-		const { accessToken, refreshToken, password: _password, ...safeUser } = user
+		const { accessToken, refreshToken: _refreshToken, password: _password, ...safeUser } = user
 
 		const res = ApiResponse(safeUser, 'User logged successfully')
 

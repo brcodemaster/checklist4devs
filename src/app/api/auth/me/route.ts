@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
 		if (!user.accessToken || !user.refreshToken)
 			throw new ApiError(BASE_ERRORS.Unauthorized, 'User not authorized')
 
-		const { accessToken, refreshToken, password: _password, ...safeUser } = user
+		const { accessToken, refreshToken: _refreshToken, password: _password, ...safeUser } = user
 
 		const res = NextResponse.json(safeUser)
 

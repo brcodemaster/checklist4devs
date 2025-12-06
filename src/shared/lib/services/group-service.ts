@@ -149,8 +149,6 @@ export class GroupService {
 	): Promise<Prisma.GroupDeveloperGetPayload<T>> {
 		const params = args ?? {}
 
-		const group = await this.findById(id)
-
 		return (await prisma.groupDeveloper.create({
 			data: {
 				groupId: id,
