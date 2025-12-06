@@ -23,15 +23,6 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 			</Section>
 		)
 
-	await prisma.notification.update({
-		where: {
-			id
-		},
-		data: {
-			state: 'OPENED'
-		}
-	})
-
 	if (notification.title === 'Invitation')
 		return (
 			<Section className='mt-10'>
@@ -60,7 +51,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 								<Link href='/'>Dismiss</Link>
 							</Button>
 
-							<AccessToGroupButton groupId={notification.invitedGroupId} />
+							<AccessToGroupButton groupId={notification.invitedGroupId} notId={id} />
 						</div>
 					)}
 				</div>

@@ -11,7 +11,7 @@ import { Group } from '@/generated/client'
 
 const INVITE_KEY = process.env.NEXT_PUBLIC_INVITE_KEY || ''
 
-export const useAccessToGroupButton = (groupId: string | null) => {
+export const useAccessToGroupButton = (groupId: string | null, notId: string) => {
 	const { user } = useAuth()
 
 	const router = useRouter()
@@ -21,6 +21,7 @@ export const useAccessToGroupButton = (groupId: string | null) => {
 			const json = {
 				inviteKey: INVITE_KEY,
 				userId: user?.id,
+				notId,
 				groupId
 			}
 

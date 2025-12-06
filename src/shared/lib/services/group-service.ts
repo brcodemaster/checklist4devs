@@ -142,22 +142,22 @@ export class GroupService {
 		})) as Prisma.GroupGetPayload<T>
 	}
 
-	async addMember<T extends Prisma.GroupDefaultArgs>(
+	async addMember<T extends Prisma.GroupDeveloperDefaultArgs>(
 		id: string,
 		userId: string,
 		args?: Prisma.SelectSubset<T, Prisma.GroupDefaultArgs>
-	): Promise<Prisma.GroupGetPayload<T>> {
+	): Promise<Prisma.GroupDeveloperGetPayload<T>> {
 		const params = args ?? {}
 
 		const group = await this.findById(id)
 
-		return (await prisma.group.update({
-			where: {
-				id: group.id
+		return (await prisma.groupDeveloper.create({
+			data: {
+				groupId: id,
+				userId: userId
 			},
-			data: { developers: { connect: { id: userId } } },
 			...params
-		})) as Prisma.GroupGetPayload<T>
+		})) as Prisma.GroupDeveloperGetPayload<T>
 	}
 
 	async kick<T extends Prisma.GroupDefaultArgs>(
