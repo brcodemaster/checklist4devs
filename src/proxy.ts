@@ -3,22 +3,22 @@ import { NextRequest, NextResponse } from 'next/server'
 export default async function proxy(req: NextRequest) {
 	const { pathname } = req.nextUrl
 
-	// Всё что не API — проверяем авторизацию
-	const isApi = pathname.startsWith('/api')
-
+	// Всё что не API — пропускаем статику
+	const staticPaths = ['/_next', '/favicon', '/robots', '/images', '/uploads']
 	if (
-		pathname.startsWith('/_next') ||
-		pathname.startsWith('/favicon') ||
-		pathname.startsWith('/robots') ||
-		pathname.startsWith('/images') ||
-		pathname.startsWith('/uploads') ||
+		staticPaths.some(p => pathname.startsWith(p)) ||
 		pathname.match(/\.(png|jpg|jpeg|gif|svg|ico|webp)$/)
 	) {
 		return NextResponse.next()
 	}
 
-	if (isApi) {
-		// API-запросы пропускаем, CORS и редирект не мешаем
+	// API пропускаем
+	if (pathname.startsWith('/api')) {
+		return NextResponse.next()
+	}
+
+	// Исключаем саму страницу логина
+	if (pathname.startsWith('/auth/login')) {
 		return NextResponse.next()
 	}
 
