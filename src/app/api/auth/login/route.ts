@@ -1,5 +1,5 @@
 import ms from 'ms'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 
 import { ApiResponse, ErrorApiResponse } from '@/shared/lib'
 import { authService } from '@/shared/lib/services/auth-service'
@@ -27,10 +27,10 @@ export async function POST(request: NextRequest) {
 			path: '/'
 		})
 
-		res.headers.set('Access-Control-Allow-Origin', 'https://checklist4devs.uz')
-		res.headers.set('Access-Control-Allow-Credentials', 'true')
-		res.headers.set('Access-Control-Allow-Methods', 'GET,POST,OPTIONS')
-		res.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+		// res.headers.set('Access-Control-Allow-Origin', 'https://checklist4devs.uz')
+		// res.headers.set('Access-Control-Allow-Credentials', 'true')
+		// res.headers.set('Access-Control-Allow-Methods', 'GET,POST,OPTIONS')
+		// res.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
 
 		return res
 	} catch (error) {
@@ -38,11 +38,11 @@ export async function POST(request: NextRequest) {
 	}
 }
 
-export async function OPTIONS() {
-	const res = NextResponse.json({})
-	res.headers.set('Access-Control-Allow-Origin', 'https://checklist4devs.uz')
-	res.headers.set('Access-Control-Allow-Credentials', 'true')
-	res.headers.set('Access-Control-Allow-Methods', 'GET,POST,OPTIONS')
-	res.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-	return res
-}
+// export async function OPTIONS() {
+// 	const res = NextResponse.json({})
+// 	res.headers.set('Access-Control-Allow-Origin', 'https://checklist4devs.uz')
+// 	res.headers.set('Access-Control-Allow-Credentials', 'true')
+// 	res.headers.set('Access-Control-Allow-Methods', 'GET,POST,OPTIONS')
+// 	res.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+// 	return res
+// }

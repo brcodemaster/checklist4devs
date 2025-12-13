@@ -174,9 +174,36 @@ export const useTaskCard = (task: Task) => {
 		mutateAsyncUpdateStatus(status)
 	}
 
+	const silentUpdate = (status: TaskStatus) => {
+		if (task.status === 'FIRED') return
+
+		const now = new Date()
+		const isDeadlinePassed = now.getTime() > new Date(task.deadlineAt).getTime()
+
+		const newStatus: TaskStatus = isDeadlinePassed ? 'FIRED' : status
+
+		// Оптимистическое обновление UI
+		queryClient.setQueryData<Prisma.ProjectGetPayload<{ include: { tasks: true } }>>(
+			['project', id],
+			old => {
+				if (!old) return old
+				return {
+					...old,
+					tasks: old.tasks.map(t => (t.id === task.id ? { ...t, status: newStatus } : t))
+				}
+			}
+		)
+
+		// Отправка запроса на сервер
+		mutateAsyncUpdateStatus(newStatus).catch(() => {
+			// При ошибке откатываемся к предыдущему состоянию
+			queryClient.invalidateQueries({ queryKey: ['project', id] })
+		})
+	}
+
 	useEffect(() => {
 		if (!task.deadlineAt) return
-		if (task.status === 'FIRED' || task.status === 'COMPLETED') return
+		if (task.status !== 'IN_PROGRESS') return
 		if (firedOnceRef.current) return
 
 		const now = Date.now()
@@ -184,9 +211,9 @@ export const useTaskCard = (task: Task) => {
 
 		if (now > deadline) {
 			firedOnceRef.current = true
-			handleUpdateStatus('FIRED')
+			silentUpdate('FIRED') // UI сразу обновится в FIRED
 		}
-	}, [])
+	}, [task, id])
 
 	return {
 		firedOnceRef,

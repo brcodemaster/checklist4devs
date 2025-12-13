@@ -408,7 +408,7 @@ export async function up() {
 						id: '31',
 						index: 1,
 						text: 'Setup the initial project repository, configure Git, initialize README, add .gitignore, and create the main branch for development with all collaborators having access permissions properly configured.',
-						status: 'COMPLETED',
+						status: 'IN_PROGRESS',
 						assigner: { connect: { id: '1' } },
 						creator: { connect: { id: '1' } },
 						deadlineAt: new Date('2023-12-12')
