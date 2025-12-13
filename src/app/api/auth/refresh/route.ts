@@ -24,10 +24,12 @@ export async function POST(request: NextRequest) {
 			httpOnly: true,
 			secure: process.env.NODE_ENV === 'production',
 			sameSite: 'lax',
-			domain: 'checklist4devs.uz',
 			maxAge: ms('1h') / 1000,
 			path: '/'
 		})
+
+		res.headers.set('Access-Control-Allow-Origin', 'https://checklist4devs.uz')
+		res.headers.set('Access-Control-Allow-Credentials', 'true')
 
 		return res
 	} catch (error) {
