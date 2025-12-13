@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { HTTPError } from 'ky'
 import { useParams } from 'next/navigation'
+import { useEffect, useRef } from 'react'
 import { toast } from 'sonner'
 
 import { kyInstance } from '@/shared/api'
@@ -8,7 +9,7 @@ import { useAuth } from '@/shared/contexts/auth-context'
 import { isBurningDayNear, isTaskBurned, prettyDateMaker } from '@/shared/lib/utils'
 import { TApiResponse } from '@/shared/types/default-types'
 
-import { Prisma, Task } from '@/generated/client'
+import { Prisma, Task, TaskStatus } from '@/generated/client'
 
 export const useTaskCard = (task: Task) => {
 	const { id } = useParams<{ id: string }>()
@@ -17,12 +18,14 @@ export const useTaskCard = (task: Task) => {
 
 	const queryClient = useQueryClient()
 
+	const firedOnceRef = useRef(false)
+
 	const { mutateAsync: mutateAsyncUpdateStatus } = useMutation({
-		mutationFn: async () => {
+		mutationFn: async (status: TaskStatus) => {
 			const json = {
 				id: task.id,
 				payload: {
-					status: task.status === 'IN_PROGRESS' ? 'COMPLETED' : 'IN_PROGRESS'
+					status
 				}
 			}
 
@@ -158,14 +161,35 @@ export const useTaskCard = (task: Task) => {
 		}
 	})
 
-	const handleUpdateStatus = () => {
+	const handleUpdateStatus = (status: TaskStatus) => {
 		if (task.assignerId !== user?.id) return
 		if (task.status === 'FIRED') return
 
-		mutateAsyncUpdateStatus()
+		const now = new Date()
+
+		const isDeadlinePassed = now.getTime() > new Date(task.deadlineAt).getTime()
+
+		if (isDeadlinePassed) return toast.info('The deadline has already passed')
+
+		mutateAsyncUpdateStatus(status)
 	}
 
+	useEffect(() => {
+		if (!task.deadlineAt) return
+		if (task.status === 'FIRED' || task.status === 'COMPLETED') return
+		if (firedOnceRef.current) return
+
+		const now = Date.now()
+		const deadline = new Date(task.deadlineAt).getTime()
+
+		if (now > deadline) {
+			firedOnceRef.current = true
+			handleUpdateStatus('FIRED')
+		}
+	}, [])
+
 	return {
+		firedOnceRef,
 		handleDelete,
 		handleUpdateStatus,
 		isBurningDayNear,

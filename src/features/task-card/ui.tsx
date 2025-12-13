@@ -30,7 +30,11 @@ export const TaskCard: React.FC<Props> = ({ task, index, assignee, creator, user
 				'border-muted-secondary bg-card hover:bg-card-hover group/card relative flex min-h-44 cursor-pointer flex-col justify-between overflow-hidden rounded-md border p-4 duration-100',
 				task.status === 'FIRED' && 'text-fired cursor-not-allowed'
 			)}
-			onClick={() => handleUpdateStatus()}
+			onClick={() => {
+				const status = task.status === 'COMPLETED' ? 'IN_PROGRESS' : 'COMPLETED'
+
+				handleUpdateStatus(status)
+			}}
 		>
 			<div>
 				<div className='flex items-center justify-between'>

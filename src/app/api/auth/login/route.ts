@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
 			secure: process.env.NODE_ENV === 'production',
 			sameSite: 'lax',
 			maxAge: ms('1h') / 1000,
+			domain: 'checklist4devs.uz',
 			path: '/'
 		})
 

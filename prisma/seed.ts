@@ -411,7 +411,7 @@ export async function up() {
 						status: 'COMPLETED',
 						assigner: { connect: { id: '1' } },
 						creator: { connect: { id: '1' } },
-						deadlineAt: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000)
+						deadlineAt: new Date('2023-12-12')
 					},
 					{
 						id: '32',
@@ -429,7 +429,7 @@ export async function up() {
 						status: 'IN_PROGRESS',
 						assigner: { connect: { id: '3' } },
 						creator: { connect: { id: '1' } },
-						deadlineAt: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)
+						deadlineAt: new Date('2023-12-12')
 					},
 					{
 						id: '34',
